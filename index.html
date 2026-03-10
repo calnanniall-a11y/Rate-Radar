@@ -3,6 +3,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>RateRadar Ireland — Compare Financial Rates</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%23080d16'/><circle cx='16' cy='16' r='9' fill='%2300c896'/><circle cx='16' cy='16' r='5' fill='%23080d16' opacity='0.4'/></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -12,649 +13,177 @@
     --border: #1c2a3e;
     --accent: #00c896;
     --accent2: #f59e0b;
-    --accent-glow: rgba(0,200,150,0.15);
     --text: #e2eaf5;
     --muted: #5a6e8a;
     --card-shadow: 0 4px 24px rgba(0,0,0,0.5);
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
   body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,200,150,0.07) 0%, transparent 60%);
-    pointer-events: none;
-    z-index: 0;
+    content: ''; position: fixed; inset: 0;
+    background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,200,150,0.07) 0%, transparent 60%);
+    pointer-events: none; z-index: 0;
   }
 
-  /* ── HEADER ── */
+  /* HEADER */
   header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    padding: 0 1.5rem;
-    border-bottom: 1px solid var(--border);
-    background: rgba(8,13,22,0.92);
-    backdrop-filter: blur(16px);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 60px;
+    position: sticky; top: 0; z-index: 100;
+    padding: 0 1.5rem; border-bottom: 1px solid var(--border);
+    background: rgba(8,13,22,0.92); backdrop-filter: blur(16px);
+    display: flex; align-items: center; justify-content: space-between; height: 60px;
   }
-
-  .logo {
-    font-size: 1.25rem;
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-
-  .logo-dot {
-    width: 8px; height: 8px;
-    background: var(--accent);
-    border-radius: 50%;
-    box-shadow: 0 0 8px var(--accent);
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.6; transform: scale(0.8); }
-  }
-
-  .logo-text { color: var(--text); }
+  .logo { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.04em; display: flex; align-items: center; gap: 0.4rem; }
+  .logo-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 8px var(--accent); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.8)} }
   .logo-text span { color: var(--accent); }
-
-  .badge-updated {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--muted);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 3px 10px;
-    border-radius: 20px;
-    white-space: nowrap;
+  .live-badge {
+    display: flex; align-items: center; gap: 0.4rem;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+    color: var(--accent); background: rgba(0,200,150,0.08);
+    border: 1px solid rgba(0,200,150,0.2); padding: 3px 10px; border-radius: 20px;
   }
+  .live-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; }
 
-  /* ── HERO ── */
-  .hero {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    padding: 3rem 1.5rem 2rem;
-  }
-
+  /* HERO */
+  .hero { position: relative; z-index: 1; text-align: center; padding: 3rem 1.5rem 2rem; }
   .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.72rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--accent);
-    background: rgba(0,200,150,0.08);
-    border: 1px solid rgba(0,200,150,0.2);
-    padding: 5px 14px;
-    border-radius: 20px;
-    margin-bottom: 1.25rem;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--accent); background: rgba(0,200,150,0.08); border: 1px solid rgba(0,200,150,0.2);
+    padding: 5px 14px; border-radius: 20px; margin-bottom: 1.25rem;
   }
+  .hero h1 { font-size: clamp(1.9rem, 5.5vw, 3.5rem); font-weight: 900; line-height: 1.08; letter-spacing: -0.04em; margin-bottom: 1rem; }
+  .hero h1 em { font-style: normal; background: linear-gradient(135deg, #00c896, #00a8ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero p { color: var(--muted); font-size: 1rem; max-width: 480px; margin: 0 auto; line-height: 1.65; }
 
-  .hero h1 {
-    font-size: clamp(1.9rem, 5.5vw, 3.5rem);
-    font-weight: 900;
-    line-height: 1.08;
-    letter-spacing: -0.04em;
-    margin-bottom: 1rem;
-    color: var(--text);
-  }
+  /* CONTAINER */
+  .container { max-width: 960px; margin: 0 auto; padding: 1.5rem 1rem 4rem; position: relative; z-index: 1; }
 
-  .hero h1 em {
-    font-style: normal;
-    background: linear-gradient(135deg, #00c896, #00a8ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero p {
-    color: var(--muted);
-    font-size: 1rem;
-    max-width: 480px;
-    margin: 0 auto;
-    line-height: 1.65;
-    font-weight: 400;
-  }
-
-  /* ── CONTAINER ── */
-  .container {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 1.5rem 1rem 4rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* ── CALCULATOR CARD ── */
-  .calc-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    box-shadow: var(--card-shadow);
-  }
-
-  .calc-card h2 {
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-bottom: 1.25rem;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .calc-card h2::before {
-    content: '';
-    width: 3px; height: 16px;
-    background: var(--accent);
-    border-radius: 2px;
-    display: inline-block;
-  }
-
-  .inputs-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-  }
-
-  @media (max-width: 480px) {
-    .inputs-grid { grid-template-columns: 1fr; }
-  }
-
+  /* CALC CARD */
+  .calc-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: var(--card-shadow); }
+  .calc-card h2 { font-size: 1rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
+  .calc-card h2::before { content: ''; width: 3px; height: 16px; background: var(--accent); border-radius: 2px; display: inline-block; }
+  .inputs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; }
+  @media (max-width: 480px) { .inputs-grid { grid-template-columns: 1fr; } }
   .input-group { display: flex; flex-direction: column; gap: 0.4rem; }
-
-  .input-group label {
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-  }
-
-  .range-wrap {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 0.7rem 0.9rem;
-  }
-
-  .range-val {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--accent);
-    margin-bottom: 0.5rem;
-    display: block;
-  }
-
-  input[type="range"] {
-    width: 100%;
-    -webkit-appearance: none;
-    height: 3px;
-    border-radius: 2px;
-    background: var(--border);
-    outline: none;
-    cursor: pointer;
-  }
-
-  input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 16px; height: 16px;
-    border-radius: 50%;
-    background: var(--accent);
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(0,200,150,0.6);
-  }
-
-  .select-wrap {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    transition: border-color 0.2s;
-  }
-
-  .select-wrap:focus-within {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(0,200,150,0.1);
-  }
-
-  .select-wrap select {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    padding: 0.7rem 0.9rem;
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 500;
-    cursor: pointer;
-    width: 100%;
-  }
-
+  .input-group label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  .range-wrap { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 0.7rem 0.9rem; }
+  .range-val { font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 500; color: var(--accent); margin-bottom: 0.5rem; display: block; }
+  input[type="range"] { width: 100%; -webkit-appearance: none; height: 3px; border-radius: 2px; background: var(--border); outline: none; cursor: pointer; }
+  input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--accent); cursor: pointer; box-shadow: 0 0 10px rgba(0,200,150,0.6); }
+  .select-wrap { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; transition: border-color 0.2s; }
+  .select-wrap:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,200,150,0.1); }
+  .select-wrap select { width: 100%; background: transparent; border: none; outline: none; padding: 0.7rem 0.9rem; color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; }
   .select-wrap select option { background: var(--surface2); }
 
-  .calc-btn {
-    width: 100%;
-    padding: 0.9rem;
-    background: var(--accent);
-    color: #080d16;
-    border: none;
-    border-radius: 10px;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 800;
-    cursor: pointer;
-    letter-spacing: -0.01em;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-  }
+  .calc-btn { width: 100%; padding: 0.9rem; background: var(--accent); color: #080d16; border: none; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 800; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+  .calc-btn:hover { background: #00e0aa; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,200,150,0.3); }
+  .calc-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-  .calc-btn:hover {
-    background: #00e0aa;
-    transform: translateY(-1px);
-    box-shadow: 0 8px 24px rgba(0,200,150,0.3);
-  }
-
-  .calc-btn:active { transform: translateY(0); }
-
-  /* ── LOADING ── */
-  .loading {
-    display: none;
-    text-align: center;
-    padding: 2.5rem;
-    color: var(--muted);
-    font-size: 0.875rem;
-  }
+  /* LOADING */
+  .loading { display: none; text-align: center; padding: 2.5rem 1rem; }
   .loading.visible { display: block; }
-
-  .spinner {
-    width: 28px; height: 28px;
-    border: 2px solid var(--border);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    margin: 0 auto 0.75rem;
-  }
+  .loading-inner { display: inline-flex; flex-direction: column; align-items: center; gap: 1rem; }
+  .loading-spinner { width: 40px; height: 40px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-label { font-size: 0.875rem; color: var(--muted); }
+  .loading-steps { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.5rem; }
+  .loading-step { font-size: 0.75rem; color: var(--muted); display: flex; align-items: center; gap: 0.5rem; opacity: 0; transition: opacity 0.4s; }
+  .loading-step.active { opacity: 1; color: var(--accent); }
+  .loading-step.done { opacity: 0.5; color: var(--muted); }
+  .step-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
 
-  /* ── RESULTS ── */
+  /* FETCH STATUS BAR */
+  .fetch-status {
+    display: none; align-items: center; gap: 0.6rem;
+    background: rgba(0,200,150,0.06); border: 1px solid rgba(0,200,150,0.15);
+    border-radius: 10px; padding: 0.6rem 1rem; margin-bottom: 1.25rem;
+    font-size: 0.75rem; color: var(--muted);
+  }
+  .fetch-status.visible { display: flex; }
+  .fetch-status .fs-dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
+  .fetch-status .fs-text { flex: 1; }
+  .fetch-status .fs-time { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 0.7rem; }
+
+  /* RESULTS */
   .results-section { display: none; }
   .results-section.visible { display: block; animation: fadeUp 0.35s ease forwards; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+  .results-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .results-header h2 { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.03em; }
+  .results-count { font-size: 0.72rem; font-weight: 600; color: var(--muted); background: var(--surface); border: 1px solid var(--border); padding: 3px 10px; border-radius: 20px; }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .results-header {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1.25rem;
-    flex-wrap: wrap;
-  }
-
-  .results-header h2 {
-    font-size: 1.1rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-  }
-
-  .results-count {
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--muted);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 3px 10px;
-    border-radius: 20px;
-  }
-
-  /* ── LOAN CARDS ── */
+  /* LOAN CARDS */
   .cards-grid { display: grid; gap: 0.75rem; margin-bottom: 1.5rem; }
-
-  .loan-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 1.25rem;
-    display: grid;
-    grid-template-columns: 56px 1fr auto;
-    gap: 0.75rem 1rem;
-    align-items: center;
-    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-    position: relative;
-  }
-
-  .loan-card:hover {
-    border-color: rgba(0,200,150,0.4);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(0,200,150,0.08);
-  }
-
-  .loan-card.best-pick {
-    border-color: var(--accent);
-    background: linear-gradient(135deg, rgba(0,200,150,0.05) 0%, var(--surface) 60%);
-  }
-
-  .best-badge {
-    display: none;
-    font-size: 0.6rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    color: var(--accent);
-    background: rgba(0,200,150,0.1);
-    padding: 3px 8px;
-    border-radius: 4px;
-    border: 1px solid rgba(0,200,150,0.25);
-    text-transform: uppercase;
-    width: fit-content;
-    margin-bottom: 0.3rem;
-  }
-
+  .loan-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem; display: grid; grid-template-columns: 56px 1fr auto; gap: 0.75rem 1rem; align-items: center; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; position: relative; }
+  .loan-card:hover { border-color: rgba(0,200,150,0.4); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,200,150,0.08); }
+  .loan-card.best-pick { border-color: var(--accent); background: linear-gradient(135deg, rgba(0,200,150,0.05) 0%, var(--surface) 60%); }
+  .best-badge { display: none; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.1em; color: var(--accent); background: rgba(0,200,150,0.1); padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(0,200,150,0.25); text-transform: uppercase; width: fit-content; margin-bottom: 0.3rem; }
   .loan-card.best-pick .best-badge { display: block; }
 
-  /* ── LOGO ── */
-  .bank-logo-wrap {
-    width: 56px; height: 56px;
-    border-radius: 12px;
-    background: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.1);
-  }
+  .bank-logo-wrap { width: 56px; height: 56px; border-radius: 12px; background: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+  .bank-logo-wrap img { width: 40px; height: 40px; object-fit: contain; display: block; }
+  .bank-logo-fallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-weight: 800; font-size: 0.85rem; border-radius: 12px; }
 
-  .bank-logo-wrap img {
-    width: 40px; height: 40px;
-    object-fit: contain;
-    display: block;
-  }
-
-  .bank-logo-fallback {
-    width: 100%; height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: 0.85rem;
-    letter-spacing: -0.02em;
-    border-radius: 12px;
-  }
-
-  /* ── BANK INFO ── */
   .bank-info { min-width: 0; }
-
-  .bank-info h3 {
-    font-size: 0.95rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.2rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .bank-desc {
-    font-size: 0.75rem;
-    color: var(--muted);
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .tags {
-    display: flex;
-    gap: 0.35rem;
-    flex-wrap: wrap;
-    margin-top: 0.45rem;
-  }
-
-  .tag {
-    font-size: 0.62rem;
-    font-weight: 700;
-    padding: 2px 7px;
-    border-radius: 4px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
+  .bank-info h3 { font-size: 0.95rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bank-desc { font-size: 0.75rem; color: var(--muted); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .tags { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.45rem; }
+  .tag { font-size: 0.62rem; font-weight: 700; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; }
   .tag-green { background: rgba(0,200,150,0.1); color: var(--accent); border: 1px solid rgba(0,200,150,0.2); }
   .tag-yellow { background: rgba(245,158,11,0.1); color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
   .tag-blue { background: rgba(96,165,250,0.1); color: #60a5fa; border: 1px solid rgba(96,165,250,0.2); }
   .tag-red { background: rgba(239,68,68,0.1); color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
 
-  /* ── LOAN NUMBERS ── */
-  .loan-numbers {
-    text-align: right;
-    flex-shrink: 0;
-  }
-
-  .apr-badge {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: var(--text);
-    line-height: 1;
-    margin-bottom: 0.25rem;
-    white-space: nowrap;
-  }
-
+  .loan-numbers { text-align: right; flex-shrink: 0; }
+  .apr-badge { font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 500; color: var(--text); line-height: 1; margin-bottom: 0.25rem; white-space: nowrap; }
   .apr-badge span { font-size: 0.8rem; color: var(--muted); font-weight: 400; }
-
-  .monthly-payment {
-    font-size: 0.78rem;
-    color: var(--muted);
-    margin-bottom: 0.15rem;
-    white-space: nowrap;
-  }
-
-  .monthly-payment strong {
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  .total-cost {
-    font-size: 0.7rem;
-    color: var(--muted);
-    white-space: nowrap;
-  }
-
+  .monthly-payment { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.15rem; white-space: nowrap; }
+  .monthly-payment strong { font-family: 'JetBrains Mono', monospace; color: var(--text); font-weight: 500; }
+  .total-cost { font-size: 0.7rem; color: var(--muted); white-space: nowrap; }
   .total-cost strong { color: var(--accent2); font-weight: 600; }
-
-  .apply-btn {
-    display: inline-block;
-    margin-top: 0.6rem;
-    padding: 6px 14px;
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    border-radius: 7px;
-    text-decoration: none;
-    font-size: 0.75rem;
-    font-weight: 700;
-    transition: all 0.18s;
-    white-space: nowrap;
-    letter-spacing: -0.01em;
-  }
-
+  .apply-btn { display: inline-block; margin-top: 0.6rem; padding: 6px 14px; border: 1px solid var(--accent); color: var(--accent); border-radius: 7px; text-decoration: none; font-size: 0.75rem; font-weight: 700; transition: all 0.18s; white-space: nowrap; }
   .apply-btn:hover { background: var(--accent); color: var(--bg); }
 
-  /* ── AI BOX ── */
-  .ai-box {
-    background: linear-gradient(135deg, rgba(0,200,150,0.04), var(--surface));
-    border: 1px solid rgba(0,200,150,0.2);
-    border-radius: 14px;
-    padding: 1.25rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .ai-header {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-bottom: 0.85rem;
-  }
-
-  .ai-icon {
-    width: 30px; height: 30px;
-    background: var(--accent);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-    flex-shrink: 0;
-    color: #080d16;
-    font-weight: 900;
-  }
-
-  .ai-header h3 {
-    font-size: 0.875rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    color: var(--accent);
-  }
-
-  .ai-body {
-    font-size: 0.875rem;
-    line-height: 1.7;
-    color: #a8bdd4;
-  }
-
+  /* AI BOX */
+  .ai-box { background: linear-gradient(135deg, rgba(0,200,150,0.04), var(--surface)); border: 1px solid rgba(0,200,150,0.2); border-radius: 14px; padding: 1.25rem; margin-bottom: 1.5rem; }
+  .ai-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.85rem; }
+  .ai-icon { width: 30px; height: 30px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; color: #080d16; font-weight: 900; }
+  .ai-header h3 { font-size: 0.875rem; font-weight: 800; letter-spacing: -0.02em; color: var(--accent); }
+  .ai-body { font-size: 0.875rem; line-height: 1.7; color: #a8bdd4; }
   .ai-body .hl { color: var(--accent); font-weight: 700; }
   .ai-body .wn { color: var(--accent2); font-weight: 700; }
 
-  /* ── TABLE ── */
-  .compare-table-wrap {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    overflow: hidden;
-    margin-bottom: 2rem;
-    overflow-x: auto;
-  }
-
-  .compare-table-wrap h3 {
-    font-size: 0.9rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .compare-table-wrap h3::before {
-    content: '';
-    width: 3px; height: 14px;
-    background: var(--accent);
-    border-radius: 2px;
-  }
-
+  /* TABLE */
+  .compare-table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 2rem; overflow-x: auto; }
+  .compare-table-wrap h3 { font-size: 0.9rem; font-weight: 800; letter-spacing: -0.02em; padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.5rem; }
+  .compare-table-wrap h3::before { content: ''; width: 3px; height: 14px; background: var(--accent); border-radius: 2px; }
   table { width: 100%; border-collapse: collapse; font-size: 0.82rem; min-width: 520px; }
-
-  th {
-    padding: 0.65rem 1rem;
-    text-align: left;
-    font-size: 0.65rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    background: rgba(0,0,0,0.25);
-    border-bottom: 1px solid var(--border);
-  }
-
-  td {
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid rgba(28,42,62,0.6);
-    vertical-align: middle;
-  }
-
+  th { padding: 0.65rem 1rem; text-align: left; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); background: rgba(0,0,0,0.25); border-bottom: 1px solid var(--border); }
+  td { padding: 0.75rem 1rem; border-bottom: 1px solid rgba(28,42,62,0.6); vertical-align: middle; }
   tr:last-child td { border-bottom: none; }
   tr:hover td { background: rgba(0,200,150,0.02); }
   td.best { color: var(--accent); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
   td.mono { font-family: 'JetBrains Mono', monospace; }
 
-  /* ── DISCLAIMER ── */
-  .disclaimer {
-    font-size: 0.7rem;
-    color: var(--muted);
-    line-height: 1.65;
-    border-top: 1px solid var(--border);
-    padding-top: 1.5rem;
-    text-align: center;
-  }
-
+  /* DISCLAIMER */
+  .disclaimer { font-size: 0.7rem; color: var(--muted); line-height: 1.65; border-top: 1px solid var(--border); padding-top: 1.5rem; text-align: center; }
   .disclaimer a { color: var(--accent); text-decoration: none; }
 
-  /* ── MOBILE ── */
+  /* ERROR BOX */
+  .error-box { background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.2); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: #f87171; display: none; }
+  .error-box.visible { display: block; }
+
+  /* MOBILE */
   @media (max-width: 600px) {
     header { padding: 0 1rem; }
-    .badge-updated { display: none; }
     .hero { padding: 2rem 1rem 1.5rem; }
     .container { padding: 1rem 0.75rem 3rem; }
     .calc-card { padding: 1.1rem; }
-    .loan-card {
-      grid-template-columns: 48px 1fr;
-      grid-template-rows: auto auto;
-      padding: 1rem;
-      gap: 0.6rem 0.75rem;
-    }
-    .loan-numbers {
-      grid-column: 1 / -1;
-      text-align: left;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.75rem;
-    }
+    .loan-card { grid-template-columns: 48px 1fr; grid-template-rows: auto auto; padding: 1rem; gap: 0.6rem 0.75rem; }
+    .loan-numbers { grid-column: 1 / -1; text-align: left; display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
     .apr-badge { font-size: 1.3rem; }
     .apply-btn { margin-top: 0; }
-    .best-badge { top: 8px; right: 8px; }
   }
 </style>
 </head>
@@ -665,20 +194,19 @@
     <div class="logo-dot"></div>
     <div class="logo-text">Rate<span>Radar</span> Ireland</div>
   </div>
-  <div class="badge-updated">Rates verified Mar 2026</div>
+  <div class="live-badge">
+    <div class="live-dot"></div>
+    AI Live Rates
+  </div>
 </header>
 
 <div class="hero">
-  <div class="hero-eyebrow">
-    <span>&#9679;</span> Live Irish Rate Comparison
-  </div>
+  <div class="hero-eyebrow">&#9679; Real-Time Irish Rate Comparison</div>
   <h1>Find Ireland's<br><em>best financial rate</em></h1>
-  <p>Compare personal loans from Bank of Ireland, AIB, PTSB &amp; Revolut with AI-powered recommendations.</p>
+  <p>AI searches Bank of Ireland, AIB, PTSB &amp; Revolut in real time — always the latest rates, never outdated.</p>
 </div>
 
 <div class="container">
-
-  <!-- Calculator -->
   <div class="calc-card">
     <h2>Configure Your Loan</h2>
     <div class="inputs-grid">
@@ -720,7 +248,7 @@
         </div>
       </div>
     </div>
-    <button class="calc-btn" onclick="compareLoan()">
+    <button class="calc-btn" id="compareBtn" onclick="startComparison()">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       Compare Rates Now
     </button>
@@ -728,12 +256,32 @@
 
   <!-- Loading -->
   <div class="loading" id="loading">
-    <div class="spinner"></div>
-    Analysing rates from 4 Irish lenders...
+    <div class="loading-inner">
+      <div class="loading-spinner"></div>
+      <div class="loading-label">AI is searching for live rates...</div>
+      <div class="loading-steps">
+        <div class="loading-step" id="step1"><div class="step-dot"></div>Searching Bank of Ireland...</div>
+        <div class="loading-step" id="step2"><div class="step-dot"></div>Searching AIB...</div>
+        <div class="loading-step" id="step3"><div class="step-dot"></div>Searching Permanent TSB...</div>
+        <div class="loading-step" id="step4"><div class="step-dot"></div>Searching Revolut Ireland...</div>
+        <div class="loading-step" id="step5"><div class="step-dot"></div>Calculating best rates for you...</div>
+      </div>
+    </div>
   </div>
+
+  <!-- Error -->
+  <div class="error-box" id="errorBox"></div>
 
   <!-- Results -->
   <div class="results-section" id="results">
+
+    <!-- Fetch status bar -->
+    <div class="fetch-status" id="fetchStatus">
+      <div class="fs-dot"></div>
+      <div class="fs-text">Rates fetched live by AI</div>
+      <div class="fs-time" id="fetchTime"></div>
+    </div>
+
     <div class="results-header">
       <h2>Comparison Results</h2>
       <span class="results-count" id="resultsLabel">4 lenders compared</span>
@@ -754,13 +302,9 @@
       <table>
         <thead>
           <tr>
-            <th>Lender</th>
-            <th>APR</th>
-            <th>Monthly</th>
-            <th>Total Interest</th>
-            <th>Total Repayable</th>
-            <th>Max Loan</th>
-            <th>Rate</th>
+            <th>Lender</th><th>APR</th><th>Monthly</th>
+            <th>Total Interest</th><th>Total Repayable</th>
+            <th>Max Loan</th><th>Rate Type</th>
           </tr>
         </thead>
         <tbody id="tableBody"></tbody>
@@ -768,7 +312,8 @@
     </div>
 
     <div class="disclaimer">
-      Rates are indicative and sourced from published lender data as of March 2026. Your actual rate depends on your credit profile, loan amount, and term. Always confirm rates directly with the lender. RateRadar Ireland is not a regulated financial advisor.<br><br>
+      Rates are fetched in real time by AI from publicly available lender data. Always confirm the exact rate directly with the lender before applying — rates may vary based on your individual credit profile.
+      RateRadar Ireland is not a regulated financial advisor.<br><br>
       <strong>Official sites:</strong>
       <a href="https://www.bankofireland.com" target="_blank">Bank of Ireland</a> &middot;
       <a href="https://aib.ie" target="_blank">AIB</a> &middot;
@@ -779,33 +324,31 @@
 </div>
 
 <script>
-var LENDERS = {
+// ── FALLBACK RATES (used if AI fetch fails) ──
+var FALLBACK_RATES = {
+  boi:     { excellent: 7.1,  good: 8.0,  fair: 8.9,  maxBorrow: 75000 },
+  aib:     { excellent: 8.95, good: 8.95, fair: 8.95, maxBorrow: 75000 },
+  ptsb:    { excellent: 6.2,  good: 7.5,  fair: 8.8,  maxBorrow: 75000 },
+  revolut: { excellent: 6.5,  good: 8.41, fair: 12.99, maxBorrow: 30000 }
+};
+
+var LENDER_META = {
   boi: {
     name: "Bank of Ireland", short: "BOI",
     favicon: "https://www.google.com/s2/favicons?domain=bankofireland.com&sz=64",
     fallbackColor: "#005f9e", fallbackBg: "#e8f0f8",
     url: "https://personalbanking.bankofireland.com/borrow/loans/personal-loan/",
-    maxBorrow: 75000, maxTerm: 5, rateType: "Variable",
-    rates: {
-      personal:{excellent:7.1,good:8.0,fair:8.9}, car:{excellent:7.1,good:8.0,fair:8.9},
-      home:{excellent:7.1,good:8.0,fair:8.9}, green:{excellent:3.0,good:3.5,fair:6.5},
-      holiday:{excellent:7.1,good:8.0,fair:8.9}, wedding:{excellent:7.1,good:8.0,fair:8.9}
-    },
-    perks: ["No early repayment penalty","Defer first 3 repayments","Green loans from 3% APR"],
-    tags: [{t:"Lowest Green Rate",c:"tag-green"},{t:"Up to \u20AC75k",c:"tag-blue"}]
+    rateType: "Variable",
+    perks: ["No early repayment penalty", "Defer first 3 repayments", "Green loans available"],
+    tags: [{t:"Green Loan Option",c:"tag-green"},{t:"Up to \u20AC75k",c:"tag-blue"}]
   },
   aib: {
     name: "AIB", short: "AIB",
     favicon: "https://www.google.com/s2/favicons?domain=aib.ie&sz=64",
     fallbackColor: "#005c9c", fallbackBg: "#e8f0f8",
     url: "https://aib.ie/our-products/loans/personal-loan",
-    maxBorrow: 75000, maxTerm: 5, rateType: "Variable",
-    rates: {
-      personal:{excellent:8.95,good:8.95,fair:8.95}, car:{excellent:8.95,good:8.95,fair:8.95},
-      home:{excellent:8.95,good:8.95,fair:8.95}, green:{excellent:6.4,good:6.4,fair:6.4},
-      holiday:{excellent:8.95,good:8.95,fair:8.95}, wedding:{excellent:8.95,good:8.95,fair:8.95}
-    },
-    perks: ["3-hour online decision","1 repayment break per year","No early repayment penalty"],
+    rateType: "Variable",
+    perks: ["3-hour online decision", "1 repayment break per year", "No early repayment penalty"],
     tags: [{t:"Fast Decision",c:"tag-yellow"},{t:"Fixed Rate Option",c:"tag-blue"}]
   },
   ptsb: {
@@ -813,13 +356,8 @@ var LENDERS = {
     favicon: "https://www.google.com/s2/favicons?domain=ptsb.ie&sz=64",
     fallbackColor: "#7c3aed", fallbackBg: "#f0ebff",
     url: "https://www.ptsb.ie/borrowing/loans/personal-loan/",
-    maxBorrow: 75000, maxTerm: 5, rateType: "Variable",
-    rates: {
-      personal:{excellent:6.2,good:7.5,fair:8.8}, car:{excellent:6.2,good:7.5,fair:8.8},
-      home:{excellent:6.2,good:7.5,fair:8.8}, green:{excellent:4.5,good:5.5,fair:6.5},
-      holiday:{excellent:6.2,good:7.5,fair:8.8}, wedding:{excellent:6.2,good:7.5,fair:8.8}
-    },
-    perks: ["Competitive variable rates","Apply in-app","Green loans available"],
+    rateType: "Variable",
+    perks: ["Competitive variable rates", "Apply in-app", "Green loans available"],
     tags: [{t:"Competitive APR",c:"tag-green"},{t:"App Apply",c:"tag-blue"}]
   },
   revolut: {
@@ -827,23 +365,17 @@ var LENDERS = {
     favicon: "https://www.google.com/s2/favicons?domain=revolut.com&sz=64",
     fallbackColor: "#374151", fallbackBg: "#f3f4f6",
     url: "https://www.revolut.com/en-IE/personal-loans/",
-    maxBorrow: 30000, maxTerm: 5, rateType: "Variable",
-    rates: {
-      personal:{excellent:6.5,good:8.41,fair:12.99}, car:{excellent:6.5,good:8.41,fair:12.99},
-      home:{excellent:6.5,good:8.41,fair:12.99}, green:{excellent:6.5,good:8.41,fair:12.99},
-      holiday:{excellent:6.5,good:8.41,fair:12.99}, wedding:{excellent:6.5,good:8.41,fair:12.99}
-    },
-    perks: ["100% digital & in-app","No early repayment fees","Fast approval"],
+    rateType: "Variable",
+    perks: ["100% digital & in-app", "No early repayment fees", "Fast approval"],
     tags: [{t:"100% Digital",c:"tag-yellow"},{t:"No Hidden Fees",c:"tag-green"}]
   }
 };
 
 var loanAmount = 15000;
 var loanTermYears = 3;
+var fetchedLive = false;
 
-function fe(n) {
-  return '\u20AC' + Math.round(n).toLocaleString('en-IE');
-}
+function fe(n) { return '\u20AC' + Math.round(n).toLocaleString('en-IE'); }
 
 function calcMonthly(p, apr, yrs) {
   var r = (apr / 100) / 12;
@@ -862,80 +394,184 @@ function updateTerm(v) {
   document.getElementById('termVal').textContent = v + (parseInt(v) === 1 ? ' year' : ' years');
 }
 
-function compareLoan() {
-  document.getElementById('loading').classList.add('visible');
-  document.getElementById('results').classList.remove('visible');
-  setTimeout(function() {
-    document.getElementById('loading').classList.remove('visible');
-    renderResults(
-      document.getElementById('purposeSelect').value,
-      document.getElementById('creditSelect').value
-    );
-  }, 800);
+// Animate loading steps
+function animateSteps() {
+  var steps = ['step1','step2','step3','step4','step5'];
+  var delays = [0, 600, 1200, 1800, 2600];
+  var dones =  [500, 1100, 1700, 2400, 99999];
+
+  steps.forEach(function(id, i) {
+    setTimeout(function() {
+      document.getElementById(id).classList.add('active');
+    }, delays[i]);
+    setTimeout(function() {
+      document.getElementById(id).classList.remove('active');
+      document.getElementById(id).classList.add('done');
+    }, dones[i]);
+  });
 }
 
-function makeLogo(lender) {
+async function startComparison() {
+  var purpose = document.getElementById('purposeSelect').value;
+  var credit  = document.getElementById('creditSelect').value;
+  var btn     = document.getElementById('compareBtn');
+
+  // Reset UI
+  document.getElementById('results').classList.remove('visible');
+  document.getElementById('errorBox').classList.remove('visible');
+  document.getElementById('loading').classList.add('visible');
+  ['step1','step2','step3','step4','step5'].forEach(function(id) {
+    var el = document.getElementById(id);
+    el.classList.remove('active','done');
+  });
+  btn.disabled = true;
+  animateSteps();
+
+  try {
+    var rates = await fetchLiveRates(purpose, credit);
+    fetchedLive = true;
+    document.getElementById('loading').classList.remove('visible');
+    renderResults(rates, purpose, credit, true);
+  } catch(err) {
+    console.warn('AI fetch failed, using fallback rates:', err);
+    fetchedLive = false;
+    document.getElementById('loading').classList.remove('visible');
+    // Build fallback rates object
+    var fallback = {};
+    Object.keys(LENDER_META).forEach(function(k) {
+      fallback[k] = FALLBACK_RATES[k][credit];
+    });
+    renderResults(fallback, purpose, credit, false);
+  }
+
+  btn.disabled = false;
+}
+
+async function fetchLiveRates(purpose, credit) {
+  var purposeLabel = {
+    personal: 'personal loan',
+    car: 'car loan',
+    home: 'home improvement loan',
+    green: 'green energy loan',
+    holiday: 'holiday loan',
+    wedding: 'wedding loan'
+  }[purpose] || 'personal loan';
+
+  var prompt = 'Search for the current APR interest rates for ' + purposeLabel + 's in Ireland for these 4 lenders: Bank of Ireland, AIB (Allied Irish Banks), Permanent TSB (PTSB), and Revolut Ireland. Find their official published rates for a customer with a ' + credit + ' credit profile. Return ONLY a valid JSON object with this exact structure, no other text:\n{\n  "boi": { "apr": <number>, "maxBorrow": <number> },\n  "aib": { "apr": <number>, "maxBorrow": <number> },\n  "ptsb": { "apr": <number>, "maxBorrow": <number> },\n  "revolut": { "apr": <number>, "maxBorrow": <number> }\n}\nUse the representative APR % as a plain number (e.g. 7.1 not "7.1%"). If a lender does not offer this loan type, use their standard personal loan rate. Only return the JSON, nothing else.';
+
+  var response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 1000,
+      tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+      messages: [{ role: 'user', content: prompt }]
+    })
+  });
+
+  if (!response.ok) throw new Error('API error: ' + response.status);
+  var data = await response.json();
+
+  // Extract text from response content blocks
+  var text = '';
+  if (data.content && Array.isArray(data.content)) {
+    data.content.forEach(function(block) {
+      if (block.type === 'text') text += block.text;
+    });
+  }
+
+  // Parse JSON from response
+  var jsonMatch = text.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) throw new Error('No JSON in response');
+  var parsed = JSON.parse(jsonMatch[0]);
+
+  // Validate all 4 lenders present
+  var required = ['boi','aib','ptsb','revolut'];
+  required.forEach(function(k) {
+    if (!parsed[k] || typeof parsed[k].apr !== 'number') throw new Error('Missing lender: ' + k);
+  });
+
+  // Return flat rates map
+  var result = {};
+  required.forEach(function(k) {
+    result[k] = parsed[k].apr;
+    // Update maxBorrow if provided
+    if (parsed[k].maxBorrow) LENDER_META[k]._maxBorrow = parsed[k].maxBorrow;
+  });
+  return result;
+}
+
+function makeLogo(meta) {
   var wrap = document.createElement('div');
   wrap.className = 'bank-logo-wrap';
 
-  var img = new Image();
-  img.width = 40;
-  img.height = 40;
-  img.alt = lender.name;
+  // Show fallback immediately
+  wrap.style.background = meta.fallbackBg;
+  var fb = document.createElement('div');
+  fb.className = 'bank-logo-fallback';
+  fb.style.color = meta.fallbackColor;
+  fb.style.background = meta.fallbackBg;
+  fb.textContent = meta.short;
+  wrap.appendChild(fb);
 
+  var img = new Image();
+  img.width = 40; img.height = 40;
+  img.alt = meta.name;
   img.onload = function() {
+    wrap.style.background = '#fff';
     wrap.innerHTML = '';
     wrap.appendChild(img);
   };
-
-  img.onerror = function() {
-    wrap.style.background = lender.fallbackBg;
-    wrap.innerHTML = '';
-    var fb = document.createElement('div');
-    fb.className = 'bank-logo-fallback';
-    fb.style.color = lender.fallbackColor;
-    fb.style.background = lender.fallbackBg;
-    fb.textContent = lender.short;
-    wrap.appendChild(fb);
-  };
-
-  // Show fallback while loading
-  wrap.style.background = lender.fallbackBg;
-  var fb = document.createElement('div');
-  fb.className = 'bank-logo-fallback';
-  fb.style.color = lender.fallbackColor;
-  fb.style.background = lender.fallbackBg;
-  fb.textContent = lender.short;
-  wrap.appendChild(fb);
-
-  img.src = lender.favicon;
+  img.src = meta.favicon;
   return wrap;
 }
 
-function renderResults(purpose, credit) {
+function renderResults(rates, purpose, credit, isLive) {
   var results = [];
-  Object.keys(LENDERS).forEach(function(k) {
-    var l = LENDERS[k];
-    var amt = Math.min(loanAmount, l.maxBorrow);
-    var term = Math.min(loanTermYears, l.maxTerm);
-    var apr = l.rates[purpose][credit];
+  Object.keys(LENDER_META).forEach(function(k) {
+    var meta = LENDER_META[k];
+    var maxBorrow = meta._maxBorrow || FALLBACK_RATES[k].maxBorrow;
+    var apr = rates[k];
+    var amt = Math.min(loanAmount, maxBorrow);
+    var term = Math.min(loanTermYears, 5);
     var mo = calcMonthly(amt, apr, term);
     var total = mo * term * 12;
-    results.push({ lender:l, amt:amt, term:term, apr:apr, mo:mo, total:total, interest:total-amt, eligible:loanAmount<=l.maxBorrow });
+    results.push({
+      key: k, meta: meta, apr: apr, mo: mo,
+      total: total, interest: total - amt,
+      amt: amt, term: term,
+      eligible: loanAmount <= maxBorrow,
+      maxBorrow: maxBorrow
+    });
   });
   results.sort(function(a,b){ return a.apr - b.apr; });
 
-  // Cards
+  // Fetch status bar
+  var fsEl = document.getElementById('fetchStatus');
+  var ftEl = document.getElementById('fetchTime');
+  fsEl.classList.add('visible');
+  if (isLive) {
+    var now = new Date();
+    ftEl.textContent = 'Fetched ' + now.toLocaleTimeString('en-IE', {hour:'2-digit',minute:'2-digit'});
+    document.getElementById('fetchStatus').querySelector('.fs-text').textContent = 'Rates fetched live by AI \u2014 up to date as of right now';
+  } else {
+    ftEl.textContent = 'Using cached rates';
+    document.getElementById('fetchStatus').querySelector('.fs-text').textContent = '\u26A0\uFE0F Live fetch unavailable \u2014 showing last known rates';
+    fsEl.style.borderColor = 'rgba(245,158,11,0.3)';
+    fsEl.style.background = 'rgba(245,158,11,0.05)';
+    ftEl.style.color = '#fbbf24';
+  }
+
+  // Build cards
   var grid = document.getElementById('cardsGrid');
   grid.innerHTML = '';
 
   results.forEach(function(r, i) {
     var card = document.createElement('div');
     card.className = 'loan-card' + (i===0 ? ' best-pick' : '');
+    card.appendChild(makeLogo(r.meta));
 
-    card.appendChild(makeLogo(r.lender));
-
-    // Info col
     var info = document.createElement('div');
     info.className = 'bank-info';
 
@@ -945,17 +581,17 @@ function renderResults(purpose, credit) {
     info.appendChild(badge);
 
     var h3 = document.createElement('h3');
-    h3.textContent = r.lender.name;
+    h3.textContent = r.meta.name;
     info.appendChild(h3);
 
     var desc = document.createElement('p');
     desc.className = 'bank-desc';
-    desc.textContent = r.lender.perks.join(' \u00B7 ');
+    desc.textContent = r.meta.perks.join(' \u00B7 ');
     info.appendChild(desc);
 
     var tagsDiv = document.createElement('div');
     tagsDiv.className = 'tags';
-    r.lender.tags.forEach(function(tg) {
+    r.meta.tags.forEach(function(tg) {
       var s = document.createElement('span');
       s.className = 'tag ' + tg.c;
       s.textContent = tg.t;
@@ -964,13 +600,12 @@ function renderResults(purpose, credit) {
     if (!r.eligible) {
       var lt = document.createElement('span');
       lt.className = 'tag tag-red';
-      lt.textContent = 'Max \u20AC' + (r.lender.maxBorrow/1000).toFixed(0) + 'k';
+      lt.textContent = 'Max \u20AC' + (r.maxBorrow/1000).toFixed(0) + 'k';
       tagsDiv.appendChild(lt);
     }
     info.appendChild(tagsDiv);
     card.appendChild(info);
 
-    // Numbers col
     var nums = document.createElement('div');
     nums.className = 'loan-numbers';
 
@@ -1000,7 +635,7 @@ function renderResults(purpose, credit) {
 
     var btn = document.createElement('a');
     btn.className = 'apply-btn';
-    btn.href = r.lender.url;
+    btn.href = r.meta.url;
     btn.target = '_blank';
     btn.rel = 'noopener noreferrer';
     btn.textContent = 'Apply \u2192';
@@ -1010,28 +645,21 @@ function renderResults(purpose, credit) {
     grid.appendChild(card);
   });
 
-  // AI text
+  // AI recommendation text
   var best = results[0];
   var worst = results[results.length-1];
   var saving = worst.interest - best.interest;
   var pEl = document.getElementById('purposeSelect');
   var pLabel = pEl.options[pEl.selectedIndex].text;
   var cLabel = credit.charAt(0).toUpperCase() + credit.slice(1);
-
-  var extra = '';
-  if (purpose === 'green') {
-    extra += '<br><br>\uD83D\uDC9A <span class="hl">Green loan tip:</span> Bank of Ireland offers their lowest green rate at 3% APR — roughly half a standard personal loan. Ensure your project meets SEAI grant criteria.';
-  }
-  if (credit === 'fair') {
-    extra += '<br><br>\u26A0\uFE0F <span class="wn">Fair credit note:</span> Revolut\'s rates are highly credit-sensitive, reaching 12.99% APR. The traditional banks offer significantly better rates for this profile.';
-  }
+  var liveNote = isLive ? ' <span class="hl">(live rate)</span>' : ' <span class="wn">(cached rate)</span>';
 
   document.getElementById('aiText').innerHTML =
     'For <span class="hl">' + fe(loanAmount) + '</span> over <span class="hl">' + loanTermYears + ' year' + (loanTermYears > 1 ? 's' : '') + '</span> (' + pLabel + ', ' + cLabel + ' credit):' +
-    '<br><br><strong>\uD83C\uDFC6 ' + best.lender.name + '</strong> offers the best rate at <span class="hl">' + best.apr.toFixed(1) + '% APR</span> — <span class="hl">' + fe(best.mo) + '/month</span> with <span class="hl">' + fe(best.interest) + '</span> total interest.' +
-    '<br><br>Switching from the highest-rate option (' + worst.lender.name + ' at ' + worst.apr.toFixed(1) + '%) saves approximately <span class="hl">' + fe(saving) + '</span> in interest.' +
-    extra +
-    '<br><br>\uD83D\uDCCC Rates are variable and subject to credit approval. Always confirm directly with the lender before applying.';
+    '<br><br><strong>\uD83C\uDFC6 ' + best.meta.name + '</strong> offers the best rate at <span class="hl">' + best.apr.toFixed(1) + '% APR</span>' + liveNote + ' \u2014 <span class="hl">' + fe(best.mo) + '/month</span> with <span class="hl">' + fe(best.interest) + '</span> total interest.' +
+    '<br><br>Choosing ' + best.meta.name + ' over the highest-rate option (' + worst.meta.name + ' at ' + worst.apr.toFixed(1) + '%) saves you approximately <span class="hl">' + fe(saving) + '</span> in interest over the full term.' +
+    (credit === 'fair' ? '<br><br>\u26A0\uFE0F <span class="wn">Fair credit note:</span> With a fair credit profile, rates vary significantly between lenders. The traditional banks are likely to offer better terms than digital-only lenders.' : '') +
+    '<br><br>\uD83D\uDCCC Rates are variable and subject to individual credit approval. Always confirm the exact rate directly with your chosen lender before applying.';
 
   // Table
   var tbody = document.getElementById('tableBody');
@@ -1040,25 +668,16 @@ function renderResults(purpose, credit) {
   results.forEach(function(r) {
     var tr = document.createElement('tr');
     var isBest = r.apr === minAPR;
-
-    function cell(txt, cls) {
-      var td = document.createElement('td');
-      if (cls) td.className = cls;
-      td.textContent = txt;
-      return td;
-    }
-
+    function cell(txt, cls) { var td = document.createElement('td'); if(cls) td.className = cls; td.textContent = txt; return td; }
     var nameTd = document.createElement('td');
-    var s = document.createElement('strong');
-    s.textContent = r.lender.name;
-    nameTd.appendChild(s);
+    var s = document.createElement('strong'); s.textContent = r.meta.name; nameTd.appendChild(s);
     tr.appendChild(nameTd);
     tr.appendChild(cell(r.apr.toFixed(1) + '%' + (isBest ? ' \u2605' : ''), isBest ? 'best' : 'mono'));
     tr.appendChild(cell(fe(r.mo) + '/mo', 'mono'));
     tr.appendChild(cell(fe(r.interest), 'mono'));
     tr.appendChild(cell(fe(r.total), 'mono'));
-    tr.appendChild(cell('\u20AC' + (r.lender.maxBorrow/1000).toFixed(0) + 'k', 'mono'));
-    tr.appendChild(cell(r.lender.rateType));
+    tr.appendChild(cell('\u20AC' + (r.maxBorrow/1000).toFixed(0) + 'k', 'mono'));
+    tr.appendChild(cell(r.meta.rateType));
     tbody.appendChild(tr);
   });
 
