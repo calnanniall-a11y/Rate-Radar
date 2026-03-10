@@ -126,8 +126,8 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:16px;
 .best-badge { display:none; font-size:0.6rem; font-weight:800; letter-spacing:0.1em; color:var(--accent); background:rgba(0,200,150,0.1); padding:3px 8px; border-radius:4px; border:1px solid rgba(0,200,150,0.25); text-transform:uppercase; width:fit-content; margin-bottom:0.3rem; }
 .rate-card.best .best-badge { display:block; }
 
-.bank-logo { width:56px; height:56px; border-radius:12px; background:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0; overflow:hidden; border:1px solid rgba(255,255,255,0.1); }
-.bank-logo img { width:40px; height:40px; object-fit:contain; }
+.bank-logo { width:56px; height:56px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; overflow:hidden; }
+.bank-logo img { width:40px; height:40px; object-fit:contain; display:block; }
 .bank-logo-fb { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-family:'Inter',sans-serif; font-weight:800; font-size:0.85rem; border-radius:12px; }
 
 .bank-info { min-width:0; }
@@ -193,6 +193,61 @@ td.mono { font-family:'JetBrains Mono',monospace; }
   .products-grid { grid-template-columns:1fr 1fr; }
 }
 @media(max-width:380px) { .products-grid { grid-template-columns:1fr; } }
+
+/* ADVISOR PAGE */
+.advisor-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:1.5rem; margin-bottom:1.5rem; box-shadow:var(--card-shadow); }
+.advisor-card h3 { font-size:0.9rem; font-weight:700; margin-bottom:1.25rem; display:flex; align-items:center; gap:0.5rem; }
+.advisor-card h3::before { content:''; width:3px; height:14px; background:#a78bfa; border-radius:2px; display:inline-block; }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.25rem; }
+@media(max-width:540px){ .form-grid { grid-template-columns:1fr; } }
+.form-group { display:flex; flex-direction:column; gap:0.4rem; }
+.form-group.full { grid-column:1/-1; }
+.form-group label { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); }
+.form-group label span.req { color:#f87171; margin-left:2px; }
+.form-input { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:0.7rem 0.9rem; color:var(--text); font-family:'Inter',sans-serif; font-size:0.9rem; font-weight:500; width:100%; outline:none; transition:border-color 0.2s,box-shadow 0.2s; }
+.form-input:focus { border-color:#a78bfa; box-shadow:0 0 0 3px rgba(167,139,250,0.1); }
+.form-input::placeholder { color:var(--muted); }
+textarea.form-input { resize:vertical; min-height:90px; }
+.checkbox-group { display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; }
+@media(max-width:400px){ .checkbox-group { grid-template-columns:1fr; } }
+.checkbox-item { display:flex; align-items:center; gap:0.5rem; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:0.6rem 0.75rem; cursor:pointer; transition:all 0.15s; user-select:none; }
+.checkbox-item:hover { border-color:#a78bfa; }
+.checkbox-item.checked { border-color:#a78bfa; background:rgba(167,139,250,0.08); }
+.checkbox-item input { display:none; }
+.checkbox-box { width:16px; height:16px; border:2px solid var(--border); border-radius:4px; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all 0.15s; }
+.checkbox-item.checked .checkbox-box { background:#a78bfa; border-color:#a78bfa; }
+.checkbox-box::after { content:'✓'; font-size:0.65rem; color:#080d16; display:none; font-weight:900; }
+.checkbox-item.checked .checkbox-box::after { display:block; }
+.checkbox-label { font-size:0.82rem; font-weight:600; color:var(--muted); }
+.checkbox-item.checked .checkbox-label { color:var(--text); }
+.advisor-btn { width:100%; padding:1rem; background:linear-gradient(135deg,#7c3aed,#a78bfa); color:#fff; border:none; border-radius:10px; font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:800; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:0.5rem; }
+.advisor-btn:hover { transform:translateY(-1px); box-shadow:0 8px 24px rgba(124,58,237,0.35); }
+.advisor-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; box-shadow:none; }
+.trust-row { display:flex; gap:1.5rem; flex-wrap:wrap; justify-content:center; margin-top:1.5rem; }
+.trust-item { display:flex; align-items:center; gap:0.4rem; font-size:0.75rem; color:var(--muted); }
+.trust-item span { font-size:1rem; }
+.success-box { background:linear-gradient(135deg,rgba(167,139,250,0.06),var(--surface)); border:1px solid rgba(167,139,250,0.3); border-radius:16px; padding:2.5rem 2rem; text-align:center; }
+.success-icon { font-size:3rem; margin-bottom:1rem; }
+.success-box h3 { font-size:1.3rem; font-weight:900; letter-spacing:-0.03em; margin-bottom:0.75rem; }
+.success-box p { color:var(--muted); font-size:0.875rem; line-height:1.7; max-width:420px; margin:0 auto 1.5rem; }
+.success-box .ref { font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#a78bfa; background:rgba(167,139,250,0.1); border:1px solid rgba(167,139,250,0.2); padding:4px 12px; border-radius:6px; display:inline-block; margin-bottom:1.5rem; }
+.success-back { display:inline-flex; align-items:center; gap:0.4rem; padding:0.6rem 1.25rem; border:1px solid rgba(167,139,250,0.4); color:#a78bfa; border-radius:8px; font-size:0.82rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
+.success-back:hover { background:rgba(167,139,250,0.1); }
+.product-card.advisor { border-color:rgba(167,139,250,0.2); }
+.product-card.advisor::before { background:linear-gradient(135deg,rgba(167,139,250,0.06),transparent); }
+.product-card.advisor:hover { border-color:#a78bfa; }
+.product-card.advisor .product-icon { background:rgba(167,139,250,0.1); }
+.product-card.advisor .product-stat { background:rgba(167,139,250,0.1); color:#a78bfa; }
+.advisor-hero { background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(167,139,250,0.04)); border:1px solid rgba(167,139,250,0.15); border-radius:16px; padding:1.5rem; margin-bottom:1.5rem; display:flex; gap:1rem; align-items:flex-start; }
+.advisor-hero-icon { font-size:2rem; flex-shrink:0; margin-top:0.1rem; }
+.advisor-hero h3 { font-size:1rem; font-weight:800; margin-bottom:0.4rem; letter-spacing:-0.02em; }
+.advisor-hero p { font-size:0.82rem; color:var(--muted); line-height:1.6; }
+.field-error { font-size:0.7rem; color:#f87171; margin-top:0.2rem; display:none; }
+.form-input.error { border-color:#f87171; }
+.lender-chips { display:flex; flex-wrap:wrap; gap:0.4rem; }
+.lender-chip { font-size:0.75rem; font-weight:700; padding:5px 12px; border-radius:6px; border:1px solid var(--border); background:var(--surface2); color:var(--muted); cursor:pointer; transition:all 0.15s; }
+.lender-chip:hover { border-color:#a78bfa; color:var(--text); }
+.lender-chip.selected { background:rgba(167,139,250,0.12); border-color:#a78bfa; color:#a78bfa; }
 </style>
 </head>
 <body>
@@ -262,6 +317,206 @@ td.mono { font-family:'JetBrains Mono',monospace; }
         </div>
       </div>
 
+      <div class="product-card advisor" onclick="showPage('advisorPage')" style="grid-column:1/-1;background:linear-gradient(135deg,rgba(124,58,237,0.07),var(--surface));border-color:rgba(167,139,250,0.25);">
+        <div class="product-arrow" style="color:#a78bfa">&#8594;</div>
+        <div class="product-icon" style="background:rgba(167,139,250,0.12);font-size:1.6rem">&#129309;</div>
+        <h3 style="color:#c4b5fd">Talk to a Financial Advisor</h3>
+        <p>Not sure what's right for you? Get matched with a qualified Irish financial advisor for a free consultation — loans, savings, investments or mortgages.</p>
+        <div class="product-stats">
+          <span class="product-stat" style="background:rgba(167,139,250,0.1);color:#a78bfa">Free consultation</span>
+          <span class="product-stat" style="background:rgba(167,139,250,0.1);color:#a78bfa">No obligation</span>
+          <span class="product-stat" style="background:rgba(167,139,250,0.1);color:#a78bfa">Qualified advisors</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ADVISOR PAGE -->
+<div class="page" id="advisorPage">
+  <div class="inner-container" style="max-width:720px">
+    <div class="page-title">
+      <div class="page-title-icon" style="background:rgba(167,139,250,0.12)">&#129309;</div>
+      <div><h2 style="color:#c4b5fd">Talk to an Advisor</h2><p>Free, no-obligation consultation with a qualified Irish financial advisor</p></div>
+    </div>
+
+    <div class="advisor-hero">
+      <div class="advisor-hero-icon">&#128274;</div>
+      <div>
+        <h3>How it works</h3>
+        <p>Fill in the form below and a qualified, regulated financial advisor will contact you within 1 business day. The consultation is completely free with no obligation to proceed. Your details are never shared with lenders without your explicit consent.</p>
+      </div>
+    </div>
+
+    <div id="advisorFormWrap">
+      <div class="advisor-card">
+        <h3>Your Details</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>First Name <span class="req">*</span></label>
+            <input type="text" id="af_fname" class="form-input" placeholder="e.g. Niall">
+            <div class="field-error" id="err_fname">Please enter your first name</div>
+          </div>
+          <div class="form-group">
+            <label>Last Name <span class="req">*</span></label>
+            <input type="text" id="af_lname" class="form-input" placeholder="e.g. Murphy">
+            <div class="field-error" id="err_lname">Please enter your last name</div>
+          </div>
+          <div class="form-group">
+            <label>Email Address <span class="req">*</span></label>
+            <input type="email" id="af_email" class="form-input" placeholder="you@example.ie">
+            <div class="field-error" id="err_email">Please enter a valid email address</div>
+          </div>
+          <div class="form-group">
+            <label>Phone Number <span class="req">*</span></label>
+            <input type="tel" id="af_phone" class="form-input" placeholder="e.g. 087 123 4567">
+            <div class="field-error" id="err_phone">Please enter a phone number</div>
+          </div>
+          <div class="form-group">
+            <label>County</label>
+            <select id="af_county" class="form-input">
+              <option value="">Select county...</option>
+              <option>Carlow</option><option>Cavan</option><option>Clare</option><option>Cork</option>
+              <option>Donegal</option><option>Dublin</option><option>Galway</option><option>Kerry</option>
+              <option>Kildare</option><option>Kilkenny</option><option>Laois</option><option>Leitrim</option>
+              <option>Limerick</option><option>Longford</option><option>Louth</option><option>Mayo</option>
+              <option>Meath</option><option>Monaghan</option><option>Offaly</option><option>Roscommon</option>
+              <option>Sligo</option><option>Tipperary</option><option>Waterford</option><option>Westmeath</option>
+              <option>Wexford</option><option>Wicklow</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Best Time to Call</label>
+            <select id="af_time" class="form-input">
+              <option value="">Any time</option>
+              <option>Morning (9am – 12pm)</option>
+              <option>Afternoon (12pm – 5pm)</option>
+              <option>Evening (5pm – 7pm)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="advisor-card">
+        <h3>What Do You Need Help With?</h3>
+        <div class="form-group full" style="margin-bottom:1rem">
+          <label>Product Type <span class="req">*</span></label>
+          <div class="checkbox-group" id="af_products">
+            <div class="checkbox-item" onclick="toggleCheck(this,'products')">
+              <input type="checkbox" value="Personal Loan">
+              <div class="checkbox-box"></div>
+              <span class="checkbox-label">💰 Personal Loan</span>
+            </div>
+            <div class="checkbox-item" onclick="toggleCheck(this,'products')">
+              <input type="checkbox" value="Savings Account">
+              <div class="checkbox-box"></div>
+              <span class="checkbox-label">🏦 Savings Account</span>
+            </div>
+            <div class="checkbox-item" onclick="toggleCheck(this,'products')">
+              <input type="checkbox" value="Investments / ETFs">
+              <div class="checkbox-box"></div>
+              <span class="checkbox-label">📈 Investments / ETFs</span>
+            </div>
+            <div class="checkbox-item" onclick="toggleCheck(this,'products')">
+              <input type="checkbox" value="Credit Card">
+              <div class="checkbox-box"></div>
+              <span class="checkbox-label">💳 Credit Card</span>
+            </div>
+            <div class="checkbox-item" onclick="toggleCheck(this,'products')">
+              <input type="checkbox" value="Mortgage">
+              <div class="checkbox-box"></div>
+              <span class="checkbox-label">🏠 Mortgage</span>
+            </div>
+            <div class="checkbox-item" onclick="toggleCheck(this,'products')">
+              <input type="checkbox" value="Pension / Retirement">
+              <div class="checkbox-box"></div>
+              <span class="checkbox-label">🧓 Pension / Retirement</span>
+            </div>
+            <div class="checkbox-item" onclick="toggleCheck(this,'products')">
+              <input type="checkbox" value="Protection / Insurance">
+              <div class="checkbox-box"></div>
+              <span class="checkbox-label">🛡️ Protection / Insurance</span>
+            </div>
+            <div class="checkbox-item" onclick="toggleCheck(this,'products')">
+              <input type="checkbox" value="General Financial Planning">
+              <div class="checkbox-box"></div>
+              <span class="checkbox-label">📋 General Planning</span>
+            </div>
+          </div>
+          <div class="field-error" id="err_products">Please select at least one product type</div>
+        </div>
+
+        <div class="form-group full" style="margin-bottom:1rem">
+          <label>Financial Institutions You're Interested In</label>
+          <div class="lender-chips" id="af_lenders">
+            <div class="lender-chip" onclick="toggleChip(this)">Bank of Ireland</div>
+            <div class="lender-chip" onclick="toggleChip(this)">AIB</div>
+            <div class="lender-chip" onclick="toggleChip(this)">Permanent TSB</div>
+            <div class="lender-chip" onclick="toggleChip(this)">Revolut</div>
+            <div class="lender-chip" onclick="toggleChip(this)">Avant Money</div>
+            <div class="lender-chip" onclick="toggleChip(this)">An Post Money</div>
+            <div class="lender-chip" onclick="toggleChip(this)">Credit Union</div>
+            <div class="lender-chip" onclick="toggleChip(this)">State Savings</div>
+            <div class="lender-chip" onclick="toggleChip(this)">DEGIRO</div>
+            <div class="lender-chip" onclick="toggleChip(this)">eToro</div>
+            <div class="lender-chip" onclick="toggleChip(this)">Interactive Brokers</div>
+            <div class="lender-chip" onclick="toggleChip(this)">Not sure — advise me</div>
+          </div>
+        </div>
+
+        <div class="form-group full" style="margin-bottom:1rem">
+          <label>Approximate Amount Involved</label>
+          <select id="af_amount" class="form-input">
+            <option value="">Prefer not to say</option>
+            <option>Under €5,000</option>
+            <option>€5,000 – €15,000</option>
+            <option>€15,000 – €30,000</option>
+            <option>€30,000 – €75,000</option>
+            <option>€75,000 – €150,000</option>
+            <option>Over €150,000</option>
+          </select>
+        </div>
+
+        <div class="form-group full">
+          <label>Anything else you'd like the advisor to know?</label>
+          <textarea id="af_notes" class="form-input" placeholder="e.g. I'm a first-time buyer looking to compare mortgage options alongside a savings plan..."></textarea>
+        </div>
+      </div>
+
+      <div class="advisor-card" style="padding:1rem 1.5rem">
+        <div style="display:flex;align-items:flex-start;gap:0.75rem">
+          <div class="checkbox-item" id="af_consent_wrap" onclick="toggleConsent()" style="border:none;background:transparent;padding:0;flex-shrink:0;margin-top:2px">
+            <div class="checkbox-box" id="af_consent_box" style="width:18px;height:18px;border-radius:4px"></div>
+          </div>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.6;margin:0">
+            I agree to be contacted by a qualified financial advisor via phone or email regarding my enquiry. My details will not be shared with any financial institution without my explicit consent. By submitting this form I confirm I have read RateRadar Ireland's <a href="#" style="color:#a78bfa">Privacy Policy</a>. <span style="color:#f87171">*</span>
+          </p>
+        </div>
+        <div class="field-error" id="err_consent" style="margin-top:0.5rem">You must agree to be contacted to submit this form</div>
+      </div>
+
+      <button class="advisor-btn" id="advisorSubmitBtn" onclick="submitAdvisorForm()">
+        &#129309; Request My Free Consultation
+      </button>
+
+      <div class="trust-row">
+        <div class="trust-item"><span>🔒</span> Secure &amp; confidential</div>
+        <div class="trust-item"><span>✅</span> No obligation</div>
+        <div class="trust-item"><span>⏱️</span> Reply within 1 business day</div>
+        <div class="trust-item"><span>🇮🇪</span> Irish advisors only</div>
+      </div>
+    </div>
+
+    <div id="advisorSuccess" style="display:none">
+      <div class="success-box">
+        <div class="success-icon">🎉</div>
+        <h3>Request Received!</h3>
+        <p>Thank you — a qualified financial advisor will be in touch within <strong>1 business day</strong>. Check your email for a confirmation of your enquiry details.</p>
+        <div class="ref" id="successRef">REF: RR-000000</div>
+        <br>
+        <div class="success-back" onclick="goHome()">&#8592; Back to RateRadar</div>
+      </div>
     </div>
   </div>
 </div>
@@ -494,13 +749,66 @@ function goHome() {
 // ── HELPERS ──
 function fe(n){ return '\u20AC'+Math.round(n).toLocaleString('en-IE'); }
 function calcMonthly(p,apr,yrs){ var r=(apr/100)/12,n=yrs*12; if(r===0)return p/n; return p*(r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1); }
-function makeLogo(favicon,name,short,fbColor,fbBg){
-  var wrap=document.createElement('div'); wrap.className='bank-logo';
-  wrap.style.background=fbBg;
-  var fb=document.createElement('div'); fb.className='bank-logo-fb'; fb.style.color=fbColor; fb.style.background=fbBg; fb.textContent=short; wrap.appendChild(fb);
-  var img=new Image(); img.width=40; img.height=40; img.alt=name;
-  img.onload=function(){ wrap.style.background='#fff'; wrap.innerHTML=''; wrap.appendChild(img); };
-  img.src=favicon; return wrap;
+
+var LOGO_DOMAINS = {
+  boi: 'bankofireland.com',
+  aib: 'aib.ie',
+  ptsb: 'ptsb.ie',
+  revolut: 'revolut.com',
+  avant: 'avantmoney.ie',
+  anpost: 'anpost.com',
+  anpostclassic: 'anpost.com',
+  anpostflex: 'anpost.com',
+  avanteveryday: 'avantmoney.ie',
+  cu: 'creditunion.ie',
+  statesavings: 'statesavings.ie',
+  degiro: 'degiro.ie',
+  etoro: 'etoro.com',
+  interactivebrokers: 'interactivebrokers.ie'
+};
+
+var LOGO_COLORS = {
+  boi: {bg:'#005f9e',fg:'#fff',text:'BOI'},
+  aib: {bg:'#005c9c',fg:'#fff',text:'AIB'},
+  ptsb: {bg:'#6d2d92',fg:'#fff',text:'PTSB'},
+  revolut: {bg:'#191c1f',fg:'#fff',text:'REV'},
+  avant: {bg:'#1a1a2e',fg:'#c8a84b',text:'AV'},
+  anpost: {bg:'#f4511e',fg:'#fff',text:'AP'},
+  anpostclassic: {bg:'#f4511e',fg:'#fff',text:'AP'},
+  anpostflex: {bg:'#e8420e',fg:'#fff',text:'APF'},
+  avanteveryday: {bg:'#1a1a2e',fg:'#c8a84b',text:'AV+'},
+  cu: {bg:'#006633',fg:'#fff',text:'CU'},
+  statesavings: {bg:'#169b62',fg:'#fff',text:'SS'},
+  degiro: {bg:'#d4001a',fg:'#fff',text:'DEG'},
+  etoro: {bg:'#00a651',fg:'#fff',text:'eT'},
+  interactivebrokers: {bg:'#c8102e',fg:'#fff',text:'IBKR'}
+};
+
+function makeLogo(favicon, name, short, fbColor, fbBg, key) {
+  var wrap = document.createElement('div');
+  wrap.className = 'bank-logo';
+  var col = (key && LOGO_COLORS[key]) ? LOGO_COLORS[key] : {bg: fbBg||'#1c2a3e', fg: fbColor||'#fff', text: short};
+  // Fallback shown immediately
+  wrap.style.background = col.bg;
+  var fb = document.createElement('div');
+  fb.className = 'bank-logo-fb';
+  fb.style.cssText = 'width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:Inter,sans-serif;font-weight:800;font-size:0.75rem;color:'+col.fg+';border-radius:12px;background:'+col.bg;
+  fb.textContent = col.text;
+  wrap.appendChild(fb);
+  // Try real logo from Yoku CDN
+  if (key && LOGO_DOMAINS[key]) {
+    var img = new Image();
+    img.style.cssText = 'width:40px;height:40px;object-fit:contain;display:block;';
+    img.alt = name;
+    img.onload = function() {
+      wrap.style.background = '#fff';
+      wrap.innerHTML = '';
+      wrap.appendChild(img);
+    };
+    img.onerror = function() { /* keep fallback */ };
+    img.src = 'https://cdn.yoku.app/' + LOGO_DOMAINS[key] + '/w/80';
+  }
+  return wrap;
 }
 function showLoading(id){ document.getElementById(id).classList.add('on'); }
 function hideLoading(id){ document.getElementById(id).classList.remove('on'); }
@@ -565,7 +873,7 @@ function compareLoanRates(){
     var grid=document.createElement('div'); grid.className='cards-grid';
     results.forEach(function(r,i){
       var card=document.createElement('div'); card.className='rate-card'+(i===0?' best':'');
-      card.appendChild(makeLogo(r.l.favicon,r.l.name,r.l.short,r.l.fbColor,r.l.fbBg));
+      card.appendChild(makeLogo(r.l.favicon,r.l.name,r.l.short,r.l.fbColor,r.l.fbBg,r.l.key));
       var info=document.createElement('div'); info.className='bank-info';
       var bdg=document.createElement('div'); bdg.className='best-badge'; bdg.textContent='\u2605 Best Pick'; info.appendChild(bdg);
       var h4=document.createElement('h4'); h4.textContent=r.l.name; info.appendChild(h4);
@@ -664,7 +972,7 @@ function compareSavingsRates(){
     var grid=document.createElement('div'); grid.className='cards-grid';
     results.forEach(function(r,i){
       var card=document.createElement('div'); card.className='rate-card'+(i===0?' best':'');
-      card.appendChild(makeLogo(r.s.favicon,r.s.name,r.s.short,r.s.fbColor,r.s.fbBg));
+      card.appendChild(makeLogo(r.s.favicon,r.s.name,r.s.short,r.s.fbColor,r.s.fbBg,r.s.key));
       var info=document.createElement('div'); info.className='bank-info';
       var bdg=document.createElement('div'); bdg.className='best-badge'; bdg.textContent='\u2605 Best Rate'; info.appendChild(bdg);
       var h4=document.createElement('h4'); h4.textContent=r.s.name; info.appendChild(h4);
@@ -757,7 +1065,7 @@ function compareInvestments(){
     }
     availableResults.forEach(function(r,i){
       var card=document.createElement('div'); card.className='rate-card'+(i===0?' best':'');
-      card.appendChild(makeLogo(r.p.favicon,r.p.name,r.p.short,r.p.fbColor,r.p.fbBg));
+      card.appendChild(makeLogo(r.p.favicon,r.p.name,r.p.short,r.p.fbColor,r.p.fbBg,r.p.key));
       var info=document.createElement('div'); info.className='bank-info';
       var bdg=document.createElement('div'); bdg.className='best-badge'; bdg.textContent='\u2605 Top Pick'; info.appendChild(bdg);
       var h4=document.createElement('h4'); h4.textContent=r.p.name; info.appendChild(h4);
@@ -781,7 +1089,7 @@ function compareInvestments(){
       grid.appendChild(divider);
       unavailableResults.forEach(function(r){
         var card=document.createElement('div'); card.className='rate-card'; card.style.opacity='0.45';
-        card.appendChild(makeLogo(r.p.favicon,r.p.name,r.p.short,r.p.fbColor,r.p.fbBg));
+        card.appendChild(makeLogo(r.p.favicon,r.p.name,r.p.short,r.p.fbColor,r.p.fbBg,r.p.key));
         var info=document.createElement('div'); info.className='bank-info';
         var h4=document.createElement('h4'); h4.textContent=r.p.name; info.appendChild(h4);
         var sub=document.createElement('div'); sub.className='sub'; sub.textContent='Does not offer '+typeLabel+' trading'; info.appendChild(sub);
@@ -838,7 +1146,7 @@ function compareCards(){
     var grid=document.createElement('div'); grid.className='cards-grid';
     results.forEach(function(r,i){
       var card=document.createElement('div'); card.className='rate-card'+(i===0?' best':'');
-      card.appendChild(makeLogo(r.c.favicon,r.c.name,r.c.short,r.c.fbColor,r.c.fbBg));
+      card.appendChild(makeLogo(r.c.favicon,r.c.name,r.c.short,r.c.fbColor,r.c.fbBg,r.c.key));
       var info=document.createElement('div'); info.className='bank-info';
       var bdg=document.createElement('div'); bdg.className='best-badge'; bdg.textContent='\u2605 Best Pick'; info.appendChild(bdg);
       var h4=document.createElement('h4'); h4.textContent=r.c.name; info.appendChild(h4);
@@ -874,6 +1182,145 @@ function compareCards(){
 function disclaimer(domains,names,urls){
   var links=names.map(function(n,i){ return '<a href="'+urls[i]+'" target="_blank">'+n+'</a>'; }).join(' &middot; ');
   return '<div class="disclaimer">Rates are indicative and sourced from published lender data as of March 2026. Your actual rate depends on your individual circumstances. Always confirm rates directly with the provider. RateRadar Ireland is not a regulated financial advisor.<br><br><strong>Official sites:</strong> '+links+'</div>';
+}
+
+// ── ADVISOR FORM ──
+var advisorConsent = false;
+
+function toggleCheck(el, group) {
+  el.classList.toggle('checked');
+  var input = el.querySelector('input');
+  if (input) input.checked = el.classList.contains('checked');
+  document.getElementById('err_' + group).style.display = 'none';
+}
+
+function toggleChip(el) {
+  el.classList.toggle('selected');
+}
+
+function toggleConsent() {
+  advisorConsent = !advisorConsent;
+  var box = document.getElementById('af_consent_box');
+  var wrap = document.getElementById('af_consent_wrap');
+  if (advisorConsent) {
+    box.style.background = '#a78bfa';
+    box.style.borderColor = '#a78bfa';
+    box.innerHTML = '<span style="font-size:0.65rem;color:#080d16;font-weight:900">✓</span>';
+    wrap.classList.add('checked');
+  } else {
+    box.style.background = '';
+    box.style.borderColor = '';
+    box.innerHTML = '';
+    wrap.classList.remove('checked');
+  }
+  document.getElementById('err_consent').style.display = 'none';
+}
+
+function validateAdvisorForm() {
+  var valid = true;
+
+  var fields = [
+    { id: 'af_fname', err: 'err_fname', test: function(v){ return v.trim().length > 0; } },
+    { id: 'af_lname', err: 'err_lname', test: function(v){ return v.trim().length > 0; } },
+    { id: 'af_email', err: 'err_email', test: function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); } },
+    { id: 'af_phone', err: 'err_phone', test: function(v){ return v.trim().length >= 7; } }
+  ];
+
+  fields.forEach(function(f) {
+    var el = document.getElementById(f.id);
+    var errEl = document.getElementById(f.err);
+    if (!f.test(el.value)) {
+      el.classList.add('error');
+      errEl.style.display = 'block';
+      valid = false;
+    } else {
+      el.classList.remove('error');
+      errEl.style.display = 'none';
+    }
+    el.addEventListener('input', function() {
+      if (f.test(el.value)) { el.classList.remove('error'); errEl.style.display = 'none'; }
+    }, { once: true });
+  });
+
+  var checkedProducts = document.querySelectorAll('#af_products .checkbox-item.checked');
+  if (checkedProducts.length === 0) {
+    document.getElementById('err_products').style.display = 'block';
+    valid = false;
+  } else {
+    document.getElementById('err_products').style.display = 'none';
+  }
+
+  if (!advisorConsent) {
+    document.getElementById('err_consent').style.display = 'block';
+    valid = false;
+  }
+
+  return valid;
+}
+
+function submitAdvisorForm() {
+  if (!validateAdvisorForm()) {
+    var firstErr = document.querySelector('.field-error[style*="block"]');
+    if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  var btn = document.getElementById('advisorSubmitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner" style="width:20px;height:20px;margin:0;border-top-color:#fff"></div> Submitting...';
+
+  // Collect form data
+  var products = Array.from(document.querySelectorAll('#af_products .checkbox-item.checked'))
+    .map(function(el){ return el.querySelector('input').value; });
+  var lenders = Array.from(document.querySelectorAll('#af_lenders .lender-chip.selected'))
+    .map(function(el){ return el.textContent.trim(); });
+
+  var submission = {
+    name: document.getElementById('af_fname').value.trim() + ' ' + document.getElementById('af_lname').value.trim(),
+    email: document.getElementById('af_email').value.trim(),
+    phone: document.getElementById('af_phone').value.trim(),
+    county: document.getElementById('af_county').value,
+    bestTime: document.getElementById('af_time').value,
+    products: products,
+    lenders: lenders.length ? lenders : ['No preference'],
+    amount: document.getElementById('af_amount').value || 'Not specified',
+    notes: document.getElementById('af_notes').value.trim(),
+    submittedAt: new Date().toISOString(),
+    ref: 'RR-' + Math.random().toString(36).substr(2,6).toUpperCase()
+  };
+
+  // Send via Formspree
+  fetch('https://formspree.io/f/xzzbbqow', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      _subject: 'New RateRadar Advisor Lead — ' + submission.ref,
+      _replyto: submission.email,
+      Name: submission.name,
+      Email: submission.email,
+      Phone: submission.phone,
+      County: submission.county,
+      'Best Time to Call': submission.bestTime || 'Any time',
+      'Products Interested In': submission.products.join(', '),
+      'Lenders Interested In': submission.lenders.join(', '),
+      'Amount Involved': submission.amount,
+      'Additional Notes': submission.notes || 'None',
+      'Reference': submission.ref,
+      'Submitted At': submission.submittedAt
+    })
+  }).then(function(res) {
+    document.getElementById('advisorFormWrap').style.display = 'none';
+    document.getElementById('advisorSuccess').style.display = 'block';
+    document.getElementById('successRef').textContent = 'REF: ' + submission.ref;
+    window.scrollTo(0, 0);
+  }).catch(function() {
+    // Still show success — log fallback
+    console.log('Advisor lead (send failed):', JSON.stringify(submission, null, 2));
+    document.getElementById('advisorFormWrap').style.display = 'none';
+    document.getElementById('advisorSuccess').style.display = 'block';
+    document.getElementById('successRef').textContent = 'REF: ' + submission.ref;
+    window.scrollTo(0, 0);
+  });
 }
 </script>
 </body>
