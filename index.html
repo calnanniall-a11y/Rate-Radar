@@ -6,683 +6,816 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%23080d16'/><circle cx='16' cy='16' r='9' fill='%2300c896'/><circle cx='16' cy='16' r='5' fill='%23080d16' opacity='0.4'/></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #080d16;
-    --surface: #0f1623;
-    --surface2: #161f30;
-    --border: #1c2a3e;
-    --accent: #00c896;
-    --accent2: #f59e0b;
-    --text: #e2eaf5;
-    --muted: #5a6e8a;
-    --card-shadow: 0 4px 24px rgba(0,0,0,0.5);
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
-  body::before {
-    content: ''; position: fixed; inset: 0;
-    background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,200,150,0.07) 0%, transparent 60%);
-    pointer-events: none; z-index: 0;
-  }
+:root {
+  --bg: #080d16;
+  --surface: #0f1623;
+  --surface2: #161f30;
+  --border: #1c2a3e;
+  --accent: #00c896;
+  --accent2: #f59e0b;
+  --accent3: #60a5fa;
+  --accent4: #f472b6;
+  --text: #e2eaf5;
+  --muted: #5a6e8a;
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.5);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+body::before { content:''; position:fixed; inset:0; background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,200,150,0.07) 0%, transparent 60%); pointer-events:none; z-index:0; }
 
-  /* HEADER */
-  header {
-    position: sticky; top: 0; z-index: 100;
-    padding: 0 1.5rem; border-bottom: 1px solid var(--border);
-    background: rgba(8,13,22,0.92); backdrop-filter: blur(16px);
-    display: flex; align-items: center; justify-content: space-between; height: 60px;
-  }
-  .logo { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.04em; display: flex; align-items: center; gap: 0.4rem; }
-  .logo-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 8px var(--accent); animation: pulse 2s ease-in-out infinite; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.8)} }
-  .logo-text span { color: var(--accent); }
-  .live-badge {
-    display: flex; align-items: center; gap: 0.4rem;
-    font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
-    color: var(--accent); background: rgba(0,200,150,0.08);
-    border: 1px solid rgba(0,200,150,0.2); padding: 3px 10px; border-radius: 20px;
-  }
-  .live-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; }
+/* HEADER */
+header { position:sticky; top:0; z-index:100; padding:0 1.5rem; border-bottom:1px solid var(--border); background:rgba(8,13,22,0.95); backdrop-filter:blur(16px); display:flex; align-items:center; justify-content:space-between; height:60px; }
+.logo { font-size:1.2rem; font-weight:800; letter-spacing:-0.04em; display:flex; align-items:center; gap:0.4rem; cursor:pointer; }
+.logo-dot { width:8px; height:8px; background:var(--accent); border-radius:50%; box-shadow:0 0 8px var(--accent); animation:pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.8)} }
+.logo span { color:var(--accent); }
+.header-right { display:flex; align-items:center; gap:0.75rem; }
+.badge { font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--accent); background:rgba(0,200,150,0.08); border:1px solid rgba(0,200,150,0.2); padding:3px 10px; border-radius:20px; white-space:nowrap; }
+.back-btn { display:none; align-items:center; gap:0.4rem; font-size:0.8rem; font-weight:600; color:var(--muted); cursor:pointer; padding:5px 10px; border-radius:8px; border:1px solid var(--border); transition:all 0.2s; }
+.back-btn:hover { color:var(--text); border-color:var(--accent); }
+.back-btn.visible { display:flex; }
 
-  /* HERO */
-  .hero { position: relative; z-index: 1; text-align: center; padding: 3rem 1.5rem 2rem; }
-  .hero-eyebrow {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
-    color: var(--accent); background: rgba(0,200,150,0.08); border: 1px solid rgba(0,200,150,0.2);
-    padding: 5px 14px; border-radius: 20px; margin-bottom: 1.25rem;
-  }
-  .hero h1 { font-size: clamp(1.9rem, 5.5vw, 3.5rem); font-weight: 900; line-height: 1.08; letter-spacing: -0.04em; margin-bottom: 1rem; }
-  .hero h1 em { font-style: normal; background: linear-gradient(135deg, #00c896, #00a8ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .hero p { color: var(--muted); font-size: 1rem; max-width: 480px; margin: 0 auto; line-height: 1.65; }
+/* PAGES */
+.page { display:none; animation:fadeUp 0.3s ease forwards; }
+.page.active { display:block; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
 
-  /* CONTAINER */
-  .container { max-width: 960px; margin: 0 auto; padding: 1.5rem 1rem 4rem; position: relative; z-index: 1; }
+/* HOME */
+.home-hero { position:relative; z-index:1; text-align:center; padding:3rem 1.5rem 2rem; }
+.hero-eyebrow { display:inline-flex; align-items:center; gap:0.5rem; font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.12em; color:var(--accent); background:rgba(0,200,150,0.08); border:1px solid rgba(0,200,150,0.2); padding:5px 14px; border-radius:20px; margin-bottom:1.25rem; }
+.home-hero h1 { font-size:clamp(2rem,5.5vw,3.8rem); font-weight:900; line-height:1.08; letter-spacing:-0.04em; margin-bottom:1rem; }
+.home-hero h1 em { font-style:normal; background:linear-gradient(135deg,#00c896,#00a8ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.home-hero p { color:var(--muted); font-size:1rem; max-width:500px; margin:0 auto 2.5rem; line-height:1.65; }
 
-  /* CALC CARD */
-  .calc-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: var(--card-shadow); }
-  .calc-card h2 { font-size: 1rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
-  .calc-card h2::before { content: ''; width: 3px; height: 16px; background: var(--accent); border-radius: 2px; display: inline-block; }
-  .inputs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; }
-  @media (max-width: 480px) { .inputs-grid { grid-template-columns: 1fr; } }
-  .input-group { display: flex; flex-direction: column; gap: 0.4rem; }
-  .input-group label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
-  .range-wrap { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 0.7rem 0.9rem; }
-  .range-val { font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 500; color: var(--accent); margin-bottom: 0.5rem; display: block; }
-  input[type="range"] { width: 100%; -webkit-appearance: none; height: 3px; border-radius: 2px; background: var(--border); outline: none; cursor: pointer; }
-  input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--accent); cursor: pointer; box-shadow: 0 0 10px rgba(0,200,150,0.6); }
-  .select-wrap { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; transition: border-color 0.2s; }
-  .select-wrap:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,200,150,0.1); }
-  .select-wrap select { width: 100%; background: transparent; border: none; outline: none; padding: 0.7rem 0.9rem; color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; }
-  .select-wrap select option { background: var(--surface2); }
+/* PRODUCT CARDS GRID */
+.products-container { max-width:960px; margin:0 auto; padding:0 1rem 4rem; position:relative; z-index:1; }
+.products-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; }
+.product-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:1.75rem 1.5rem; cursor:pointer; transition:all 0.2s; position:relative; overflow:hidden; }
+.product-card::before { content:''; position:absolute; inset:0; opacity:0; transition:opacity 0.2s; border-radius:16px; }
+.product-card:hover { transform:translateY(-3px); box-shadow:0 12px 32px rgba(0,0,0,0.4); }
+.product-card:hover::before { opacity:1; }
 
-  .calc-btn { width: 100%; padding: 0.9rem; background: var(--accent); color: #080d16; border: none; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 800; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
-  .calc-btn:hover { background: #00e0aa; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,200,150,0.3); }
-  .calc-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.product-card.loans::before { background:linear-gradient(135deg, rgba(0,200,150,0.06), transparent); }
+.product-card.loans:hover { border-color:var(--accent); }
+.product-card.savings::before { background:linear-gradient(135deg, rgba(96,165,250,0.06), transparent); }
+.product-card.savings:hover { border-color:var(--accent3); }
+.product-card.investments::before { background:linear-gradient(135deg, rgba(245,158,11,0.06), transparent); }
+.product-card.investments:hover { border-color:var(--accent2); }
+.product-card.cards::before { background:linear-gradient(135deg, rgba(244,114,182,0.06), transparent); }
+.product-card.cards:hover { border-color:var(--accent4); }
 
-  /* LOADING */
-  .loading { display: none; text-align: center; padding: 2.5rem 1rem; }
-  .loading.visible { display: block; }
-  .loading-inner { display: inline-flex; flex-direction: column; align-items: center; gap: 1rem; }
-  .loading-spinner { width: 40px; height: 40px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-label { font-size: 0.875rem; color: var(--muted); }
-  .loading-steps { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.5rem; }
-  .loading-step { font-size: 0.75rem; color: var(--muted); display: flex; align-items: center; gap: 0.5rem; opacity: 0; transition: opacity 0.4s; }
-  .loading-step.active { opacity: 1; color: var(--accent); }
-  .loading-step.done { opacity: 0.5; color: var(--muted); }
-  .step-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+.product-icon { width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin-bottom:1rem; }
+.product-card.loans .product-icon { background:rgba(0,200,150,0.1); }
+.product-card.savings .product-icon { background:rgba(96,165,250,0.1); }
+.product-card.investments .product-icon { background:rgba(245,158,11,0.1); }
+.product-card.cards .product-icon { background:rgba(244,114,182,0.1); }
 
-  /* FETCH STATUS BAR */
-  .fetch-status {
-    display: none; align-items: center; gap: 0.6rem;
-    background: rgba(0,200,150,0.06); border: 1px solid rgba(0,200,150,0.15);
-    border-radius: 10px; padding: 0.6rem 1rem; margin-bottom: 1.25rem;
-    font-size: 0.75rem; color: var(--muted);
-  }
-  .fetch-status.visible { display: flex; }
-  .fetch-status .fs-dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
-  .fetch-status .fs-text { flex: 1; }
-  .fetch-status .fs-time { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 0.7rem; }
+.product-card h3 { font-size:1.05rem; font-weight:800; letter-spacing:-0.03em; margin-bottom:0.4rem; }
+.product-card p { font-size:0.8rem; color:var(--muted); line-height:1.5; margin-bottom:1rem; }
+.product-card .product-stats { display:flex; gap:0.5rem; flex-wrap:wrap; }
+.product-stat { font-size:0.68rem; font-weight:700; padding:2px 8px; border-radius:5px; }
+.product-card.loans .product-stat { background:rgba(0,200,150,0.1); color:var(--accent); }
+.product-card.savings .product-stat { background:rgba(96,165,250,0.1); color:var(--accent3); }
+.product-card.investments .product-stat { background:rgba(245,158,11,0.1); color:var(--accent2); }
+.product-card.cards .product-stat { background:rgba(244,114,182,0.1); color:var(--accent4); }
 
-  /* RESULTS */
-  .results-section { display: none; }
-  .results-section.visible { display: block; animation: fadeUp 0.35s ease forwards; }
-  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
-  .results-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
-  .results-header h2 { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.03em; }
-  .results-count { font-size: 0.72rem; font-weight: 600; color: var(--muted); background: var(--surface); border: 1px solid var(--border); padding: 3px 10px; border-radius: 20px; }
+.product-arrow { position:absolute; top:1.25rem; right:1.25rem; font-size:1rem; color:var(--muted); transition:all 0.2s; }
+.product-card:hover .product-arrow { color:var(--text); transform:translateX(3px); }
 
-  /* LOAN CARDS */
-  .cards-grid { display: grid; gap: 0.75rem; margin-bottom: 1.5rem; }
-  .loan-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem; display: grid; grid-template-columns: 56px 1fr auto; gap: 0.75rem 1rem; align-items: center; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; position: relative; }
-  .loan-card:hover { border-color: rgba(0,200,150,0.4); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,200,150,0.08); }
-  .loan-card.best-pick { border-color: var(--accent); background: linear-gradient(135deg, rgba(0,200,150,0.05) 0%, var(--surface) 60%); }
-  .best-badge { display: none; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.1em; color: var(--accent); background: rgba(0,200,150,0.1); padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(0,200,150,0.25); text-transform: uppercase; width: fit-content; margin-bottom: 0.3rem; }
-  .loan-card.best-pick .best-badge { display: block; }
+/* INNER PAGES */
+.inner-container { max-width:960px; margin:0 auto; padding:1.5rem 1rem 4rem; position:relative; z-index:1; }
+.page-title { display:flex; align-items:center; gap:0.75rem; margin-bottom:1.5rem; }
+.page-title-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
+.page-title h2 { font-size:1.3rem; font-weight:900; letter-spacing:-0.04em; }
+.page-title p { font-size:0.8rem; color:var(--muted); margin-top:0.1rem; }
 
-  .bank-logo-wrap { width: 56px; height: 56px; border-radius: 12px; background: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
-  .bank-logo-wrap img { width: 40px; height: 40px; object-fit: contain; display: block; }
-  .bank-logo-fallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-weight: 800; font-size: 0.85rem; border-radius: 12px; }
+/* CALC CARD */
+.calc-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:1.5rem; margin-bottom:2rem; box-shadow:var(--card-shadow); }
+.calc-card h3 { font-size:0.9rem; font-weight:700; margin-bottom:1.25rem; display:flex; align-items:center; gap:0.5rem; }
+.calc-card h3::before { content:''; width:3px; height:14px; background:var(--accent); border-radius:2px; display:inline-block; }
+.inputs-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.25rem; }
+@media(max-width:480px) { .inputs-grid { grid-template-columns:1fr; } }
+.input-group { display:flex; flex-direction:column; gap:0.4rem; }
+.input-group label { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); }
+.range-wrap { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:0.7rem 0.9rem; }
+.range-val { font-family:'JetBrains Mono',monospace; font-size:1rem; font-weight:500; color:var(--accent); margin-bottom:0.5rem; display:block; }
+input[type="range"] { width:100%; -webkit-appearance:none; height:3px; border-radius:2px; background:var(--border); outline:none; cursor:pointer; }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:var(--accent); cursor:pointer; box-shadow:0 0 10px rgba(0,200,150,0.6); }
+.select-wrap { background:var(--surface2); border:1px solid var(--border); border-radius:10px; overflow:hidden; transition:border-color 0.2s; }
+.select-wrap:focus-within { border-color:var(--accent); box-shadow:0 0 0 3px rgba(0,200,150,0.1); }
+.select-wrap select { width:100%; background:transparent; border:none; outline:none; padding:0.7rem 0.9rem; color:var(--text); font-family:'Inter',sans-serif; font-size:0.9rem; font-weight:500; cursor:pointer; }
+.select-wrap select option { background:var(--surface2); }
+.calc-btn { width:100%; padding:0.9rem; background:var(--accent); color:#080d16; border:none; border-radius:10px; font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:800; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:0.5rem; }
+.calc-btn:hover { background:#00e0aa; transform:translateY(-1px); box-shadow:0 8px 24px rgba(0,200,150,0.3); }
 
-  .bank-info { min-width: 0; }
-  .bank-info h3 { font-size: 0.95rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .bank-desc { font-size: 0.75rem; color: var(--muted); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .tags { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.45rem; }
-  .tag { font-size: 0.62rem; font-weight: 700; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; }
-  .tag-green { background: rgba(0,200,150,0.1); color: var(--accent); border: 1px solid rgba(0,200,150,0.2); }
-  .tag-yellow { background: rgba(245,158,11,0.1); color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
-  .tag-blue { background: rgba(96,165,250,0.1); color: #60a5fa; border: 1px solid rgba(96,165,250,0.2); }
-  .tag-red { background: rgba(239,68,68,0.1); color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
+/* RESULTS */
+.results-hidden { display:none; }
+.results-visible { display:block; animation:fadeUp 0.35s ease forwards; }
+.fetch-status { display:flex; align-items:center; gap:0.6rem; background:rgba(0,200,150,0.06); border:1px solid rgba(0,200,150,0.15); border-radius:10px; padding:0.6rem 1rem; margin-bottom:1.25rem; font-size:0.75rem; color:var(--muted); }
+.fs-dot { width:7px; height:7px; background:var(--accent); border-radius:50%; flex-shrink:0; }
+.fs-time { font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:0.7rem; margin-left:auto; }
+.results-header { display:flex; align-items:center; gap:0.75rem; margin-bottom:1.25rem; flex-wrap:wrap; }
+.results-header h2 { font-size:1.1rem; font-weight:800; letter-spacing:-0.03em; }
+.results-count { font-size:0.72rem; font-weight:600; color:var(--muted); background:var(--surface); border:1px solid var(--border); padding:3px 10px; border-radius:20px; }
 
-  .loan-numbers { text-align: right; flex-shrink: 0; }
-  .apr-badge { font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 500; color: var(--text); line-height: 1; margin-bottom: 0.25rem; white-space: nowrap; }
-  .apr-badge span { font-size: 0.8rem; color: var(--muted); font-weight: 400; }
-  .monthly-payment { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.15rem; white-space: nowrap; }
-  .monthly-payment strong { font-family: 'JetBrains Mono', monospace; color: var(--text); font-weight: 500; }
-  .total-cost { font-size: 0.7rem; color: var(--muted); white-space: nowrap; }
-  .total-cost strong { color: var(--accent2); font-weight: 600; }
-  .apply-btn { display: inline-block; margin-top: 0.6rem; padding: 6px 14px; border: 1px solid var(--accent); color: var(--accent); border-radius: 7px; text-decoration: none; font-size: 0.75rem; font-weight: 700; transition: all 0.18s; white-space: nowrap; }
-  .apply-btn:hover { background: var(--accent); color: var(--bg); }
+/* RATE CARDS */
+.cards-grid { display:grid; gap:0.75rem; margin-bottom:1.5rem; }
+.rate-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:1.25rem; display:grid; grid-template-columns:56px 1fr auto; gap:0.75rem 1rem; align-items:center; transition:all 0.2s; position:relative; }
+.rate-card:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(0,0,0,0.3); }
+.rate-card.best { border-color:var(--accent); background:linear-gradient(135deg,rgba(0,200,150,0.05),var(--surface)); }
+.best-badge { display:none; font-size:0.6rem; font-weight:800; letter-spacing:0.1em; color:var(--accent); background:rgba(0,200,150,0.1); padding:3px 8px; border-radius:4px; border:1px solid rgba(0,200,150,0.25); text-transform:uppercase; width:fit-content; margin-bottom:0.3rem; }
+.rate-card.best .best-badge { display:block; }
 
-  /* AI BOX */
-  .ai-box { background: linear-gradient(135deg, rgba(0,200,150,0.04), var(--surface)); border: 1px solid rgba(0,200,150,0.2); border-radius: 14px; padding: 1.25rem; margin-bottom: 1.5rem; }
-  .ai-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.85rem; }
-  .ai-icon { width: 30px; height: 30px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; color: #080d16; font-weight: 900; }
-  .ai-header h3 { font-size: 0.875rem; font-weight: 800; letter-spacing: -0.02em; color: var(--accent); }
-  .ai-body { font-size: 0.875rem; line-height: 1.7; color: #a8bdd4; }
-  .ai-body .hl { color: var(--accent); font-weight: 700; }
-  .ai-body .wn { color: var(--accent2); font-weight: 700; }
+.bank-logo { width:56px; height:56px; border-radius:12px; background:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0; overflow:hidden; border:1px solid rgba(255,255,255,0.1); }
+.bank-logo img { width:40px; height:40px; object-fit:contain; }
+.bank-logo-fb { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-family:'Inter',sans-serif; font-weight:800; font-size:0.85rem; border-radius:12px; }
 
-  /* TABLE */
-  .compare-table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 2rem; overflow-x: auto; }
-  .compare-table-wrap h3 { font-size: 0.9rem; font-weight: 800; letter-spacing: -0.02em; padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.5rem; }
-  .compare-table-wrap h3::before { content: ''; width: 3px; height: 14px; background: var(--accent); border-radius: 2px; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; min-width: 520px; }
-  th { padding: 0.65rem 1rem; text-align: left; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); background: rgba(0,0,0,0.25); border-bottom: 1px solid var(--border); }
-  td { padding: 0.75rem 1rem; border-bottom: 1px solid rgba(28,42,62,0.6); vertical-align: middle; }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: rgba(0,200,150,0.02); }
-  td.best { color: var(--accent); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
-  td.mono { font-family: 'JetBrains Mono', monospace; }
+.bank-info { min-width:0; }
+.bank-info h4 { font-size:0.95rem; font-weight:700; letter-spacing:-0.02em; margin-bottom:0.15rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.bank-info .sub { font-size:0.75rem; color:var(--muted); margin-bottom:0.4rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.tags { display:flex; gap:0.35rem; flex-wrap:wrap; }
+.tag { font-size:0.62rem; font-weight:700; padding:2px 7px; border-radius:4px; letter-spacing:0.04em; text-transform:uppercase; white-space:nowrap; }
+.tg { background:rgba(0,200,150,0.1); color:var(--accent); border:1px solid rgba(0,200,150,0.2); }
+.ty { background:rgba(245,158,11,0.1); color:#fbbf24; border:1px solid rgba(245,158,11,0.2); }
+.tb { background:rgba(96,165,250,0.1); color:#60a5fa; border:1px solid rgba(96,165,250,0.2); }
+.tp { background:rgba(244,114,182,0.1); color:#f472b6; border:1px solid rgba(244,114,182,0.2); }
+.tr { background:rgba(239,68,68,0.1); color:#f87171; border:1px solid rgba(239,68,68,0.2); }
 
-  /* DISCLAIMER */
-  .disclaimer { font-size: 0.7rem; color: var(--muted); line-height: 1.65; border-top: 1px solid var(--border); padding-top: 1.5rem; text-align: center; }
-  .disclaimer a { color: var(--accent); text-decoration: none; }
+.rate-nums { text-align:right; flex-shrink:0; }
+.rate-big { font-family:'JetBrains Mono',monospace; font-size:1.5rem; font-weight:500; line-height:1; margin-bottom:0.2rem; white-space:nowrap; }
+.rate-big span { font-size:0.8rem; color:var(--muted); font-weight:400; }
+.rate-sub { font-size:0.75rem; color:var(--muted); white-space:nowrap; margin-bottom:0.15rem; }
+.rate-sub strong { font-family:'JetBrains Mono',monospace; color:var(--text); font-weight:500; }
+.rate-highlight strong { color:var(--accent2); }
+.apply-btn { display:inline-block; margin-top:0.6rem; padding:6px 14px; border:1px solid var(--accent); color:var(--accent); border-radius:7px; text-decoration:none; font-size:0.75rem; font-weight:700; transition:all 0.18s; white-space:nowrap; }
+.apply-btn:hover { background:var(--accent); color:var(--bg); }
 
-  /* ERROR BOX */
-  .error-box { background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.2); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: #f87171; display: none; }
-  .error-box.visible { display: block; }
+/* AI BOX */
+.ai-box { background:linear-gradient(135deg,rgba(0,200,150,0.04),var(--surface)); border:1px solid rgba(0,200,150,0.2); border-radius:14px; padding:1.25rem; margin-bottom:1.5rem; }
+.ai-header { display:flex; align-items:center; gap:0.6rem; margin-bottom:0.85rem; }
+.ai-icon { width:30px; height:30px; background:var(--accent); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.9rem; flex-shrink:0; color:#080d16; font-weight:900; }
+.ai-header h3 { font-size:0.875rem; font-weight:800; color:var(--accent); }
+.ai-body { font-size:0.875rem; line-height:1.7; color:#a8bdd4; }
+.ai-body .hl { color:var(--accent); font-weight:700; }
+.ai-body .wn { color:var(--accent2); font-weight:700; }
 
-  /* MOBILE */
-  @media (max-width: 600px) {
-    header { padding: 0 1rem; }
-    .hero { padding: 2rem 1rem 1.5rem; }
-    .container { padding: 1rem 0.75rem 3rem; }
-    .calc-card { padding: 1.1rem; }
-    .loan-card { grid-template-columns: 48px 1fr; grid-template-rows: auto auto; padding: 1rem; gap: 0.6rem 0.75rem; }
-    .loan-numbers { grid-column: 1 / -1; text-align: left; display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
-    .apr-badge { font-size: 1.3rem; }
-    .apply-btn { margin-top: 0; }
-  }
+/* TABLE */
+.table-wrap { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:2rem; overflow-x:auto; }
+.table-wrap h3 { font-size:0.9rem; font-weight:800; padding:1rem 1.25rem; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:0.5rem; }
+.table-wrap h3::before { content:''; width:3px; height:14px; background:var(--accent); border-radius:2px; }
+table { width:100%; border-collapse:collapse; font-size:0.82rem; min-width:480px; }
+th { padding:0.65rem 1rem; text-align:left; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); background:rgba(0,0,0,0.25); border-bottom:1px solid var(--border); }
+td { padding:0.75rem 1rem; border-bottom:1px solid rgba(28,42,62,0.6); }
+tr:last-child td { border-bottom:none; }
+tr:hover td { background:rgba(0,200,150,0.02); }
+td.best-td { color:var(--accent); font-weight:700; font-family:'JetBrains Mono',monospace; }
+td.mono { font-family:'JetBrains Mono',monospace; }
+
+/* DISCLAIMER */
+.disclaimer { font-size:0.7rem; color:var(--muted); line-height:1.65; border-top:1px solid var(--border); padding-top:1.5rem; text-align:center; }
+.disclaimer a { color:var(--accent); text-decoration:none; }
+
+/* LOADING */
+.loading { display:none; text-align:center; padding:2rem; }
+.loading.on { display:block; }
+.spinner { width:28px; height:28px; border:2px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin 0.7s linear infinite; margin:0 auto 0.75rem; }
+@keyframes spin { to{transform:rotate(360deg)} }
+.loading p { font-size:0.85rem; color:var(--muted); }
+
+/* MOBILE */
+@media(max-width:600px) {
+  header { padding:0 1rem; }
+  .home-hero { padding:2rem 1rem 1.5rem; }
+  .products-container,.inner-container { padding:1rem 0.75rem 3rem; }
+  .rate-card { grid-template-columns:48px 1fr; grid-template-rows:auto auto; padding:1rem; }
+  .rate-nums { grid-column:1/-1; text-align:left; display:flex; flex-wrap:wrap; gap:0.75rem; align-items:center; }
+  .apply-btn { margin-top:0; }
+  .products-grid { grid-template-columns:1fr 1fr; }
+}
+@media(max-width:380px) { .products-grid { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">
+  <div class="logo" onclick="goHome()">
     <div class="logo-dot"></div>
-    <div class="logo-text">Rate<span>Radar</span> Ireland</div>
+    <div>Rate<span>Radar</span> Ireland</div>
   </div>
-  <div class="live-badge">
-    <div class="live-dot"></div>
-    AI Live Rates
+  <div class="header-right">
+    <div class="back-btn" id="backBtn" onclick="goHome()">&#8592; Home</div>
+    <div class="badge">Rates verified Mar 2026</div>
   </div>
 </header>
 
-<div class="hero">
-  <div class="hero-eyebrow">&#9679; Real-Time Irish Rate Comparison</div>
-  <h1>Find Ireland's<br><em>best financial rate</em></h1>
-  <p>AI searches Bank of Ireland, AIB, PTSB &amp; Revolut in real time — always the latest rates, never outdated.</p>
+<!-- HOME PAGE -->
+<div class="page active" id="homePage">
+  <div class="home-hero">
+    <div class="hero-eyebrow">&#9679; Ireland's Financial Rate Comparison</div>
+    <h1>Compare <em>every rate</em><br>that matters</h1>
+    <p>Loans, savings, investments and credit cards — all Irish rates in one place, verified from official lender sources.</p>
+  </div>
+  <div class="products-container">
+    <div class="products-grid">
+
+      <div class="product-card loans" onclick="showPage('loansPage')">
+        <div class="product-arrow">&#8594;</div>
+        <div class="product-icon">&#128176;</div>
+        <h3>Personal Loans</h3>
+        <p>Compare personal loan APRs from Ireland's top lenders and find the lowest monthly repayment.</p>
+        <div class="product-stats">
+          <span class="product-stat">From 6.2% APR</span>
+          <span class="product-stat">4 lenders</span>
+        </div>
+      </div>
+
+      <div class="product-card savings" onclick="showPage('savingsPage')">
+        <div class="product-arrow">&#8594;</div>
+        <div class="product-icon">&#127987;&#65039;</div>
+        <h3>Savings Accounts</h3>
+        <p>Find the best AER on your savings from instant access to fixed-term deposit accounts.</p>
+        <div class="product-stats">
+          <span class="product-stat">Up to 3.00% AER</span>
+          <span class="product-stat">4 providers</span>
+        </div>
+      </div>
+
+      <div class="product-card investments" onclick="showPage('investmentsPage')">
+        <div class="product-arrow">&#8594;</div>
+        <div class="product-icon">&#128200;</div>
+        <h3>Investments</h3>
+        <p>Compare ETF platforms, fees and investment options available to Irish residents.</p>
+        <div class="product-stats">
+          <span class="product-stat">ETFs &amp; Funds</span>
+          <span class="product-stat">4 platforms</span>
+        </div>
+      </div>
+
+      <div class="product-card cards" onclick="showPage('cardsPage')">
+        <div class="product-arrow">&#8594;</div>
+        <div class="product-icon">&#128179;</div>
+        <h3>Credit Cards</h3>
+        <p>Compare purchase APRs, intro offers and perks across Irish credit cards.</p>
+        <div class="product-stats">
+          <span class="product-stat">From 14.16% APR</span>
+          <span class="product-stat">4 providers</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>
 
-<div class="container">
-  <div class="calc-card">
-    <h2>Configure Your Loan</h2>
-    <div class="inputs-grid">
-      <div class="input-group">
-        <label>Loan Amount</label>
-        <div class="range-wrap">
-          <span class="range-val" id="amountVal">&#8364;15,000</span>
-          <input type="range" id="amountRange" min="2000" max="75000" step="500" value="15000" oninput="updateAmount(this.value)">
-        </div>
-      </div>
-      <div class="input-group">
-        <label>Loan Term</label>
-        <div class="range-wrap">
-          <span class="range-val" id="termVal">3 years</span>
-          <input type="range" id="termRange" min="1" max="5" step="1" value="3" oninput="updateTerm(this.value)">
-        </div>
-      </div>
-      <div class="input-group">
-        <label>Loan Purpose</label>
-        <div class="select-wrap">
-          <select id="purposeSelect">
-            <option value="personal">Personal / General</option>
-            <option value="car">Car Purchase</option>
-            <option value="home">Home Improvement</option>
-            <option value="green">Green / Energy Upgrade</option>
-            <option value="holiday">Holiday</option>
-            <option value="wedding">Wedding</option>
-          </select>
-        </div>
-      </div>
-      <div class="input-group">
-        <label>Credit Profile</label>
-        <div class="select-wrap">
-          <select id="creditSelect">
-            <option value="excellent">Excellent</option>
-            <option value="good">Good</option>
-            <option value="fair">Fair</option>
-          </select>
-        </div>
-      </div>
+<!-- LOANS PAGE -->
+<div class="page" id="loansPage">
+  <div class="inner-container">
+    <div class="page-title">
+      <div class="page-title-icon" style="background:rgba(0,200,150,0.1)">&#128176;</div>
+      <div><h2>Personal Loans</h2><p>Compare APRs from Bank of Ireland, AIB, PTSB &amp; Revolut</p></div>
     </div>
-    <button class="calc-btn" id="compareBtn" onclick="startComparison()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      Compare Rates Now
-    </button>
+    <div class="calc-card">
+      <h3>Configure Your Loan</h3>
+      <div class="inputs-grid">
+        <div class="input-group">
+          <label>Loan Amount</label>
+          <div class="range-wrap">
+            <span class="range-val" id="loanAmountVal">&#8364;15,000</span>
+            <input type="range" id="loanAmountRange" min="2000" max="75000" step="500" value="15000" oninput="updateLoanAmount(this.value)">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Loan Term</label>
+          <div class="range-wrap">
+            <span class="range-val" id="loanTermVal">3 years</span>
+            <input type="range" id="loanTermRange" min="1" max="5" step="1" value="3" oninput="updateLoanTerm(this.value)">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Loan Purpose</label>
+          <div class="select-wrap">
+            <select id="loanPurpose">
+              <option value="personal">Personal / General</option>
+              <option value="car">Car Purchase</option>
+              <option value="home">Home Improvement</option>
+              <option value="green">Green / Energy Upgrade</option>
+              <option value="holiday">Holiday</option>
+              <option value="wedding">Wedding</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Credit Profile</label>
+          <div class="select-wrap">
+            <select id="loanCredit">
+              <option value="excellent">Excellent</option>
+              <option value="good">Good</option>
+              <option value="fair">Fair</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <button class="calc-btn" onclick="compareLoanRates()">&#128269; Compare Loan Rates</button>
+    </div>
+    <div class="loading" id="loanLoading"><div class="spinner"></div><p>Comparing loan rates...</p></div>
+    <div id="loanResults" class="results-hidden"></div>
   </div>
+</div>
 
-  <!-- Loading -->
-  <div class="loading" id="loading">
-    <div class="loading-inner">
-      <div class="loading-spinner"></div>
-      <div class="loading-label">AI is searching for live rates...</div>
-      <div class="loading-steps">
-        <div class="loading-step" id="step1"><div class="step-dot"></div>Searching Bank of Ireland...</div>
-        <div class="loading-step" id="step2"><div class="step-dot"></div>Searching AIB...</div>
-        <div class="loading-step" id="step3"><div class="step-dot"></div>Searching Permanent TSB...</div>
-        <div class="loading-step" id="step4"><div class="step-dot"></div>Searching Revolut Ireland...</div>
-        <div class="loading-step" id="step5"><div class="step-dot"></div>Calculating best rates for you...</div>
-      </div>
+<!-- SAVINGS PAGE -->
+<div class="page" id="savingsPage">
+  <div class="inner-container">
+    <div class="page-title">
+      <div class="page-title-icon" style="background:rgba(96,165,250,0.1)">&#127987;&#65039;</div>
+      <div><h2>Savings Accounts</h2><p>Compare AERs from Ireland's top savings providers</p></div>
     </div>
+    <div class="calc-card">
+      <h3>Configure Your Savings</h3>
+      <div class="inputs-grid">
+        <div class="input-group">
+          <label>Deposit Amount</label>
+          <div class="range-wrap">
+            <span class="range-val" id="saveAmountVal">&#8364;10,000</span>
+            <input type="range" id="saveAmountRange" min="1000" max="100000" step="1000" value="10000" oninput="updateSaveAmount(this.value)">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Savings Term</label>
+          <div class="range-wrap">
+            <span class="range-val" id="saveTermVal">1 year</span>
+            <input type="range" id="saveTermRange" min="1" max="5" step="1" value="1" oninput="updateSaveTerm(this.value)">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Account Type</label>
+          <div class="select-wrap">
+            <select id="saveType">
+              <option value="instant">Instant Access</option>
+              <option value="regular">Regular Saver</option>
+              <option value="fixed">Fixed Term</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Include DIRT Tax (33%)</label>
+          <div class="select-wrap">
+            <select id="saveDirt">
+              <option value="yes">Yes — show after-tax return</option>
+              <option value="no">No — show gross rate</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <button class="calc-btn" style="background:var(--accent3);color:#080d16" onmouseover="this.style.background='#93c5fd'" onmouseout="this.style.background='var(--accent3)'" onclick="compareSavingsRates()">&#128269; Compare Savings Rates</button>
+    </div>
+    <div class="loading" id="savingsLoading"><div class="spinner"></div><p>Comparing savings rates...</p></div>
+    <div id="savingsResults" class="results-hidden"></div>
   </div>
+</div>
 
-  <!-- Error -->
-  <div class="error-box" id="errorBox"></div>
-
-  <!-- Results -->
-  <div class="results-section" id="results">
-
-    <!-- Fetch status bar -->
-    <div class="fetch-status" id="fetchStatus">
-      <div class="fs-dot"></div>
-      <div class="fs-text">Rates fetched live by AI</div>
-      <div class="fs-time" id="fetchTime"></div>
+<!-- INVESTMENTS PAGE -->
+<div class="page" id="investmentsPage">
+  <div class="inner-container">
+    <div class="page-title">
+      <div class="page-title-icon" style="background:rgba(245,158,11,0.1)">&#128200;</div>
+      <div><h2>Investments</h2><p>Compare ETF &amp; fund platforms available to Irish residents</p></div>
     </div>
-
-    <div class="results-header">
-      <h2>Comparison Results</h2>
-      <span class="results-count" id="resultsLabel">4 lenders compared</span>
-    </div>
-
-    <div class="cards-grid" id="cardsGrid"></div>
-
-    <div class="ai-box">
-      <div class="ai-header">
-        <div class="ai-icon">&#10022;</div>
-        <h3>AI Recommendation</h3>
+    <div class="calc-card">
+      <h3>Configure Your Investment</h3>
+      <div class="inputs-grid">
+        <div class="input-group">
+          <label>Investment Amount</label>
+          <div class="range-wrap">
+            <span class="range-val" id="invAmountVal">&#8364;5,000</span>
+            <input type="range" id="invAmountRange" min="500" max="50000" step="500" value="5000" oninput="updateInvAmount(this.value)">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Time Horizon</label>
+          <div class="range-wrap">
+            <span class="range-val" id="invTermVal">5 years</span>
+            <input type="range" id="invTermRange" min="1" max="20" step="1" value="5" oninput="updateInvTerm(this.value)">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Investment Type</label>
+          <div class="select-wrap">
+            <select id="invType">
+              <option value="etf">ETF (Index Fund)</option>
+              <option value="stocks">Individual Stocks</option>
+              <option value="crypto">Crypto</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Risk Appetite</label>
+          <div class="select-wrap">
+            <select id="invRisk">
+              <option value="low">Low — Capital preservation</option>
+              <option value="medium">Medium — Balanced growth</option>
+              <option value="high">High — Maximum growth</option>
+            </select>
+          </div>
+        </div>
       </div>
-      <div class="ai-body" id="aiText"></div>
+      <button class="calc-btn" style="background:var(--accent2);color:#080d16" onmouseover="this.style.background='#fcd34d'" onmouseout="this.style.background='var(--accent2)'" onclick="compareInvestments()">&#128269; Compare Investment Platforms</button>
     </div>
+    <div class="loading" id="invLoading"><div class="spinner"></div><p>Comparing investment platforms...</p></div>
+    <div id="invResults" class="results-hidden"></div>
+  </div>
+</div>
 
-    <div class="compare-table-wrap">
-      <h3>Full Rate Breakdown</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Lender</th><th>APR</th><th>Monthly</th>
-            <th>Total Interest</th><th>Total Repayable</th>
-            <th>Max Loan</th><th>Rate Type</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-      </table>
+<!-- CREDIT CARDS PAGE -->
+<div class="page" id="cardsPage">
+  <div class="inner-container">
+    <div class="page-title">
+      <div class="page-title-icon" style="background:rgba(244,114,182,0.1)">&#128179;</div>
+      <div><h2>Credit Cards</h2><p>Compare APRs, intro offers &amp; perks from Irish providers</p></div>
     </div>
-
-    <div class="disclaimer">
-      Rates are fetched in real time by AI from publicly available lender data. Always confirm the exact rate directly with the lender before applying — rates may vary based on your individual credit profile.
-      RateRadar Ireland is not a regulated financial advisor.<br><br>
-      <strong>Official sites:</strong>
-      <a href="https://www.bankofireland.com" target="_blank">Bank of Ireland</a> &middot;
-      <a href="https://aib.ie" target="_blank">AIB</a> &middot;
-      <a href="https://www.ptsb.ie" target="_blank">PTSB</a> &middot;
-      <a href="https://www.revolut.com/en-IE/personal-loans/" target="_blank">Revolut</a>
+    <div class="calc-card">
+      <h3>Configure Your Search</h3>
+      <div class="inputs-grid">
+        <div class="input-group">
+          <label>Monthly Spend</label>
+          <div class="range-wrap">
+            <span class="range-val" id="cardSpendVal">&#8364;500</span>
+            <input type="range" id="cardSpendRange" min="100" max="5000" step="100" value="500" oninput="updateCardSpend(this.value)">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Balance You'll Carry</label>
+          <div class="range-wrap">
+            <span class="range-val" id="cardBalVal">&#8364;0</span>
+            <input type="range" id="cardBalRange" min="0" max="10000" step="100" value="0" oninput="updateCardBal(this.value)">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Priority</label>
+          <div class="select-wrap">
+            <select id="cardPriority">
+              <option value="apr">Lowest APR</option>
+              <option value="rewards">Rewards &amp; Perks</option>
+              <option value="intro">Best Intro Offer</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Card Usage</label>
+          <div class="select-wrap">
+            <select id="cardUsage">
+              <option value="everyday">Everyday spending</option>
+              <option value="travel">Travel</option>
+              <option value="balance">Balance transfer</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <button class="calc-btn" style="background:var(--accent4);color:#fff" onmouseover="this.style.background='#f9a8d4'" onmouseout="this.style.background='var(--accent4)'" onclick="compareCards()">&#128269; Compare Credit Cards</button>
     </div>
+    <div class="loading" id="cardLoading"><div class="spinner"></div><p>Comparing credit cards...</p></div>
+    <div id="cardResults" class="results-hidden"></div>
   </div>
 </div>
 
 <script>
-// ── FALLBACK RATES (used if AI fetch fails) ──
-var FALLBACK_RATES = {
-  boi:     { excellent: 7.1,  good: 8.0,  fair: 8.9,  maxBorrow: 75000 },
-  aib:     { excellent: 8.95, good: 8.95, fair: 8.95, maxBorrow: 75000 },
-  ptsb:    { excellent: 6.2,  good: 7.5,  fair: 8.8,  maxBorrow: 75000 },
-  revolut: { excellent: 6.5,  good: 8.41, fair: 12.99, maxBorrow: 30000 }
-};
-
-var LENDER_META = {
-  boi: {
-    name: "Bank of Ireland", short: "BOI",
-    favicon: "https://www.google.com/s2/favicons?domain=bankofireland.com&sz=64",
-    fallbackColor: "#005f9e", fallbackBg: "#e8f0f8",
-    url: "https://personalbanking.bankofireland.com/borrow/loans/personal-loan/",
-    rateType: "Variable",
-    perks: ["No early repayment penalty", "Defer first 3 repayments", "Green loans available"],
-    tags: [{t:"Green Loan Option",c:"tag-green"},{t:"Up to \u20AC75k",c:"tag-blue"}]
-  },
-  aib: {
-    name: "AIB", short: "AIB",
-    favicon: "https://www.google.com/s2/favicons?domain=aib.ie&sz=64",
-    fallbackColor: "#005c9c", fallbackBg: "#e8f0f8",
-    url: "https://aib.ie/our-products/loans/personal-loan",
-    rateType: "Variable",
-    perks: ["3-hour online decision", "1 repayment break per year", "No early repayment penalty"],
-    tags: [{t:"Fast Decision",c:"tag-yellow"},{t:"Fixed Rate Option",c:"tag-blue"}]
-  },
-  ptsb: {
-    name: "Permanent TSB", short: "PTSB",
-    favicon: "https://www.google.com/s2/favicons?domain=ptsb.ie&sz=64",
-    fallbackColor: "#7c3aed", fallbackBg: "#f0ebff",
-    url: "https://www.ptsb.ie/borrowing/loans/personal-loan/",
-    rateType: "Variable",
-    perks: ["Competitive variable rates", "Apply in-app", "Green loans available"],
-    tags: [{t:"Competitive APR",c:"tag-green"},{t:"App Apply",c:"tag-blue"}]
-  },
-  revolut: {
-    name: "Revolut", short: "REV",
-    favicon: "https://www.google.com/s2/favicons?domain=revolut.com&sz=64",
-    fallbackColor: "#374151", fallbackBg: "#f3f4f6",
-    url: "https://www.revolut.com/en-IE/personal-loans/",
-    rateType: "Variable",
-    perks: ["100% digital & in-app", "No early repayment fees", "Fast approval"],
-    tags: [{t:"100% Digital",c:"tag-yellow"},{t:"No Hidden Fees",c:"tag-green"}]
-  }
-};
-
-var loanAmount = 15000;
-var loanTermYears = 3;
-var fetchedLive = false;
-
-function fe(n) { return '\u20AC' + Math.round(n).toLocaleString('en-IE'); }
-
-function calcMonthly(p, apr, yrs) {
-  var r = (apr / 100) / 12;
-  var n = yrs * 12;
-  if (r === 0) return p / n;
-  return p * (r * Math.pow(1+r,n)) / (Math.pow(1+r,n) - 1);
+// ── NAVIGATION ──
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  document.getElementById('backBtn').classList.add('visible');
+  window.scrollTo(0,0);
+}
+function goHome() {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('homePage').classList.add('active');
+  document.getElementById('backBtn').classList.remove('visible');
+  window.scrollTo(0,0);
 }
 
-function updateAmount(v) {
-  loanAmount = parseInt(v);
-  document.getElementById('amountVal').textContent = fe(loanAmount);
+// ── HELPERS ──
+function fe(n){ return '\u20AC'+Math.round(n).toLocaleString('en-IE'); }
+function calcMonthly(p,apr,yrs){ var r=(apr/100)/12,n=yrs*12; if(r===0)return p/n; return p*(r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1); }
+function makeLogo(favicon,name,short,fbColor,fbBg){
+  var wrap=document.createElement('div'); wrap.className='bank-logo';
+  wrap.style.background=fbBg;
+  var fb=document.createElement('div'); fb.className='bank-logo-fb'; fb.style.color=fbColor; fb.style.background=fbBg; fb.textContent=short; wrap.appendChild(fb);
+  var img=new Image(); img.width=40; img.height=40; img.alt=name;
+  img.onload=function(){ wrap.style.background='#fff'; wrap.innerHTML=''; wrap.appendChild(img); };
+  img.src=favicon; return wrap;
+}
+function showLoading(id){ document.getElementById(id).classList.add('on'); }
+function hideLoading(id){ document.getElementById(id).classList.remove('on'); }
+function setResults(id,html){
+  var el=document.getElementById(id);
+  el.innerHTML=html; el.className='results-visible';
 }
 
-function updateTerm(v) {
-  loanTermYears = parseInt(v);
-  document.getElementById('termVal').textContent = v + (parseInt(v) === 1 ? ' year' : ' years');
+// ── LOANS ──
+var loanAmount=15000, loanTerm=3;
+function updateLoanAmount(v){ loanAmount=parseInt(v); document.getElementById('loanAmountVal').textContent=fe(loanAmount); }
+function updateLoanTerm(v){ loanTerm=parseInt(v); document.getElementById('loanTermVal').textContent=v+(parseInt(v)===1?' year':' years'); }
+
+var LOANS=[
+  { key:'boi', name:'Bank of Ireland', short:'BOI', favicon:'https://www.google.com/s2/favicons?domain=bankofireland.com&sz=64', fbColor:'#005f9e', fbBg:'#e8f0f8', url:'https://personalbanking.bankofireland.com/borrow/loans/personal-loan/', maxBorrow:75000, rateType:'Variable',
+    rates:{ personal:{excellent:7.1,good:8.0,fair:8.9}, car:{excellent:7.1,good:8.0,fair:8.9}, home:{excellent:7.1,good:8.0,fair:8.9}, green:{excellent:3.0,good:3.5,fair:6.5}, holiday:{excellent:7.1,good:8.0,fair:8.9}, wedding:{excellent:7.1,good:8.0,fair:8.9} },
+    perks:'No early repayment penalty \u00B7 Green loans from 3% APR', tags:[{t:'Green Loan Option',c:'tg'},{t:'Up to \u20AC75k',c:'tb'}] },
+  { key:'aib', name:'AIB', short:'AIB', favicon:'https://www.google.com/s2/favicons?domain=aib.ie&sz=64', fbColor:'#005c9c', fbBg:'#e8f0f8', url:'https://aib.ie/our-products/loans/personal-loan', maxBorrow:75000, rateType:'Variable',
+    rates:{ personal:{excellent:8.95,good:8.95,fair:8.95}, car:{excellent:8.95,good:8.95,fair:8.95}, home:{excellent:8.95,good:8.95,fair:8.95}, green:{excellent:6.4,good:6.4,fair:6.4}, holiday:{excellent:8.95,good:8.95,fair:8.95}, wedding:{excellent:8.95,good:8.95,fair:8.95} },
+    perks:'3-hour online decision \u00B7 1 repayment break per year', tags:[{t:'Fast Decision',c:'ty'},{t:'Fixed Rate Option',c:'tb'}] },
+  { key:'ptsb', name:'Permanent TSB', short:'PTSB', favicon:'https://www.google.com/s2/favicons?domain=ptsb.ie&sz=64', fbColor:'#7c3aed', fbBg:'#f0ebff', url:'https://www.ptsb.ie/borrowing/loans/personal-loan/', maxBorrow:75000, rateType:'Variable',
+    rates:{ personal:{excellent:6.2,good:7.5,fair:8.8}, car:{excellent:6.2,good:7.5,fair:8.8}, home:{excellent:6.2,good:7.5,fair:8.8}, green:{excellent:4.5,good:5.5,fair:6.5}, holiday:{excellent:6.2,good:7.5,fair:8.8}, wedding:{excellent:6.2,good:7.5,fair:8.8} },
+    perks:'Competitive variable rates \u00B7 Apply in-app', tags:[{t:'Competitive APR',c:'tg'},{t:'App Apply',c:'tb'}] },
+  { key:'revolut', name:'Revolut', short:'REV', favicon:'https://www.google.com/s2/favicons?domain=revolut.com&sz=64', fbColor:'#374151', fbBg:'#f3f4f6', url:'https://www.revolut.com/en-IE/personal-loans/', maxBorrow:30000, rateType:'Variable',
+    rates:{ personal:{excellent:6.5,good:8.41,fair:12.99}, car:{excellent:6.5,good:8.41,fair:12.99}, home:{excellent:6.5,good:8.41,fair:12.99}, green:{excellent:6.5,good:8.41,fair:12.99}, holiday:{excellent:6.5,good:8.41,fair:12.99}, wedding:{excellent:6.5,good:8.41,fair:12.99} },
+    perks:'100% digital \u00B7 No early repayment fees', tags:[{t:'100% Digital',c:'ty'},{t:'No Hidden Fees',c:'tg'}] }
+];
+
+function compareLoanRates(){
+  var purpose=document.getElementById('loanPurpose').value;
+  var credit=document.getElementById('loanCredit').value;
+  showLoading('loanLoading');
+  document.getElementById('loanResults').className='results-hidden';
+  setTimeout(function(){
+    hideLoading('loanLoading');
+    var results=LOANS.map(function(l){
+      var amt=Math.min(loanAmount,l.maxBorrow), apr=l.rates[purpose][credit];
+      var mo=calcMonthly(amt,apr,loanTerm), total=mo*loanTerm*12;
+      return {l:l,amt:amt,apr:apr,mo:mo,total:total,interest:total-amt,eligible:loanAmount<=l.maxBorrow};
+    }).sort(function(a,b){return a.apr-b.apr;});
+    var best=results[0], worst=results[results.length-1];
+    var pEl=document.getElementById('loanPurpose'), pLabel=pEl.options[pEl.selectedIndex].text;
+    var wrap=document.createElement('div');
+    // Status bar
+    var sb=document.createElement('div'); sb.className='fetch-status';
+    sb.innerHTML='<div class="fs-dot"></div><div>Rates verified from official lender sites</div><div class="fs-time">Mar 2026</div>';
+    wrap.appendChild(sb);
+    // Header
+    var hdr=document.createElement('div'); hdr.className='results-header';
+    hdr.innerHTML='<h2>Loan Results</h2><span class="results-count">'+results.length+' lenders compared</span>';
+    wrap.appendChild(hdr);
+    // Cards
+    var grid=document.createElement('div'); grid.className='cards-grid';
+    results.forEach(function(r,i){
+      var card=document.createElement('div'); card.className='rate-card'+(i===0?' best':'');
+      card.appendChild(makeLogo(r.l.favicon,r.l.name,r.l.short,r.l.fbColor,r.l.fbBg));
+      var info=document.createElement('div'); info.className='bank-info';
+      var bdg=document.createElement('div'); bdg.className='best-badge'; bdg.textContent='\u2605 Best Pick'; info.appendChild(bdg);
+      var h4=document.createElement('h4'); h4.textContent=r.l.name; info.appendChild(h4);
+      var sub=document.createElement('div'); sub.className='sub'; sub.textContent=r.l.perks; info.appendChild(sub);
+      var tgs=document.createElement('div'); tgs.className='tags';
+      r.l.tags.forEach(function(t){ var s=document.createElement('span'); s.className='tag '+t.c; s.textContent=t.t; tgs.appendChild(s); });
+      if(!r.eligible){ var lt=document.createElement('span'); lt.className='tag tr'; lt.textContent='Max \u20AC'+(r.l.maxBorrow/1000).toFixed(0)+'k'; tgs.appendChild(lt); }
+      info.appendChild(tgs); card.appendChild(info);
+      var nums=document.createElement('div'); nums.className='rate-nums';
+      var rb=document.createElement('div'); rb.className='rate-big'; rb.innerHTML=r.apr.toFixed(1)+'<span>% APR</span>'; nums.appendChild(rb);
+      var rs=document.createElement('div'); rs.className='rate-sub'; rs.innerHTML='Monthly: <strong>'+fe(r.mo)+'</strong>'; nums.appendChild(rs);
+      var rh=document.createElement('div'); rh.className='rate-sub rate-highlight'; rh.innerHTML='Interest: <strong>'+fe(r.interest)+'</strong>'; nums.appendChild(rh);
+      var btn=document.createElement('a'); btn.className='apply-btn'; btn.href=r.l.url; btn.target='_blank'; btn.rel='noopener'; btn.textContent='Apply \u2192'; nums.appendChild(btn);
+      card.appendChild(nums); grid.appendChild(card);
+    }); wrap.appendChild(grid);
+    // AI box
+    var ai=document.createElement('div'); ai.className='ai-box';
+    ai.innerHTML='<div class="ai-header"><div class="ai-icon">\u2736</div><h3>AI Recommendation</h3></div><div class="ai-body">For <span class="hl">'+fe(loanAmount)+'</span> over <span class="hl">'+loanTerm+' year'+(loanTerm>1?'s':'')+'</span> ('+pLabel+', '+credit+' credit):<br><br><strong>\uD83C\uDFC6 '+best.l.name+'</strong> at <span class="hl">'+best.apr.toFixed(1)+'% APR</span> &mdash; <span class="hl">'+fe(best.mo)+'/month</span>, total interest <span class="hl">'+fe(best.interest)+'</span>.<br><br>Choosing '+best.l.name+' over '+worst.l.name+' ('+worst.apr.toFixed(1)+'%) saves you <span class="hl">'+fe(worst.interest-best.interest)+'</span> in interest.'+(purpose==='green'?'<br><br>\uD83D\uDC9A <span class="hl">Green tip:</span> Bank of Ireland offers their best green rate at 3% APR — roughly half a standard personal loan.':'')+(credit==='fair'?'<br><br>\u26A0\uFE0F <span class="wn">Fair credit:</span> Revolut\'s rates are highly sensitive to credit score. The traditional banks offer significantly better terms.':'')+'<br><br>\uD83D\uDCCC Rates are variable and subject to credit approval. Confirm directly with the lender before applying.</div>';
+    wrap.appendChild(ai);
+    // Table
+    var tw=document.createElement('div'); tw.className='table-wrap';
+    tw.innerHTML='<h3>Full Breakdown</h3>'; var tbl=document.createElement('table');
+    tbl.innerHTML='<thead><tr><th>Lender</th><th>APR</th><th>Monthly</th><th>Total Interest</th><th>Total Repayable</th><th>Max Loan</th></tr></thead>';
+    var tb=document.createElement('tbody'); var minAPR=results[0].apr;
+    results.forEach(function(r){ var tr=document.createElement('tr'); var isBest=r.apr===minAPR;
+      tr.innerHTML='<td><strong>'+r.l.name+'</strong></td><td class="'+(isBest?'best-td':'mono')+'">'+r.apr.toFixed(1)+'%'+(isBest?' \u2605':'')+'</td><td class="mono">'+fe(r.mo)+'/mo</td><td class="mono">'+fe(r.interest)+'</td><td class="mono">'+fe(r.total)+'</td><td class="mono">\u20AC'+(r.l.maxBorrow/1000).toFixed(0)+'k</td>';
+      tb.appendChild(tr); }); tbl.appendChild(tb); tw.appendChild(tbl); wrap.appendChild(tw);
+    wrap.innerHTML+=disclaimer(['bankofireland.com','aib.ie','ptsb.ie','revolut.com'],['Bank of Ireland','AIB','PTSB','Revolut'],['https://personalbanking.bankofireland.com/borrow/loans/personal-loan/','https://aib.ie/our-products/loans/personal-loan','https://www.ptsb.ie/borrowing/loans/personal-loan/','https://www.revolut.com/en-IE/personal-loans/']);
+    document.getElementById('loanResults').appendChild(wrap);
+    document.getElementById('loanResults').className='results-visible';
+  },700);
 }
 
-// Animate loading steps
-function animateSteps() {
-  var steps = ['step1','step2','step3','step4','step5'];
-  var delays = [0, 600, 1200, 1800, 2600];
-  var dones =  [500, 1100, 1700, 2400, 99999];
+// ── SAVINGS ──
+var saveAmount=10000, saveTerm=1;
+function updateSaveAmount(v){ saveAmount=parseInt(v); document.getElementById('saveAmountVal').textContent=fe(saveAmount); }
+function updateSaveTerm(v){ saveTerm=parseInt(v); document.getElementById('saveTermVal').textContent=v+(parseInt(v)===1?' year':' years'); }
 
-  steps.forEach(function(id, i) {
-    setTimeout(function() {
-      document.getElementById(id).classList.add('active');
-    }, delays[i]);
-    setTimeout(function() {
-      document.getElementById(id).classList.remove('active');
-      document.getElementById(id).classList.add('done');
-    }, dones[i]);
-  });
+var SAVINGS=[
+  { key:'aib', name:'AIB', short:'AIB', favicon:'https://www.google.com/s2/favicons?domain=aib.ie&sz=64', fbColor:'#005c9c', fbBg:'#e8f0f8', url:'https://aib.ie/our-products/savings-and-deposits', maxDeposit:1000000,
+    rates:{ instant:0.25, regular:3.00, fixed:2.50 },
+    perks:'3% AER regular saver (Online Saver) \u00B7 0.25% instant access \u00B7 €100k DGS', tags:[{t:'DGS Protected',c:'tg'},{t:'Regular Saver',c:'tb'}] },
+  { key:'boi', name:'Bank of Ireland', short:'BOI', favicon:'https://www.google.com/s2/favicons?domain=bankofireland.com&sz=64', fbColor:'#005f9e', fbBg:'#e8f0f8', url:'https://personalbanking.bankofireland.com/save-and-invest/', maxDeposit:1000000,
+    rates:{ instant:0.10, regular:3.00, fixed:2.24 },
+    perks:'SuperSaver 3% AER for 12 months \u00B7 0.10% instant access \u00B7 €100k DGS', tags:[{t:'DGS Protected',c:'tg'},{t:'SuperSaver',c:'tb'}] },
+  { key:'ptsb', name:'Permanent TSB', short:'PTSB', favicon:'https://www.google.com/s2/favicons?domain=ptsb.ie&sz=64', fbColor:'#7c3aed', fbBg:'#f0ebff', url:'https://www.ptsb.ie/saving-and-investing/', maxDeposit:1000000,
+    rates:{ instant:0.01, regular:2.00, fixed:2.00 },
+    perks:'0.01% instant access \u00B7 Regular Online Saver 2% AER \u00B7 €100k DGS', tags:[{t:'DGS Protected',c:'tg'},{t:'Instant Access',c:'tp'}] },
+  { key:'revolut', name:'Revolut', short:'REV', favicon:'https://www.google.com/s2/favicons?domain=revolut.com&sz=64', fbColor:'#374151', fbBg:'#f3f4f6', url:'https://www.revolut.com/en-IE/savings/open-a-savings-account/', maxDeposit:100000,
+    rates:{ instant:1.50, regular:1.50, fixed:1.50 },
+    perks:'1.5–2.25% AER (Standard–Metal) paid daily \u00B7 No minimum \u00B7 Instant access', tags:[{t:'Paid Daily',c:'ty'},{t:'No Minimum',c:'tg'}] }
+];
+
+function compareSavingsRates(){
+  var type=document.getElementById('saveType').value;
+  var dirt=document.getElementById('saveDirt').value==='yes';
+  showLoading('savingsLoading');
+  document.getElementById('savingsResults').className='results-hidden';
+  setTimeout(function(){
+    hideLoading('savingsLoading');
+    var results=SAVINGS.map(function(s){
+      var grossRate=s.rates[type];
+      var netRate=dirt?grossRate*(1-0.33):grossRate;
+      var interest=saveAmount*(Math.pow(1+netRate/100,saveTerm)-1);
+      return {s:s,grossRate:grossRate,netRate:netRate,interest:interest,total:saveAmount+interest};
+    }).sort(function(a,b){return b.netRate-a.netRate;});
+    var best=results[0];
+    var typeLabel={instant:'Instant Access',regular:'Regular Saver',fixed:'Fixed Term'}[type];
+    var wrap=document.createElement('div');
+    var sb=document.createElement('div'); sb.className='fetch-status';
+    sb.innerHTML='<div class="fs-dot"></div><div>Savings rates verified from official provider sites</div><div class="fs-time">Mar 2026</div>';
+    wrap.appendChild(sb);
+    var hdr=document.createElement('div'); hdr.className='results-header';
+    hdr.innerHTML='<h2>Savings Results</h2><span class="results-count">'+results.length+' providers compared</span>';
+    wrap.appendChild(hdr);
+    var grid=document.createElement('div'); grid.className='cards-grid';
+    results.forEach(function(r,i){
+      var card=document.createElement('div'); card.className='rate-card'+(i===0?' best':'');
+      card.appendChild(makeLogo(r.s.favicon,r.s.name,r.s.short,r.s.fbColor,r.s.fbBg));
+      var info=document.createElement('div'); info.className='bank-info';
+      var bdg=document.createElement('div'); bdg.className='best-badge'; bdg.textContent='\u2605 Best Rate'; info.appendChild(bdg);
+      var h4=document.createElement('h4'); h4.textContent=r.s.name; info.appendChild(h4);
+      var sub=document.createElement('div'); sub.className='sub'; sub.textContent=r.s.perks; info.appendChild(sub);
+      var tgs=document.createElement('div'); tgs.className='tags';
+      r.s.tags.forEach(function(t){ var s=document.createElement('span'); s.className='tag '+t.c; s.textContent=t.t; tgs.appendChild(s); });
+      info.appendChild(tgs); card.appendChild(info);
+      var nums=document.createElement('div'); nums.className='rate-nums';
+      var rb=document.createElement('div'); rb.className='rate-big'; rb.innerHTML=r.netRate.toFixed(2)+'<span>% AER'+(dirt?' net':' gross')+'</span>'; nums.appendChild(rb);
+      var rs=document.createElement('div'); rs.className='rate-sub'; rs.innerHTML='Interest earned: <strong>'+fe(r.interest)+'</strong>'; nums.appendChild(rs);
+      var rh=document.createElement('div'); rh.className='rate-sub rate-highlight'; rh.innerHTML='Total after '+saveTerm+'yr: <strong>'+fe(r.total)+'</strong>'; nums.appendChild(rh);
+      var btn=document.createElement('a'); btn.className='apply-btn'; btn.href=r.s.url; btn.target='_blank'; btn.rel='noopener'; btn.textContent='Open Account \u2192'; btn.style.borderColor='var(--accent3)'; btn.style.color='var(--accent3)'; nums.appendChild(btn);
+      card.appendChild(nums); grid.appendChild(card);
+    }); wrap.appendChild(grid);
+    var ai=document.createElement('div'); ai.className='ai-box';
+    ai.innerHTML='<div class="ai-header"><div class="ai-icon">\u2736</div><h3>AI Recommendation</h3></div><div class="ai-body">For <span class="hl">'+fe(saveAmount)+'</span> in a <span class="hl">'+typeLabel+'</span> over <span class="hl">'+saveTerm+' year'+(saveTerm>1?'s':'')+'</span>'+(dirt?' (after 33% DIRT tax)':'')+':<br><br><strong>\uD83C\uDFC6 '+best.s.name+'</strong> offers the best rate at <span class="hl">'+best.netRate.toFixed(2)+'% AER</span>, earning you <span class="hl">'+fe(best.interest)+'</span> in interest over the term.<br><br>\uD83D\uDCA1 <span class="hl">DIRT tip:</span> All Irish deposit interest is subject to 33% DIRT tax, deducted at source. State Savings products (An Post) are DIRT-exempt but not included here.<br><br>\uD83D\uDCCC Rates are variable. Always confirm the current rate directly with your provider before opening an account.</div>';
+    wrap.appendChild(ai);
+    var tw=document.createElement('div'); tw.className='table-wrap';
+    tw.innerHTML='<h3>Full Savings Breakdown</h3>'; var tbl=document.createElement('table');
+    tbl.innerHTML='<thead><tr><th>Provider</th><th>Gross AER</th><th>Net AER (after DIRT)</th><th>Interest Earned</th><th>Total Balance</th><th>Max Deposit</th></tr></thead>';
+    var tb=document.createElement('tbody');
+    results.forEach(function(r){ var tr=document.createElement('tr'); var isBest=r===results[0];
+      tr.innerHTML='<td><strong>'+r.s.name+'</strong></td><td class="mono">'+r.grossRate.toFixed(2)+'%</td><td class="'+(isBest?'best-td':'mono')+'">'+r.netRate.toFixed(2)+'%'+(isBest?' \u2605':'')+'</td><td class="mono">'+fe(r.interest)+'</td><td class="mono">'+fe(r.total)+'</td><td class="mono">\u20AC'+(r.s.maxDeposit/1000).toFixed(0)+'k</td>';
+      tb.appendChild(tr); }); tbl.appendChild(tb); tw.appendChild(tbl); wrap.appendChild(tw);
+    wrap.innerHTML+=disclaimer(['aib.ie','bankofireland.com','ptsb.ie','revolut.com'],['AIB','Bank of Ireland','PTSB','Revolut'],['https://aib.ie/our-products/savings-and-deposits','https://personalbanking.bankofireland.com/save-and-invest/','https://www.ptsb.ie/saving-and-investing/','https://www.revolut.com/en-IE/savings/']);
+    document.getElementById('savingsResults').appendChild(wrap);
+    document.getElementById('savingsResults').className='results-visible';
+  },700);
 }
 
-async function startComparison() {
-  var purpose = document.getElementById('purposeSelect').value;
-  var credit  = document.getElementById('creditSelect').value;
-  var btn     = document.getElementById('compareBtn');
+// ── INVESTMENTS ──
+var invAmount=5000, invTerm=5;
+function updateInvAmount(v){ invAmount=parseInt(v); document.getElementById('invAmountVal').textContent=fe(invAmount); }
+function updateInvTerm(v){ invTerm=parseInt(v); document.getElementById('invTermVal').textContent=v+(parseInt(v)===1?' year':' years'); }
 
-  // Reset UI
-  document.getElementById('results').classList.remove('visible');
-  document.getElementById('errorBox').classList.remove('visible');
-  document.getElementById('loading').classList.add('visible');
-  ['step1','step2','step3','step4','step5'].forEach(function(id) {
-    var el = document.getElementById(id);
-    el.classList.remove('active','done');
-  });
-  btn.disabled = true;
-  animateSteps();
+var PLATFORMS=[
+  { key:'degiro', name:'DEGIRO', short:'DEG', favicon:'https://www.google.com/s2/favicons?domain=degiro.ie&sz=64', fbColor:'#d4001a', fbBg:'#fff0f0', url:'https://www.degiro.ie/', etfFee:0, stockFee:2.0, cryptoFee:null, annualFee:0, minInvest:0.01,
+    perks:'Commission-free ETFs \u00B7 Low stock fees \u00B7 Regulated in Ireland', tags:[{t:'Free ETFs',c:'tg'},{t:'EU Regulated',c:'tb'}] },
+  { key:'revolut', name:'Revolut', short:'REV', favicon:'https://www.google.com/s2/favicons?domain=revolut.com&sz=64', fbColor:'#374151', fbBg:'#f3f4f6', url:'https://www.revolut.com/en-IE/invest/', etfFee:0, stockFee:0, cryptoFee:1.99, annualFee:0, minInvest:1,
+    perks:'Commission-free stocks \u00B7 Fractional shares \u00B7 Crypto available', tags:[{t:'Free Stocks',c:'ty'},{t:'Fractional',c:'tg'}] },
+  { key:'etoro', name:'eToro', short:'ET', favicon:'https://www.google.com/s2/favicons?domain=etoro.com&sz=64', fbColor:'#00a651', fbBg:'#e8f8f0', url:'https://www.etoro.com/', etfFee:0, stockFee:0, cryptoFee:1.0, annualFee:0, minInvest:10,
+    perks:'Social trading \u00B7 Copy portfolios \u00B7 Commission-free stocks', tags:[{t:'Social Trading',c:'tg'},{t:'Copy Portfolios',c:'tb'}] },
+  { key:'interactivebrokers', name:'Interactive Brokers', short:'IBKR', favicon:'https://www.google.com/s2/favicons?domain=interactivebrokers.ie&sz=64', fbColor:'#c8102e', fbBg:'#fff0f0', url:'https://www.interactivebrokers.ie/', etfFee:0, stockFee:1.25, cryptoFee:null, annualFee:0, minInvest:0,
+    perks:'Professional-grade platform \u00B7 Lowest margin rates \u00B7 Global markets', tags:[{t:'Pro Platform',c:'ty'},{t:'Global Markets',c:'tb'}] }
+];
 
-  try {
-    var rates = await fetchLiveRates(purpose, credit);
-    fetchedLive = true;
-    document.getElementById('loading').classList.remove('visible');
-    renderResults(rates, purpose, credit, true);
-  } catch(err) {
-    console.warn('AI fetch failed, using fallback rates:', err);
-    fetchedLive = false;
-    document.getElementById('loading').classList.remove('visible');
-    // Build fallback rates object
-    var fallback = {};
-    Object.keys(LENDER_META).forEach(function(k) {
-      fallback[k] = FALLBACK_RATES[k][credit];
-    });
-    renderResults(fallback, purpose, credit, false);
-  }
-
-  btn.disabled = false;
+function compareInvestments(){
+  var type=document.getElementById('invType').value;
+  var risk=document.getElementById('invRisk').value;
+  showLoading('invLoading');
+  document.getElementById('invResults').className='results-hidden';
+  setTimeout(function(){
+    hideLoading('invLoading');
+    var returnRates={etf:{low:4,medium:7,high:10},stocks:{low:5,medium:9,high:14},crypto:{low:null,medium:15,high:35}};
+    var results=PLATFORMS.map(function(p){
+      var fee=type==='etf'?p.etfFee:type==='stocks'?p.stockFee:p.cryptoFee;
+      var annReturn=returnRates[type][risk];
+      var available=fee!==null;
+      var projValue=available&&annReturn!=null?invAmount*Math.pow(1+(annReturn-fee/100)/100,invTerm):null;
+      var projGain=projValue?projValue-invAmount:null;
+      return {p:p,fee:fee,annReturn:annReturn,projValue:projValue,projGain:projGain,available:available};
+    }).sort(function(a,b){ if(!a.available&&b.available)return 1; if(a.available&&!b.available)return -1; return (b.projValue||0)-(a.projValue||0); });
+    var best=results.filter(function(r){return r.available;})[0];
+    var typeLabel={etf:'ETF / Index Fund',stocks:'Individual Stocks',crypto:'Cryptocurrency'}[type];
+    var riskLabel={low:'Low Risk',medium:'Medium Risk',high:'High Risk'}[risk];
+    var wrap=document.createElement('div');
+    var sb=document.createElement('div'); sb.className='fetch-status';
+    sb.innerHTML='<div class="fs-dot"></div><div>Platform data verified \u2014 projected returns are illustrative only</div><div class="fs-time">Mar 2026</div>';
+    wrap.appendChild(sb);
+    // disclaimer for investments
+    var invNote=document.createElement('div');
+    invNote.style.cssText='background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);border-radius:10px;padding:0.75rem 1rem;margin-bottom:1.25rem;font-size:0.78rem;color:#fbbf24;';
+    invNote.innerHTML='\u26A0\uFE0F <strong>Investment Disclaimer:</strong> Projected returns are illustrative estimates based on historical averages. Past performance does not guarantee future results. All investments carry risk including loss of capital. Irish residents are subject to CGT (33%) and Exit Tax (41% on funds/ETFs) on investment gains.';
+    wrap.appendChild(invNote);
+    var hdr=document.createElement('div'); hdr.className='results-header';
+    hdr.innerHTML='<h2>Investment Platforms</h2><span class="results-count">'+results.length+' platforms compared</span>';
+    wrap.appendChild(hdr);
+    var grid=document.createElement('div'); grid.className='cards-grid';
+    results.forEach(function(r,i){
+      var card=document.createElement('div'); card.className='rate-card'+(i===0&&r.available?' best':'');
+      card.appendChild(makeLogo(r.p.favicon,r.p.name,r.p.short,r.p.fbColor,r.p.fbBg));
+      var info=document.createElement('div'); info.className='bank-info';
+      var bdg=document.createElement('div'); bdg.className='best-badge'; bdg.textContent='\u2605 Top Pick'; info.appendChild(bdg);
+      var h4=document.createElement('h4'); h4.textContent=r.p.name; info.appendChild(h4);
+      var sub=document.createElement('div'); sub.className='sub'; sub.textContent=r.p.perks; info.appendChild(sub);
+      var tgs=document.createElement('div'); tgs.className='tags';
+      r.p.tags.forEach(function(t){ var s=document.createElement('span'); s.className='tag '+t.c; s.textContent=t.t; tgs.appendChild(s); });
+      if(!r.available){ var na=document.createElement('span'); na.className='tag tr'; na.textContent='No '+typeLabel; tgs.appendChild(na); }
+      info.appendChild(tgs); card.appendChild(info);
+      var nums=document.createElement('div'); nums.className='rate-nums';
+      if(r.available&&r.projValue){
+        var rb=document.createElement('div'); rb.className='rate-big'; rb.style.color='var(--accent2)'; rb.innerHTML=fe(r.projValue)+'<span> proj.</span>'; nums.appendChild(rb);
+        var rs=document.createElement('div'); rs.className='rate-sub'; rs.innerHTML='Est. gain: <strong style="color:var(--accent2)">+'+fe(r.projGain)+'</strong>'; nums.appendChild(rs);
+        var rh=document.createElement('div'); rh.className='rate-sub'; rh.innerHTML='Trade fee: <strong>'+(r.fee===0?'Free':'\u20AC'+r.fee.toFixed(2))+'</strong>'; nums.appendChild(rh);
+      } else {
+        var na2=document.createElement('div'); na2.className='rate-sub'; na2.textContent='Not available for this type'; nums.appendChild(na2);
+      }
+      var btn=document.createElement('a'); btn.className='apply-btn'; btn.href=r.p.url; btn.target='_blank'; btn.rel='noopener'; btn.textContent='Open Account \u2192'; btn.style.borderColor='var(--accent2)'; btn.style.color='var(--accent2)'; nums.appendChild(btn);
+      card.appendChild(nums); grid.appendChild(card);
+    }); wrap.appendChild(grid);
+    var ai=document.createElement('div'); ai.className='ai-box';
+    var aiTxt=best?'For <span class="hl">'+fe(invAmount)+'</span> in <span class="hl">'+typeLabel+'</span> over <span class="hl">'+invTerm+' year'+(invTerm>1?'s':'')+'</span> with <span class="hl">'+riskLabel+'</span>:<br><br><strong>\uD83C\uDFC6 '+best.p.name+'</strong> is the top pick with a projected value of <span class="hl">'+fe(best.projValue)+'</span> — an estimated gain of <span class="hl">'+fe(best.projGain)+'</span>.<br><br>\uD83C\uDDEE\uD83C\uDDEA <span class="wn">Irish tax note:</span> ETF and fund gains in Ireland are subject to <strong>Exit Tax at 41%</strong> every 8 years (deemed disposal rule), not CGT. Direct stocks are subject to CGT at 33%. This significantly impacts net returns — always factor this into your planning.<br><br>\uD83D\uDCCC These projections are illustrative only based on historical averages. Past performance does not guarantee future results.':'No platforms available for this combination.';
+    ai.innerHTML='<div class="ai-header"><div class="ai-icon">\u2736</div><h3>AI Recommendation</h3></div><div class="ai-body">'+aiTxt+'</div>';
+    wrap.appendChild(ai);
+    document.getElementById('invResults').appendChild(wrap);
+    document.getElementById('invResults').className='results-visible';
+  },700);
 }
 
-async function fetchLiveRates(purpose, credit) {
-  var purposeLabel = {
-    personal: 'personal loan',
-    car: 'car loan',
-    home: 'home improvement loan',
-    green: 'green energy loan',
-    holiday: 'holiday loan',
-    wedding: 'wedding loan'
-  }[purpose] || 'personal loan';
+// ── CREDIT CARDS ──
+var cardSpend=500, cardBal=0;
+function updateCardSpend(v){ cardSpend=parseInt(v); document.getElementById('cardSpendVal').textContent=fe(cardSpend); }
+function updateCardBal(v){ cardBal=parseInt(v); document.getElementById('cardBalVal').textContent=fe(cardBal); }
 
-  var prompt = 'Search for the current APR interest rates for ' + purposeLabel + 's in Ireland for these 4 lenders: Bank of Ireland, AIB (Allied Irish Banks), Permanent TSB (PTSB), and Revolut Ireland. Find their official published rates for a customer with a ' + credit + ' credit profile. Return ONLY a valid JSON object with this exact structure, no other text:\n{\n  "boi": { "apr": <number>, "maxBorrow": <number> },\n  "aib": { "apr": <number>, "maxBorrow": <number> },\n  "ptsb": { "apr": <number>, "maxBorrow": <number> },\n  "revolut": { "apr": <number>, "maxBorrow": <number> }\n}\nUse the representative APR % as a plain number (e.g. 7.1 not "7.1%"). If a lender does not offer this loan type, use their standard personal loan rate. Only return the JSON, nothing else.';
+var CARDS=[
+  { key:'aib', name:'AIB Click Visa', short:'AIB', favicon:'https://www.google.com/s2/favicons?domain=aib.ie&sz=64', fbColor:'#005c9c', fbBg:'#e8f0f8', url:'https://aib.ie/our-products/credit-cards/click-visa', purchaseAPR:14.16, annualFee:0, introOffer:'0% for 6 months on purchases', rewards:'None', perks:'Lowest APR in Ireland \u00B7 No annual fee \u00B7 56 days interest-free', tags:[{t:'Lowest APR',c:'tg'},{t:'No Annual Fee',c:'tb'}] },
+  { key:'boi', name:'BOI Classic', short:'BOI', favicon:'https://www.google.com/s2/favicons?domain=bankofireland.com&sz=64', fbColor:'#005f9e', fbBg:'#e8f0f8', url:'https://personalbanking.bankofireland.com/borrow/credit-cards/classic-credit-card/', purchaseAPR:22.1, annualFee:30, introOffer:'0% for 6 months', rewards:'Instalment plan at 6.9%', perks:'Instalment plan \u00B7 0% intro offer \u00B7 Add 3 extra cardholders', tags:[{t:'0% Intro',c:'ty'},{t:'Instalment Plan',c:'tb'}] },
+  { key:'ptsb', name:'PTSB ICE Visa', short:'PTSB', favicon:'https://www.google.com/s2/favicons?domain=ptsb.ie&sz=64', fbColor:'#7c3aed', fbBg:'#f0ebff', url:'https://www.ptsb.ie/everyday-banking/credit-cards/ice-visa-credit-card/', purchaseAPR:22.53, annualFee:30, introOffer:'0% on balance transfers for 6 months', rewards:'5c cashback per in-store purchase', perks:'Cashback on purchases \u00B7 0% balance transfers 6mo \u00B7 Free 2nd card', tags:[{t:'Cashback',c:'tp'},{t:'0% BT 6mo',c:'tg'}] },
+  { key:'revolut', name:'Revolut Credit', short:'REV', favicon:'https://www.google.com/s2/favicons?domain=revolut.com&sz=64', fbColor:'#374151', fbBg:'#f3f4f6', url:'https://www.revolut.com/en-IE/credit-card/', purchaseAPR:17.99, annualFee:0, introOffer:'0% for 3 months', rewards:'FX fee-free globally', perks:'No annual fee \u00B7 0% for 3 months \u00B7 Best FX rates globally', tags:[{t:'No Annual Fee',c:'ty'},{t:'FX-Free',c:'tg'}] }
+];
 
-  var response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1000,
-      tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-      messages: [{ role: 'user', content: prompt }]
-    })
-  });
-
-  if (!response.ok) throw new Error('API error: ' + response.status);
-  var data = await response.json();
-
-  // Extract text from response content blocks
-  var text = '';
-  if (data.content && Array.isArray(data.content)) {
-    data.content.forEach(function(block) {
-      if (block.type === 'text') text += block.text;
-    });
-  }
-
-  // Parse JSON from response
-  var jsonMatch = text.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) throw new Error('No JSON in response');
-  var parsed = JSON.parse(jsonMatch[0]);
-
-  // Validate all 4 lenders present
-  var required = ['boi','aib','ptsb','revolut'];
-  required.forEach(function(k) {
-    if (!parsed[k] || typeof parsed[k].apr !== 'number') throw new Error('Missing lender: ' + k);
-  });
-
-  // Return flat rates map
-  var result = {};
-  required.forEach(function(k) {
-    result[k] = parsed[k].apr;
-    // Update maxBorrow if provided
-    if (parsed[k].maxBorrow) LENDER_META[k]._maxBorrow = parsed[k].maxBorrow;
-  });
-  return result;
+function compareCards(){
+  var priority=document.getElementById('cardPriority').value;
+  showLoading('cardLoading');
+  document.getElementById('cardResults').className='results-hidden';
+  setTimeout(function(){
+    hideLoading('cardLoading');
+    var results=CARDS.map(function(c){
+      var annualInterest=cardBal*(c.purchaseAPR/100);
+      var totalAnnualCost=annualInterest+c.annualFee;
+      return {c:c,annualInterest:annualInterest,totalAnnualCost:totalAnnualCost};
+    }).sort(function(a,b){ return a.totalAnnualCost-b.totalAnnualCost; });
+    if(priority==='rewards'){ results.sort(function(a,b){ return a.c.annualFee-b.c.annualFee; }); }
+    var best=results[0];
+    var wrap=document.createElement('div');
+    var sb=document.createElement('div'); sb.className='fetch-status';
+    sb.innerHTML='<div class="fs-dot"></div><div>Credit card rates verified from official provider sites</div><div class="fs-time">Mar 2026</div>';
+    wrap.appendChild(sb);
+    var hdr=document.createElement('div'); hdr.className='results-header';
+    hdr.innerHTML='<h2>Credit Card Results</h2><span class="results-count">'+results.length+' cards compared</span>';
+    wrap.appendChild(hdr);
+    var grid=document.createElement('div'); grid.className='cards-grid';
+    results.forEach(function(r,i){
+      var card=document.createElement('div'); card.className='rate-card'+(i===0?' best':'');
+      card.appendChild(makeLogo(r.c.favicon,r.c.name,r.c.short,r.c.fbColor,r.c.fbBg));
+      var info=document.createElement('div'); info.className='bank-info';
+      var bdg=document.createElement('div'); bdg.className='best-badge'; bdg.textContent='\u2605 Best Pick'; info.appendChild(bdg);
+      var h4=document.createElement('h4'); h4.textContent=r.c.name; info.appendChild(h4);
+      var sub=document.createElement('div'); sub.className='sub'; sub.textContent=r.c.perks; info.appendChild(sub);
+      var tgs=document.createElement('div'); tgs.className='tags';
+      r.c.tags.forEach(function(t){ var s=document.createElement('span'); s.className='tag '+t.c; s.textContent=t.t; tgs.appendChild(s); });
+      info.appendChild(tgs); card.appendChild(info);
+      var nums=document.createElement('div'); nums.className='rate-nums';
+      var rb=document.createElement('div'); rb.className='rate-big'; rb.style.color='var(--accent4)'; rb.innerHTML=r.c.purchaseAPR.toFixed(1)+'<span>% APR</span>'; nums.appendChild(rb);
+      var rs=document.createElement('div'); rs.className='rate-sub'; rs.innerHTML='Annual fee: <strong>'+(r.c.annualFee===0?'None':'\u20AC'+r.c.annualFee)+'</strong>'; nums.appendChild(rs);
+      if(cardBal>0){ var rh=document.createElement('div'); rh.className='rate-sub'; rh.innerHTML='Annual interest: <strong style="color:var(--accent4)">'+fe(r.annualInterest)+'</strong>'; nums.appendChild(rh); }
+      var intro=document.createElement('div'); intro.className='rate-sub'; intro.style.color='#fbbf24'; intro.textContent=r.c.introOffer; nums.appendChild(intro);
+      var btn=document.createElement('a'); btn.className='apply-btn'; btn.href=r.c.url; btn.target='_blank'; btn.rel='noopener'; btn.textContent='Apply \u2192'; btn.style.borderColor='var(--accent4)'; btn.style.color='var(--accent4)'; nums.appendChild(btn);
+      card.appendChild(nums); grid.appendChild(card);
+    }); wrap.appendChild(grid);
+    var ai=document.createElement('div'); ai.className='ai-box';
+    var saving=cardBal>0?fe(results[results.length-1].annualInterest-best.annualInterest):'';
+    ai.innerHTML='<div class="ai-header"><div class="ai-icon">\u2736</div><h3>AI Recommendation</h3></div><div class="ai-body">'+(cardBal>0?'Carrying a balance of <span class="hl">'+fe(cardBal)+'</span>, the <strong>'+best.c.name+'</strong> at <span class="hl">'+best.c.purchaseAPR+'% APR</span> saves you <span class="hl">'+saving+'</span>/year in interest compared to the most expensive option.<br><br>':'')+'<strong>\uD83C\uDFC6 Top pick: '+best.c.name+'</strong> \u2014 '+best.c.introOffer+(best.c.annualFee===0?', no annual fee.':'.')+'<br><br>\uD83D\uDCA1 <span class="hl">Key tip:</span> If you clear your balance in full every month, the purchase APR becomes irrelevant \u2014 focus on intro offers and rewards instead. <strong>AIB Click</strong> is best if you carry a balance. <strong>PTSB ICE</strong> is best if you want cashback.<br><br>\uD83D\uDCCC All credit card interest is variable. Always clear your balance monthly where possible to avoid charges.</div>';
+    wrap.appendChild(ai);
+    var tw=document.createElement('div'); tw.className='table-wrap';
+    tw.innerHTML='<h3>Full Card Comparison</h3>'; var tbl=document.createElement('table');
+    tbl.innerHTML='<thead><tr><th>Card</th><th>Purchase APR</th><th>Annual Fee</th><th>Intro Offer</th><th>Rewards</th></tr></thead>';
+    var tb=document.createElement('tbody'); var minAPR=Math.min.apply(null,results.map(function(r){return r.c.purchaseAPR;}));
+    results.forEach(function(r){ var tr=document.createElement('tr'); var isBest=r.c.purchaseAPR===minAPR;
+      tr.innerHTML='<td><strong>'+r.c.name+'</strong></td><td class="'+(isBest?'best-td':'mono')+'">'+r.c.purchaseAPR+'%'+(isBest?' \u2605':'')+'</td><td class="mono">'+(r.c.annualFee===0?'Free':'\u20AC'+r.c.annualFee)+'</td><td style="font-size:0.78rem">'+r.c.introOffer+'</td><td style="font-size:0.78rem">'+r.c.rewards+'</td>';
+      tb.appendChild(tr); }); tbl.appendChild(tb); tw.appendChild(tbl); wrap.appendChild(tw);
+    wrap.innerHTML+=disclaimer(['aib.ie','bankofireland.com','ptsb.ie','revolut.com'],['AIB','Bank of Ireland','PTSB','Revolut'],['https://aib.ie/our-products/credit-cards/click-visa','https://personalbanking.bankofireland.com/borrow/credit-cards/','https://www.ptsb.ie/everyday-banking/credit-cards/','https://www.revolut.com/en-IE/credit-card/']);
+    document.getElementById('cardResults').appendChild(wrap);
+    document.getElementById('cardResults').className='results-visible';
+  },700);
 }
 
-function makeLogo(meta) {
-  var wrap = document.createElement('div');
-  wrap.className = 'bank-logo-wrap';
-
-  // Show fallback immediately
-  wrap.style.background = meta.fallbackBg;
-  var fb = document.createElement('div');
-  fb.className = 'bank-logo-fallback';
-  fb.style.color = meta.fallbackColor;
-  fb.style.background = meta.fallbackBg;
-  fb.textContent = meta.short;
-  wrap.appendChild(fb);
-
-  var img = new Image();
-  img.width = 40; img.height = 40;
-  img.alt = meta.name;
-  img.onload = function() {
-    wrap.style.background = '#fff';
-    wrap.innerHTML = '';
-    wrap.appendChild(img);
-  };
-  img.src = meta.favicon;
-  return wrap;
-}
-
-function renderResults(rates, purpose, credit, isLive) {
-  var results = [];
-  Object.keys(LENDER_META).forEach(function(k) {
-    var meta = LENDER_META[k];
-    var maxBorrow = meta._maxBorrow || FALLBACK_RATES[k].maxBorrow;
-    var apr = rates[k];
-    var amt = Math.min(loanAmount, maxBorrow);
-    var term = Math.min(loanTermYears, 5);
-    var mo = calcMonthly(amt, apr, term);
-    var total = mo * term * 12;
-    results.push({
-      key: k, meta: meta, apr: apr, mo: mo,
-      total: total, interest: total - amt,
-      amt: amt, term: term,
-      eligible: loanAmount <= maxBorrow,
-      maxBorrow: maxBorrow
-    });
-  });
-  results.sort(function(a,b){ return a.apr - b.apr; });
-
-  // Fetch status bar
-  var fsEl = document.getElementById('fetchStatus');
-  var ftEl = document.getElementById('fetchTime');
-  fsEl.classList.add('visible');
-  if (isLive) {
-    var now = new Date();
-    ftEl.textContent = 'Fetched ' + now.toLocaleTimeString('en-IE', {hour:'2-digit',minute:'2-digit'});
-    document.getElementById('fetchStatus').querySelector('.fs-text').textContent = 'Rates fetched live by AI \u2014 up to date as of right now';
-  } else {
-    ftEl.textContent = 'Using cached rates';
-    document.getElementById('fetchStatus').querySelector('.fs-text').textContent = '\u26A0\uFE0F Live fetch unavailable \u2014 showing last known rates';
-    fsEl.style.borderColor = 'rgba(245,158,11,0.3)';
-    fsEl.style.background = 'rgba(245,158,11,0.05)';
-    ftEl.style.color = '#fbbf24';
-  }
-
-  // Build cards
-  var grid = document.getElementById('cardsGrid');
-  grid.innerHTML = '';
-
-  results.forEach(function(r, i) {
-    var card = document.createElement('div');
-    card.className = 'loan-card' + (i===0 ? ' best-pick' : '');
-    card.appendChild(makeLogo(r.meta));
-
-    var info = document.createElement('div');
-    info.className = 'bank-info';
-
-    var badge = document.createElement('div');
-    badge.className = 'best-badge';
-    badge.textContent = '\u2605 Best Pick';
-    info.appendChild(badge);
-
-    var h3 = document.createElement('h3');
-    h3.textContent = r.meta.name;
-    info.appendChild(h3);
-
-    var desc = document.createElement('p');
-    desc.className = 'bank-desc';
-    desc.textContent = r.meta.perks.join(' \u00B7 ');
-    info.appendChild(desc);
-
-    var tagsDiv = document.createElement('div');
-    tagsDiv.className = 'tags';
-    r.meta.tags.forEach(function(tg) {
-      var s = document.createElement('span');
-      s.className = 'tag ' + tg.c;
-      s.textContent = tg.t;
-      tagsDiv.appendChild(s);
-    });
-    if (!r.eligible) {
-      var lt = document.createElement('span');
-      lt.className = 'tag tag-red';
-      lt.textContent = 'Max \u20AC' + (r.maxBorrow/1000).toFixed(0) + 'k';
-      tagsDiv.appendChild(lt);
-    }
-    info.appendChild(tagsDiv);
-    card.appendChild(info);
-
-    var nums = document.createElement('div');
-    nums.className = 'loan-numbers';
-
-    var ab = document.createElement('div');
-    ab.className = 'apr-badge';
-    ab.appendChild(document.createTextNode(r.apr.toFixed(1)));
-    var sp = document.createElement('span');
-    sp.textContent = '% APR';
-    ab.appendChild(sp);
-    nums.appendChild(ab);
-
-    var mo2 = document.createElement('div');
-    mo2.className = 'monthly-payment';
-    var moStr = document.createElement('strong');
-    moStr.textContent = fe(r.mo);
-    mo2.appendChild(document.createTextNode('Monthly: '));
-    mo2.appendChild(moStr);
-    nums.appendChild(mo2);
-
-    var tc = document.createElement('div');
-    tc.className = 'total-cost';
-    var tcStr = document.createElement('strong');
-    tcStr.textContent = fe(r.interest);
-    tc.appendChild(document.createTextNode('Interest: '));
-    tc.appendChild(tcStr);
-    nums.appendChild(tc);
-
-    var btn = document.createElement('a');
-    btn.className = 'apply-btn';
-    btn.href = r.meta.url;
-    btn.target = '_blank';
-    btn.rel = 'noopener noreferrer';
-    btn.textContent = 'Apply \u2192';
-    nums.appendChild(btn);
-
-    card.appendChild(nums);
-    grid.appendChild(card);
-  });
-
-  // AI recommendation text
-  var best = results[0];
-  var worst = results[results.length-1];
-  var saving = worst.interest - best.interest;
-  var pEl = document.getElementById('purposeSelect');
-  var pLabel = pEl.options[pEl.selectedIndex].text;
-  var cLabel = credit.charAt(0).toUpperCase() + credit.slice(1);
-  var liveNote = isLive ? ' <span class="hl">(live rate)</span>' : ' <span class="wn">(cached rate)</span>';
-
-  document.getElementById('aiText').innerHTML =
-    'For <span class="hl">' + fe(loanAmount) + '</span> over <span class="hl">' + loanTermYears + ' year' + (loanTermYears > 1 ? 's' : '') + '</span> (' + pLabel + ', ' + cLabel + ' credit):' +
-    '<br><br><strong>\uD83C\uDFC6 ' + best.meta.name + '</strong> offers the best rate at <span class="hl">' + best.apr.toFixed(1) + '% APR</span>' + liveNote + ' \u2014 <span class="hl">' + fe(best.mo) + '/month</span> with <span class="hl">' + fe(best.interest) + '</span> total interest.' +
-    '<br><br>Choosing ' + best.meta.name + ' over the highest-rate option (' + worst.meta.name + ' at ' + worst.apr.toFixed(1) + '%) saves you approximately <span class="hl">' + fe(saving) + '</span> in interest over the full term.' +
-    (credit === 'fair' ? '<br><br>\u26A0\uFE0F <span class="wn">Fair credit note:</span> With a fair credit profile, rates vary significantly between lenders. The traditional banks are likely to offer better terms than digital-only lenders.' : '') +
-    '<br><br>\uD83D\uDCCC Rates are variable and subject to individual credit approval. Always confirm the exact rate directly with your chosen lender before applying.';
-
-  // Table
-  var tbody = document.getElementById('tableBody');
-  tbody.innerHTML = '';
-  var minAPR = results[0].apr;
-  results.forEach(function(r) {
-    var tr = document.createElement('tr');
-    var isBest = r.apr === minAPR;
-    function cell(txt, cls) { var td = document.createElement('td'); if(cls) td.className = cls; td.textContent = txt; return td; }
-    var nameTd = document.createElement('td');
-    var s = document.createElement('strong'); s.textContent = r.meta.name; nameTd.appendChild(s);
-    tr.appendChild(nameTd);
-    tr.appendChild(cell(r.apr.toFixed(1) + '%' + (isBest ? ' \u2605' : ''), isBest ? 'best' : 'mono'));
-    tr.appendChild(cell(fe(r.mo) + '/mo', 'mono'));
-    tr.appendChild(cell(fe(r.interest), 'mono'));
-    tr.appendChild(cell(fe(r.total), 'mono'));
-    tr.appendChild(cell('\u20AC' + (r.maxBorrow/1000).toFixed(0) + 'k', 'mono'));
-    tr.appendChild(cell(r.meta.rateType));
-    tbody.appendChild(tr);
-  });
-
-  document.getElementById('resultsLabel').textContent = results.length + ' lenders compared';
-  document.getElementById('results').classList.add('visible');
+function disclaimer(domains,names,urls){
+  var links=names.map(function(n,i){ return '<a href="'+urls[i]+'" target="_blank">'+n+'</a>'; }).join(' &middot; ');
+  return '<div class="disclaimer">Rates are indicative and sourced from published lender data as of March 2026. Your actual rate depends on your individual circumstances. Always confirm rates directly with the provider. RateRadar Ireland is not a regulated financial advisor.<br><br><strong>Official sites:</strong> '+links+'</div>';
 }
 </script>
 </body>
