@@ -224,8 +224,8 @@ td.mono { font-family:'JetBrains Mono',monospace; }
         <h3>Personal Loans</h3>
         <p>Compare personal loan APRs from Ireland's top lenders and find the lowest monthly repayment.</p>
         <div class="product-stats">
-          <span class="product-stat">From 6.2% APR</span>
-          <span class="product-stat">4 lenders</span>
+          <span class="product-stat">From 6.7% APR</span>
+          <span class="product-stat">7 lenders</span>
         </div>
       </div>
 
@@ -236,7 +236,7 @@ td.mono { font-family:'JetBrains Mono',monospace; }
         <p>Find the best AER on your savings from instant access to fixed-term deposit accounts.</p>
         <div class="product-stats">
           <span class="product-stat">Up to 3.00% AER</span>
-          <span class="product-stat">4 providers</span>
+          <span class="product-stat">7 providers</span>
         </div>
       </div>
 
@@ -258,7 +258,7 @@ td.mono { font-family:'JetBrains Mono',monospace; }
         <p>Compare purchase APRs, intro offers and perks across Irish credit cards.</p>
         <div class="product-stats">
           <span class="product-stat">From 14.16% APR</span>
-          <span class="product-stat">4 providers</span>
+          <span class="product-stat">7 cards</span>
         </div>
       </div>
 
@@ -515,18 +515,27 @@ function updateLoanAmount(v){ loanAmount=parseInt(v); document.getElementById('l
 function updateLoanTerm(v){ loanTerm=parseInt(v); document.getElementById('loanTermVal').textContent=v+(parseInt(v)===1?' year':' years'); }
 
 var LOANS=[
-  { key:'boi', name:'Bank of Ireland', short:'BOI', favicon:'https://www.google.com/s2/favicons?domain=bankofireland.com&sz=64', fbColor:'#005f9e', fbBg:'#e8f0f8', url:'https://personalbanking.bankofireland.com/borrow/loans/personal-loan/', maxBorrow:75000, rateType:'Variable',
-    rates:{ personal:{excellent:7.1,good:8.0,fair:8.9}, car:{excellent:7.1,good:8.0,fair:8.9}, home:{excellent:7.1,good:8.0,fair:8.9}, green:{excellent:3.0,good:3.5,fair:6.5}, holiday:{excellent:7.1,good:8.0,fair:8.9}, wedding:{excellent:7.1,good:8.0,fair:8.9} },
-    perks:'No early repayment penalty \u00B7 Green loans from 3% APR', tags:[{t:'Green Loan Option',c:'tg'},{t:'Up to \u20AC75k',c:'tb'}] },
-  { key:'aib', name:'AIB', short:'AIB', favicon:'https://www.google.com/s2/favicons?domain=aib.ie&sz=64', fbColor:'#005c9c', fbBg:'#e8f0f8', url:'https://aib.ie/our-products/loans/personal-loan', maxBorrow:75000, rateType:'Variable',
-    rates:{ personal:{excellent:8.95,good:8.95,fair:8.95}, car:{excellent:8.95,good:8.95,fair:8.95}, home:{excellent:8.95,good:8.95,fair:8.95}, green:{excellent:6.4,good:6.4,fair:6.4}, holiday:{excellent:8.95,good:8.95,fair:8.95}, wedding:{excellent:8.95,good:8.95,fair:8.95} },
-    perks:'3-hour online decision \u00B7 1 repayment break per year', tags:[{t:'Fast Decision',c:'ty'},{t:'Fixed Rate Option',c:'tb'}] },
+  { key:'avant', name:'Avant Money', short:'AV', favicon:'https://www.google.com/s2/favicons?domain=avantmoney.ie&sz=64', fbColor:'#1a1a2e', fbBg:'#e8e8f5', url:'https://www.avantmoney.ie/personal-loans', maxBorrow:75000, rateType:'Fixed',
+    rates:{ personal:{excellent:6.7,good:8.5,fair:12.0}, car:{excellent:6.7,good:8.5,fair:12.0}, home:{excellent:6.7,good:8.5,fair:12.0}, green:{excellent:6.7,good:8.5,fair:12.0}, holiday:{excellent:8.5,good:10.0,fair:12.0}, wedding:{excellent:8.5,good:10.0,fair:12.0} },
+    perks:'Best fixed rate in Ireland on loans >€30k \u00B7 No early repayment fees', tags:[{t:'Fixed Rate',c:'tg'},{t:'Best >€30k',c:'ty'}] },
   { key:'ptsb', name:'Permanent TSB', short:'PTSB', favicon:'https://www.google.com/s2/favicons?domain=ptsb.ie&sz=64', fbColor:'#7c3aed', fbBg:'#f0ebff', url:'https://www.ptsb.ie/borrowing/loans/personal-loan/', maxBorrow:75000, rateType:'Variable',
     rates:{ personal:{excellent:6.2,good:7.5,fair:8.8}, car:{excellent:6.2,good:7.5,fair:8.8}, home:{excellent:6.2,good:7.5,fair:8.8}, green:{excellent:4.5,good:5.5,fair:6.5}, holiday:{excellent:6.2,good:7.5,fair:8.8}, wedding:{excellent:6.2,good:7.5,fair:8.8} },
     perks:'Competitive variable rates \u00B7 Apply in-app', tags:[{t:'Competitive APR',c:'tg'},{t:'App Apply',c:'tb'}] },
+  { key:'boi', name:'Bank of Ireland', short:'BOI', favicon:'https://www.google.com/s2/favicons?domain=bankofireland.com&sz=64', fbColor:'#005f9e', fbBg:'#e8f0f8', url:'https://personalbanking.bankofireland.com/borrow/loans/personal-loan/', maxBorrow:75000, rateType:'Variable',
+    rates:{ personal:{excellent:7.1,good:8.0,fair:8.9}, car:{excellent:7.1,good:8.0,fair:8.9}, home:{excellent:7.1,good:8.0,fair:8.9}, green:{excellent:3.0,good:3.5,fair:6.5}, holiday:{excellent:7.1,good:8.0,fair:8.9}, wedding:{excellent:7.1,good:8.0,fair:8.9} },
+    perks:'No early repayment penalty \u00B7 Green loans from 3% APR', tags:[{t:'Green Loan Option',c:'tg'},{t:'Up to \u20AC75k',c:'tb'}] },
   { key:'revolut', name:'Revolut', short:'REV', favicon:'https://www.google.com/s2/favicons?domain=revolut.com&sz=64', fbColor:'#374151', fbBg:'#f3f4f6', url:'https://www.revolut.com/en-IE/personal-loans/', maxBorrow:30000, rateType:'Variable',
     rates:{ personal:{excellent:6.5,good:8.41,fair:12.99}, car:{excellent:6.5,good:8.41,fair:12.99}, home:{excellent:6.5,good:8.41,fair:12.99}, green:{excellent:6.5,good:8.41,fair:12.99}, holiday:{excellent:6.5,good:8.41,fair:12.99}, wedding:{excellent:6.5,good:8.41,fair:12.99} },
-    perks:'100% digital \u00B7 No early repayment fees', tags:[{t:'100% Digital',c:'ty'},{t:'No Hidden Fees',c:'tg'}] }
+    perks:'100% digital \u00B7 No early repayment fees', tags:[{t:'100% Digital',c:'ty'},{t:'No Hidden Fees',c:'tg'}] },
+  { key:'aib', name:'AIB', short:'AIB', favicon:'https://www.google.com/s2/favicons?domain=aib.ie&sz=64', fbColor:'#005c9c', fbBg:'#e8f0f8', url:'https://aib.ie/our-products/loans/personal-loan', maxBorrow:75000, rateType:'Variable',
+    rates:{ personal:{excellent:8.95,good:8.95,fair:8.95}, car:{excellent:8.95,good:8.95,fair:8.95}, home:{excellent:8.95,good:8.95,fair:8.95}, green:{excellent:6.4,good:6.4,fair:6.4}, holiday:{excellent:8.95,good:8.95,fair:8.95}, wedding:{excellent:8.95,good:8.95,fair:8.95} },
+    perks:'3-hour online decision \u00B7 1 repayment break per year', tags:[{t:'Fast Decision',c:'ty'},{t:'Fixed Rate Option',c:'tb'}] },
+  { key:'anpost', name:'An Post Money', short:'AP', favicon:'https://www.google.com/s2/favicons?domain=anpost.com&sz=64', fbColor:'#f4511e', fbBg:'#fff3f0', url:'https://www.anpost.com/Money/Loans', maxBorrow:75000, rateType:'Fixed',
+    rates:{ personal:{excellent:7.5,good:9.5,fair:14.0}, car:{excellent:7.5,good:9.5,fair:14.0}, home:{excellent:7.5,good:9.5,fair:14.0}, green:{excellent:5.5,good:7.0,fair:10.0}, holiday:{excellent:9.5,good:11.0,fair:14.0}, wedding:{excellent:9.5,good:11.0,fair:14.0} },
+    perks:'Green loans available \u00B7 1,000+ Post Office locations \u00B7 Fixed rate', tags:[{t:'Fixed Rate',c:'tg'},{t:'Nationwide',c:'tb'}] },
+  { key:'cu', name:'Credit Union (avg)', short:'CU', favicon:'https://www.google.com/s2/favicons?domain=creditunion.ie&sz=64', fbColor:'#006633', fbBg:'#e8f5ee', url:'https://www.creditunion.ie/loans/', maxBorrow:75000, rateType:'Variable',
+    rates:{ personal:{excellent:9.5,good:10.42,fair:11.5}, car:{excellent:9.0,good:10.0,fair:11.0}, home:{excellent:9.5,good:10.42,fair:11.5}, green:{excellent:8.0,good:9.0,fair:10.5}, holiday:{excellent:9.5,good:10.42,fair:11.5}, wedding:{excellent:9.5,good:10.42,fair:11.5} },
+    perks:'Not-for-profit \u00B7 Loan interest rebate possible \u00B7 Max 12.68% APR by law', tags:[{t:'Not-for-Profit',c:'tg'},{t:'Interest Rebate',c:'ty'}] }
 ];
 
 function compareLoanRates(){
@@ -596,18 +605,28 @@ function updateSaveAmount(v){ saveAmount=parseInt(v); document.getElementById('s
 function updateSaveTerm(v){ saveTerm=parseInt(v); document.getElementById('saveTermVal').textContent=v+(parseInt(v)===1?' year':' years'); }
 
 var SAVINGS=[
+  { key:'statesavings', name:'State Savings (NTMA)', short:'SS', favicon:'https://www.google.com/s2/favicons?domain=statesavings.ie&sz=64', fbColor:'#006633', fbBg:'#e8f5ee', url:'https://www.statesavings.ie/', maxDeposit:120000,
+    rates:{ instant:0.50, regular:0.50, fixed:1.76 },
+    taxFree:true,
+    perks:'100% Irish State-backed \u00B7 Tax-free returns \u00B7 No DIRT \u00B7 Up to \u20AC120k', tags:[{t:'TAX FREE',c:'tg'},{t:'State Backed',c:'tb'}] },
+  { key:'avant', name:'Avant/Bankinter', short:'AV', favicon:'https://www.google.com/s2/favicons?domain=avantmoney.ie&sz=64', fbColor:'#1a1a2e', fbBg:'#e8e8f5', url:'https://www.avantmoney.ie/', maxDeposit:200000,
+    rates:{ instant:0.0, regular:0.0, fixed:2.60 },
+    perks:'2.60% AER fixed 6-month term \u00B7 Min \u20AC2,000 \u00B7 One partial withdrawal allowed', tags:[{t:'Best Fixed Rate',c:'tg'},{t:'6-Month Term',c:'ty'}] },
   { key:'aib', name:'AIB', short:'AIB', favicon:'https://www.google.com/s2/favicons?domain=aib.ie&sz=64', fbColor:'#005c9c', fbBg:'#e8f0f8', url:'https://aib.ie/our-products/savings-and-deposits', maxDeposit:1000000,
     rates:{ instant:0.25, regular:3.00, fixed:2.50 },
-    perks:'3% AER regular saver (Online Saver) \u00B7 0.25% instant access \u00B7 €100k DGS', tags:[{t:'DGS Protected',c:'tg'},{t:'Regular Saver',c:'tb'}] },
+    perks:'3% AER regular saver (Online Saver) \u00B7 0.25% instant access \u00B7 \u20AC100k DGS', tags:[{t:'DGS Protected',c:'tg'},{t:'Regular Saver',c:'tb'}] },
   { key:'boi', name:'Bank of Ireland', short:'BOI', favicon:'https://www.google.com/s2/favicons?domain=bankofireland.com&sz=64', fbColor:'#005f9e', fbBg:'#e8f0f8', url:'https://personalbanking.bankofireland.com/save-and-invest/', maxDeposit:1000000,
     rates:{ instant:0.10, regular:3.00, fixed:2.24 },
-    perks:'SuperSaver 3% AER for 12 months \u00B7 0.10% instant access \u00B7 €100k DGS', tags:[{t:'DGS Protected',c:'tg'},{t:'SuperSaver',c:'tb'}] },
-  { key:'ptsb', name:'Permanent TSB', short:'PTSB', favicon:'https://www.google.com/s2/favicons?domain=ptsb.ie&sz=64', fbColor:'#7c3aed', fbBg:'#f0ebff', url:'https://www.ptsb.ie/saving-and-investing/', maxDeposit:1000000,
-    rates:{ instant:0.01, regular:2.00, fixed:2.00 },
-    perks:'0.01% instant access \u00B7 Regular Online Saver 2% AER \u00B7 €100k DGS', tags:[{t:'DGS Protected',c:'tg'},{t:'Instant Access',c:'tp'}] },
+    perks:'SuperSaver 3% AER for 12 months \u00B7 0.10% instant access \u00B7 \u20AC100k DGS', tags:[{t:'DGS Protected',c:'tg'},{t:'SuperSaver',c:'tb'}] },
   { key:'revolut', name:'Revolut', short:'REV', favicon:'https://www.google.com/s2/favicons?domain=revolut.com&sz=64', fbColor:'#374151', fbBg:'#f3f4f6', url:'https://www.revolut.com/en-IE/savings/open-a-savings-account/', maxDeposit:100000,
     rates:{ instant:1.50, regular:1.50, fixed:1.50 },
-    perks:'1.5–2.25% AER (Standard–Metal) paid daily \u00B7 No minimum \u00B7 Instant access', tags:[{t:'Paid Daily',c:'ty'},{t:'No Minimum',c:'tg'}] }
+    perks:'1.5\u20132.25% AER (Standard\u2013Metal) paid daily \u00B7 No minimum \u00B7 Instant access', tags:[{t:'Paid Daily',c:'ty'},{t:'No Minimum',c:'tg'}] },
+  { key:'ptsb', name:'Permanent TSB', short:'PTSB', favicon:'https://www.google.com/s2/favicons?domain=ptsb.ie&sz=64', fbColor:'#7c3aed', fbBg:'#f0ebff', url:'https://www.ptsb.ie/saving-and-investing/', maxDeposit:1000000,
+    rates:{ instant:0.01, regular:2.00, fixed:2.00 },
+    perks:'0.01% instant access \u00B7 Regular Online Saver 2% AER \u00B7 \u20AC100k DGS', tags:[{t:'DGS Protected',c:'tg'},{t:'Instant Access',c:'tp'}] },
+  { key:'cu', name:'Credit Union (avg)', short:'CU', favicon:'https://www.google.com/s2/favicons?domain=creditunion.ie&sz=64', fbColor:'#006633', fbBg:'#e8f5ee', url:'https://www.creditunion.ie/what-we-offer/savings/', maxDeposit:100000,
+    rates:{ instant:0.0, regular:1.00, fixed:1.50 },
+    perks:'Not-for-profit \u00B7 Annual dividend declared \u00B7 \u20AC100k DGS protected', tags:[{t:'DGS Protected',c:'tg'},{t:'Not-for-Profit',c:'ty'}] }
 ];
 
 function compareSavingsRates(){
@@ -619,10 +638,20 @@ function compareSavingsRates(){
     hideLoading('savingsLoading');
     var results=SAVINGS.map(function(s){
       var grossRate=s.rates[type];
-      var netRate=dirt?grossRate*(1-0.33):grossRate;
+      var unavailable=grossRate===0&&(type==='instant'&&s.key==='avant'||type==='instant'&&s.key==='cu'||type==='regular'&&s.key==='avant');
+      if(unavailable) return null;
+      var isTaxFree=s.taxFree&&dirt;
+      var netRate=(!isTaxFree&&dirt)?grossRate*(1-0.33):grossRate;
       var interest=saveAmount*(Math.pow(1+netRate/100,saveTerm)-1);
-      return {s:s,grossRate:grossRate,netRate:netRate,interest:interest,total:saveAmount+interest};
-    }).sort(function(a,b){return b.netRate-a.netRate;});
+      return {s:s,grossRate:grossRate,netRate:netRate,interest:interest,total:saveAmount+interest,isTaxFree:isTaxFree};
+    }).filter(Boolean).sort(function(a,b){return b.netRate-a.netRate;});
+    if(results.length===0){
+      var wrap=document.createElement('div');
+      wrap.innerHTML='<div class="ai-box" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:0.75rem">🔍</div><div style="font-size:1rem;font-weight:700;margin-bottom:0.5rem">No results for this combination</div><div style="font-size:0.85rem;color:var(--muted)">Try a different account type or adjust your filters.</div></div>';
+      document.getElementById('savingsResults').appendChild(wrap);
+      document.getElementById('savingsResults').className='results-visible';
+      return;
+    }
     var best=results[0];
     var typeLabel={instant:'Instant Access',regular:'Regular Saver',fixed:'Fixed Term'}[type];
     var wrap=document.createElement('div');
@@ -642,25 +671,27 @@ function compareSavingsRates(){
       var sub=document.createElement('div'); sub.className='sub'; sub.textContent=r.s.perks; info.appendChild(sub);
       var tgs=document.createElement('div'); tgs.className='tags';
       r.s.tags.forEach(function(t){ var s=document.createElement('span'); s.className='tag '+t.c; s.textContent=t.t; tgs.appendChild(s); });
+      if(r.isTaxFree){ var tf=document.createElement('span'); tf.className='tag tg'; tf.textContent='DIRT Exempt'; tgs.appendChild(tf); }
       info.appendChild(tgs); card.appendChild(info);
       var nums=document.createElement('div'); nums.className='rate-nums';
-      var rb=document.createElement('div'); rb.className='rate-big'; rb.innerHTML=r.netRate.toFixed(2)+'<span>% AER'+(dirt?' net':' gross')+'</span>'; nums.appendChild(rb);
+      var rb=document.createElement('div'); rb.className='rate-big'; rb.innerHTML=r.netRate.toFixed(2)+'<span>% AER'+(r.isTaxFree?' tax-free':dirt?' net':' gross')+'</span>'; nums.appendChild(rb);
       var rs=document.createElement('div'); rs.className='rate-sub'; rs.innerHTML='Interest earned: <strong>'+fe(r.interest)+'</strong>'; nums.appendChild(rs);
       var rh=document.createElement('div'); rh.className='rate-sub rate-highlight'; rh.innerHTML='Total after '+saveTerm+'yr: <strong>'+fe(r.total)+'</strong>'; nums.appendChild(rh);
       var btn=document.createElement('a'); btn.className='apply-btn'; btn.href=r.s.url; btn.target='_blank'; btn.rel='noopener'; btn.textContent='Open Account \u2192'; btn.style.borderColor='var(--accent3)'; btn.style.color='var(--accent3)'; nums.appendChild(btn);
       card.appendChild(nums); grid.appendChild(card);
     }); wrap.appendChild(grid);
+    var hasTaxFree=results.some(function(r){return r.isTaxFree;});
     var ai=document.createElement('div'); ai.className='ai-box';
-    ai.innerHTML='<div class="ai-header"><div class="ai-icon">\u2736</div><h3>AI Recommendation</h3></div><div class="ai-body">For <span class="hl">'+fe(saveAmount)+'</span> in a <span class="hl">'+typeLabel+'</span> over <span class="hl">'+saveTerm+' year'+(saveTerm>1?'s':'')+'</span>'+(dirt?' (after 33% DIRT tax)':'')+':<br><br><strong>\uD83C\uDFC6 '+best.s.name+'</strong> offers the best rate at <span class="hl">'+best.netRate.toFixed(2)+'% AER</span>, earning you <span class="hl">'+fe(best.interest)+'</span> in interest over the term.<br><br>\uD83D\uDCA1 <span class="hl">DIRT tip:</span> All Irish deposit interest is subject to 33% DIRT tax, deducted at source. State Savings products (An Post) are DIRT-exempt but not included here.<br><br>\uD83D\uDCCC Rates are variable. Always confirm the current rate directly with your provider before opening an account.</div>';
+    ai.innerHTML='<div class="ai-header"><div class="ai-icon">\u2736</div><h3>AI Recommendation</h3></div><div class="ai-body">For <span class="hl">'+fe(saveAmount)+'</span> in a <span class="hl">'+typeLabel+'</span> over <span class="hl">'+saveTerm+' year'+(saveTerm>1?'s':'')+'</span>'+(dirt?' (after 33% DIRT tax)':'')+':<br><br><strong>\uD83C\uDFC6 '+best.s.name+'</strong> offers the best rate at <span class="hl">'+best.netRate.toFixed(2)+'% AER</span>'+(best.isTaxFree?' (tax-free — no DIRT)':'')+', earning you <span class="hl">'+fe(best.interest)+'</span> in interest over the term.'+(hasTaxFree?'<br><br>\uD83C\uDDEE\uD83C\uDDEA <span class="hl">Tax-free tip:</span> <strong>State Savings (NTMA)</strong> returns are completely exempt from DIRT and CGT. They may have lower headline rates but the after-tax return is often competitive — especially for higher-rate taxpayers.':'')+'<br><br>\uD83D\uDCA1 <span class="hl">DIRT tip:</span> All other Irish deposit interest is subject to 33% DIRT tax, deducted at source.<br><br>\uD83D\uDCCC Rates are variable. Always confirm the current rate directly with your provider before opening an account.</div>';
     wrap.appendChild(ai);
     var tw=document.createElement('div'); tw.className='table-wrap';
     tw.innerHTML='<h3>Full Savings Breakdown</h3>'; var tbl=document.createElement('table');
-    tbl.innerHTML='<thead><tr><th>Provider</th><th>Gross AER</th><th>Net AER (after DIRT)</th><th>Interest Earned</th><th>Total Balance</th><th>Max Deposit</th></tr></thead>';
+    tbl.innerHTML='<thead><tr><th>Provider</th><th>Gross AER</th><th>Net/After-tax AER</th><th>Interest Earned</th><th>Total Balance</th><th>Tax Treatment</th></tr></thead>';
     var tb=document.createElement('tbody');
     results.forEach(function(r){ var tr=document.createElement('tr'); var isBest=r===results[0];
-      tr.innerHTML='<td><strong>'+r.s.name+'</strong></td><td class="mono">'+r.grossRate.toFixed(2)+'%</td><td class="'+(isBest?'best-td':'mono')+'">'+r.netRate.toFixed(2)+'%'+(isBest?' \u2605':'')+'</td><td class="mono">'+fe(r.interest)+'</td><td class="mono">'+fe(r.total)+'</td><td class="mono">\u20AC'+(r.s.maxDeposit/1000).toFixed(0)+'k</td>';
+      tr.innerHTML='<td><strong>'+r.s.name+'</strong></td><td class="mono">'+r.grossRate.toFixed(2)+'%</td><td class="'+(isBest?'best-td':'mono')+'">'+r.netRate.toFixed(2)+'%'+(isBest?' \u2605':'')+'</td><td class="mono">'+fe(r.interest)+'</td><td class="mono">'+fe(r.total)+'</td><td style="font-size:0.78rem">'+(r.isTaxFree?'<span style="color:var(--accent)">Tax-Free (DIRT Exempt)</span>':'DIRT 33%')+'</td>';
       tb.appendChild(tr); }); tbl.appendChild(tb); tw.appendChild(tbl); wrap.appendChild(tw);
-    wrap.innerHTML+=disclaimer(['aib.ie','bankofireland.com','ptsb.ie','revolut.com'],['AIB','Bank of Ireland','PTSB','Revolut'],['https://aib.ie/our-products/savings-and-deposits','https://personalbanking.bankofireland.com/save-and-invest/','https://www.ptsb.ie/saving-and-investing/','https://www.revolut.com/en-IE/savings/']);
+    wrap.innerHTML+=disclaimer(['statesavings.ie','avantmoney.ie','aib.ie','bankofireland.com','revolut.com','ptsb.ie','creditunion.ie'],['State Savings','Avant Money','AIB','Bank of Ireland','Revolut','PTSB','Credit Union'],['https://www.statesavings.ie/','https://www.avantmoney.ie/','https://aib.ie/our-products/savings-and-deposits','https://personalbanking.bankofireland.com/save-and-invest/','https://www.revolut.com/en-IE/savings/','https://www.ptsb.ie/saving-and-investing/','https://www.creditunion.ie/what-we-offer/savings/']);
     document.getElementById('savingsResults').appendChild(wrap);
     document.getElementById('savingsResults').className='results-visible';
   },700);
@@ -714,8 +745,18 @@ function compareInvestments(){
     hdr.innerHTML='<h2>Investment Platforms</h2><span class="results-count">'+results.length+' platforms compared</span>';
     wrap.appendChild(hdr);
     var grid=document.createElement('div'); grid.className='cards-grid';
-    results.forEach(function(r,i){
-      var card=document.createElement('div'); card.className='rate-card'+(i===0&&r.available?' best':'');
+    var availableResults=results.filter(function(r){return r.available;});
+    var unavailableResults=results.filter(function(r){return !r.available;});
+    if(availableResults.length===0){
+      var emptyBox=document.createElement('div'); emptyBox.className='ai-box'; emptyBox.style.textAlign='center'; emptyBox.style.padding='2rem';
+      emptyBox.innerHTML='<div style="font-size:2rem;margin-bottom:0.75rem">\uD83D\uDD0D</div><div style="font-size:1rem;font-weight:700;margin-bottom:0.5rem">No platforms available for '+typeLabel+'</div><div style="font-size:0.85rem;color:var(--muted)">None of the platforms we track currently support this asset type. Try switching to ETFs or Stocks.</div>';
+      wrap.appendChild(emptyBox);
+      document.getElementById('invResults').appendChild(wrap);
+      document.getElementById('invResults').className='results-visible';
+      return;
+    }
+    availableResults.forEach(function(r,i){
+      var card=document.createElement('div'); card.className='rate-card'+(i===0?' best':'');
       card.appendChild(makeLogo(r.p.favicon,r.p.name,r.p.short,r.p.fbColor,r.p.fbBg));
       var info=document.createElement('div'); info.className='bank-info';
       var bdg=document.createElement('div'); bdg.className='best-badge'; bdg.textContent='\u2605 Top Pick'; info.appendChild(bdg);
@@ -723,19 +764,33 @@ function compareInvestments(){
       var sub=document.createElement('div'); sub.className='sub'; sub.textContent=r.p.perks; info.appendChild(sub);
       var tgs=document.createElement('div'); tgs.className='tags';
       r.p.tags.forEach(function(t){ var s=document.createElement('span'); s.className='tag '+t.c; s.textContent=t.t; tgs.appendChild(s); });
-      if(!r.available){ var na=document.createElement('span'); na.className='tag tr'; na.textContent='No '+typeLabel; tgs.appendChild(na); }
       info.appendChild(tgs); card.appendChild(info);
       var nums=document.createElement('div'); nums.className='rate-nums';
-      if(r.available&&r.projValue){
+      if(r.projValue){
         var rb=document.createElement('div'); rb.className='rate-big'; rb.style.color='var(--accent2)'; rb.innerHTML=fe(r.projValue)+'<span> proj.</span>'; nums.appendChild(rb);
         var rs=document.createElement('div'); rs.className='rate-sub'; rs.innerHTML='Est. gain: <strong style="color:var(--accent2)">+'+fe(r.projGain)+'</strong>'; nums.appendChild(rs);
         var rh=document.createElement('div'); rh.className='rate-sub'; rh.innerHTML='Trade fee: <strong>'+(r.fee===0?'Free':'\u20AC'+r.fee.toFixed(2))+'</strong>'; nums.appendChild(rh);
-      } else {
-        var na2=document.createElement('div'); na2.className='rate-sub'; na2.textContent='Not available for this type'; nums.appendChild(na2);
       }
       var btn=document.createElement('a'); btn.className='apply-btn'; btn.href=r.p.url; btn.target='_blank'; btn.rel='noopener'; btn.textContent='Open Account \u2192'; btn.style.borderColor='var(--accent2)'; btn.style.color='var(--accent2)'; nums.appendChild(btn);
       card.appendChild(nums); grid.appendChild(card);
-    }); wrap.appendChild(grid);
+    });
+    if(unavailableResults.length>0){
+      var divider=document.createElement('div');
+      divider.style.cssText='font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);padding:0.5rem 0 0.25rem;border-top:1px solid var(--border);margin-top:0.25rem';
+      divider.textContent='Not available for '+typeLabel;
+      grid.appendChild(divider);
+      unavailableResults.forEach(function(r){
+        var card=document.createElement('div'); card.className='rate-card'; card.style.opacity='0.45';
+        card.appendChild(makeLogo(r.p.favicon,r.p.name,r.p.short,r.p.fbColor,r.p.fbBg));
+        var info=document.createElement('div'); info.className='bank-info';
+        var h4=document.createElement('h4'); h4.textContent=r.p.name; info.appendChild(h4);
+        var sub=document.createElement('div'); sub.className='sub'; sub.textContent='Does not offer '+typeLabel+' trading'; info.appendChild(sub);
+        card.appendChild(info);
+        var nums=document.createElement('div'); nums.className='rate-nums';
+        var na=document.createElement('div'); na.className='rate-sub'; na.textContent='N/A'; nums.appendChild(na);
+        card.appendChild(nums); grid.appendChild(card);
+      });
+    } wrap.appendChild(grid);
     var ai=document.createElement('div'); ai.className='ai-box';
     var aiTxt=best?'For <span class="hl">'+fe(invAmount)+'</span> in <span class="hl">'+typeLabel+'</span> over <span class="hl">'+invTerm+' year'+(invTerm>1?'s':'')+'</span> with <span class="hl">'+riskLabel+'</span>:<br><br><strong>\uD83C\uDFC6 '+best.p.name+'</strong> is the top pick with a projected value of <span class="hl">'+fe(best.projValue)+'</span> — an estimated gain of <span class="hl">'+fe(best.projGain)+'</span>.<br><br>\uD83C\uDDEE\uD83C\uDDEA <span class="wn">Irish tax note:</span> ETF and fund gains in Ireland are subject to <strong>Exit Tax at 41%</strong> every 8 years (deemed disposal rule), not CGT. Direct stocks are subject to CGT at 33%. This significantly impacts net returns — always factor this into your planning.<br><br>\uD83D\uDCCC These projections are illustrative only based on historical averages. Past performance does not guarantee future results.':'No platforms available for this combination.';
     ai.innerHTML='<div class="ai-header"><div class="ai-icon">\u2736</div><h3>AI Recommendation</h3></div><div class="ai-body">'+aiTxt+'</div>';
@@ -752,9 +807,12 @@ function updateCardBal(v){ cardBal=parseInt(v); document.getElementById('cardBal
 
 var CARDS=[
   { key:'aib', name:'AIB Click Visa', short:'AIB', favicon:'https://www.google.com/s2/favicons?domain=aib.ie&sz=64', fbColor:'#005c9c', fbBg:'#e8f0f8', url:'https://aib.ie/our-products/credit-cards/click-visa', purchaseAPR:14.16, annualFee:0, introOffer:'0% for 6 months on purchases', rewards:'None', perks:'Lowest APR in Ireland \u00B7 No annual fee \u00B7 56 days interest-free', tags:[{t:'Lowest APR',c:'tg'},{t:'No Annual Fee',c:'tb'}] },
+  { key:'revolut', name:'Revolut Credit', short:'REV', favicon:'https://www.google.com/s2/favicons?domain=revolut.com&sz=64', fbColor:'#374151', fbBg:'#f3f4f6', url:'https://www.revolut.com/en-IE/credit-card/', purchaseAPR:17.99, annualFee:0, introOffer:'0% for 3 months', rewards:'FX fee-free globally', perks:'No annual fee \u00B7 0% for 3 months \u00B7 Best FX rates globally', tags:[{t:'No Annual Fee',c:'ty'},{t:'FX-Free',c:'tg'}] },
   { key:'boi', name:'BOI Classic', short:'BOI', favicon:'https://www.google.com/s2/favicons?domain=bankofireland.com&sz=64', fbColor:'#005f9e', fbBg:'#e8f0f8', url:'https://personalbanking.bankofireland.com/borrow/credit-cards/classic-credit-card/', purchaseAPR:22.1, annualFee:30, introOffer:'0% for 6 months', rewards:'Instalment plan at 6.9%', perks:'Instalment plan \u00B7 0% intro offer \u00B7 Add 3 extra cardholders', tags:[{t:'0% Intro',c:'ty'},{t:'Instalment Plan',c:'tb'}] },
   { key:'ptsb', name:'PTSB ICE Visa', short:'PTSB', favicon:'https://www.google.com/s2/favicons?domain=ptsb.ie&sz=64', fbColor:'#7c3aed', fbBg:'#f0ebff', url:'https://www.ptsb.ie/everyday-banking/credit-cards/ice-visa-credit-card/', purchaseAPR:22.53, annualFee:30, introOffer:'0% on balance transfers for 6 months', rewards:'5c cashback per in-store purchase', perks:'Cashback on purchases \u00B7 0% balance transfers 6mo \u00B7 Free 2nd card', tags:[{t:'Cashback',c:'tp'},{t:'0% BT 6mo',c:'tg'}] },
-  { key:'revolut', name:'Revolut Credit', short:'REV', favicon:'https://www.google.com/s2/favicons?domain=revolut.com&sz=64', fbColor:'#374151', fbBg:'#f3f4f6', url:'https://www.revolut.com/en-IE/credit-card/', purchaseAPR:17.99, annualFee:0, introOffer:'0% for 3 months', rewards:'FX fee-free globally', perks:'No annual fee \u00B7 0% for 3 months \u00B7 Best FX rates globally', tags:[{t:'No Annual Fee',c:'ty'},{t:'FX-Free',c:'tg'}] }
+  { key:'anpostclassic', name:'An Post Classic', short:'AP', favicon:'https://www.google.com/s2/favicons?domain=anpost.com&sz=64', fbColor:'#f4511e', fbBg:'#fff3f0', url:'https://www.anpost.com/Money/Credit-Card', purchaseAPR:22.9, annualFee:30, introOffer:'0% on balance transfers for 12 months', rewards:'56 days interest-free', perks:'0% balance transfers 12 months \u00B7 Up to 3 extra cardholders free', tags:[{t:'0% BT 12mo',c:'tg'},{t:'Free Extra Cards',c:'tb'}] },
+  { key:'anpostflex', name:'An Post Flex', short:'APF', favicon:'https://www.google.com/s2/favicons?domain=anpost.com&sz=64', fbColor:'#f4511e', fbBg:'#fff3f0', url:'https://www.anpost.com/Money/Credit-Card/Flex-Purchase-Offer', purchaseAPR:22.9, annualFee:30, introOffer:'0% on purchases for 9 months', rewards:'Instalment plan option', perks:'0% purchases for 9 months \u00B7 Instalment plan on purchases \u00B7 4x winner Best Credit Card 2022\u20132025', tags:[{t:'0% Purchases 9mo',c:'tg'},{t:'Award Winner',c:'ty'}] },
+  { key:'avanteveryday', name:'Avant Everyday+', short:'AV+', favicon:'https://www.google.com/s2/favicons?domain=avantmoney.ie&sz=64', fbColor:'#1a1a2e', fbBg:'#e8e8f5', url:'https://www.avantmoney.ie/credit-cards/everydayplus', purchaseAPR:22.9, annualFee:0, introOffer:'5% cashback on groceries (first 12mo)', rewards:'5% groceries cashback (max \u20AC25/mo), 0.1% all spend', perks:'5% grocery cashback \u00B7 No annual fee \u00B7 Stamp duty refunded \u00B7 56 days interest-free', tags:[{t:'5% Cashback',c:'tg'},{t:'No Annual Fee',c:'ty'}] }
 ];
 
 function compareCards(){
