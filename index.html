@@ -23,17 +23,9 @@
 body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 body::before { content:''; position:fixed; inset:0; background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,200,150,0.07) 0%, transparent 60%); pointer-events:none; z-index:0; }
 
-/* HEADER */
-header { position:sticky; top:0; z-index:100; padding:0 1.5rem; border-bottom:1px solid var(--border); background:rgba(8,13,22,0.95); backdrop-filter:blur(16px); display:flex; align-items:center; justify-content:space-between; height:60px; }
-.logo { font-size:1.2rem; font-weight:800; letter-spacing:-0.04em; display:flex; align-items:center; gap:0.4rem; cursor:pointer; }
+/* NAV LOGO DOT */
 .logo-dot { width:8px; height:8px; background:var(--accent); border-radius:50%; box-shadow:0 0 8px var(--accent); animation:pulse 2s ease-in-out infinite; }
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.8)} }
-.logo span { color:var(--accent); }
-.header-right { display:flex; align-items:center; gap:0.75rem; }
-.badge { font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--accent); background:rgba(0,200,150,0.08); border:1px solid rgba(0,200,150,0.2); padding:3px 10px; border-radius:20px; white-space:nowrap; }
-.back-btn { display:none; align-items:center; gap:0.4rem; font-size:0.8rem; font-weight:600; color:var(--muted); cursor:pointer; padding:5px 10px; border-radius:8px; border:1px solid var(--border); transition:all 0.2s; }
-.back-btn:hover { color:var(--text); border-color:var(--accent); }
-.back-btn.visible { display:flex; }
 
 /* PAGES */
 .page { display:none; animation:fadeUp 0.3s ease forwards; }
@@ -194,7 +186,33 @@ td.mono { font-family:'JetBrains Mono',monospace; }
 }
 @media(max-width:380px) { .products-grid { grid-template-columns:1fr; } }
 
-/* ADVISOR PAGE */
+/* ── NAV ── */
+nav { background:var(--surface); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
+.nav-inner { max-width:900px; margin:0 auto; padding:0 1.25rem; display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { display:flex; align-items:center; gap:0.5rem; font-size:1rem; font-weight:900; letter-spacing:-0.03em; cursor:pointer; flex-shrink:0; white-space:nowrap; }
+.nav-logo span { color:var(--accent); }
+.nav-logo .logo-dot { width:8px; height:8px; background:var(--accent); border-radius:50%; }
+.nav-right { display:flex; align-items:center; gap:0.75rem; }
+.nav-cta-btn { padding:0.4rem 0.9rem; background:rgba(167,139,250,0.12); color:#a78bfa; border:1px solid rgba(167,139,250,0.25); border-radius:7px; font-size:0.75rem; font-weight:700; cursor:pointer; transition:all 0.15s; white-space:nowrap; font-family:'Inter',sans-serif; }
+.nav-cta-btn:hover { background:rgba(167,139,250,0.2); color:#c4b5fd; }
+.hamburger { display:flex; flex-direction:column; gap:5px; cursor:pointer; padding:6px; border-radius:8px; border:1px solid var(--border); background:var(--surface2); transition:all 0.15s; }
+.hamburger:hover { border-color:var(--accent); }
+.hamburger span { display:block; width:20px; height:2px; background:var(--muted); border-radius:2px; transition:all 0.25s; }
+.hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); background:var(--text); }
+.hamburger.open span:nth-child(2) { opacity:0; }
+.hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); background:var(--text); }
+.nav-drawer { display:none; position:fixed; top:56px; left:0; right:0; bottom:0; z-index:99; }
+.nav-drawer.open { display:block; }
+.nav-overlay { position:absolute; inset:0; background:rgba(8,13,22,0.7); backdrop-filter:blur(4px); }
+.nav-menu { position:absolute; top:0; right:0; width:280px; height:100%; background:var(--surface); border-left:1px solid var(--border); padding:1rem 0; overflow-y:auto; animation:slideIn 0.22s ease forwards; }
+@keyframes slideIn { from{transform:translateX(100%)} to{transform:translateX(0)} }
+.nav-menu-item { display:flex; align-items:center; gap:0.75rem; padding:0.85rem 1.5rem; font-size:0.88rem; font-weight:600; color:var(--muted); cursor:pointer; transition:all 0.15s; border-left:3px solid transparent; }
+.nav-menu-item:hover { color:var(--text); background:rgba(255,255,255,0.03); }
+.nav-menu-item.active { color:var(--accent); border-left-color:var(--accent); background:rgba(0,200,150,0.04); }
+.nav-menu-item .nav-icon { font-size:1.1rem; width:24px; text-align:center; flex-shrink:0; }
+.nav-divider { height:1px; background:var(--border); margin:0.5rem 1.5rem; }
+.nav-badge { display:inline-block; font-size:0.55rem; font-weight:800; background:var(--accent); color:#080d16; border-radius:4px; padding:1px 5px; margin-left:auto; text-transform:uppercase; letter-spacing:0.05em; }
+
 .advisor-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:1.5rem; margin-bottom:1.5rem; box-shadow:var(--card-shadow); }
 .advisor-card h3 { font-size:0.9rem; font-weight:700; margin-bottom:1.25rem; display:flex; align-items:center; gap:0.5rem; }
 .advisor-card h3::before { content:''; width:3px; height:14px; background:#a78bfa; border-radius:2px; display:inline-block; }
@@ -248,20 +266,102 @@ textarea.form-input { resize:vertical; min-height:90px; }
 .lender-chip { font-size:0.75rem; font-weight:700; padding:5px 12px; border-radius:6px; border:1px solid var(--border); background:var(--surface2); color:var(--muted); cursor:pointer; transition:all 0.15s; }
 .lender-chip:hover { border-color:#a78bfa; color:var(--text); }
 .lender-chip.selected { background:rgba(167,139,250,0.12); border-color:#a78bfa; color:#a78bfa; }
+/* ── BEST RATES TICKER ── */
+.best-rates-bar { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:1.25rem 1.5rem; margin-bottom:1.5rem; }
+.best-rates-bar h3 { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); margin-bottom:1rem; }
+.best-rates-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:0.75rem; }
+.br-item { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:0.85rem 1rem; cursor:pointer; transition:all 0.2s; }
+.br-item:hover { border-color:var(--accent); transform:translateY(-1px); }
+.br-cat { font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); margin-bottom:0.3rem; }
+.br-val { font-family:'JetBrains Mono',monospace; font-size:1.3rem; font-weight:500; line-height:1; margin-bottom:0.2rem; }
+.br-who { font-size:0.72rem; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+/* ── MORTGAGES ── */
+.mortgage-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:1.25rem; display:grid; grid-template-columns:56px 1fr auto; gap:0.75rem 1rem; align-items:start; transition:all 0.2s; position:relative; }
+.mortgage-card:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(0,0,0,0.3); }
+.mortgage-card.best { border-color:#34d399; background:linear-gradient(135deg,rgba(52,211,153,0.04),var(--surface)); }
+.mortgage-best-badge { display:none; font-size:0.6rem; font-weight:800; letter-spacing:0.1em; color:#34d399; background:rgba(52,211,153,0.1); padding:3px 8px; border-radius:4px; border:1px solid rgba(52,211,153,0.25); text-transform:uppercase; width:fit-content; margin-bottom:0.3rem; }
+.mortgage-card.best .mortgage-best-badge { display:block; }
+.mortgage-rate-big { font-family:'JetBrains Mono',monospace; font-size:1.6rem; font-weight:500; line-height:1; color:#34d399; white-space:nowrap; }
+.mortgage-rate-big span { font-size:0.8rem; color:var(--muted); font-weight:400; }
+.mortgage-aprc { font-size:0.72rem; color:var(--muted); font-family:'JetBrains Mono',monospace; margin-bottom:0.2rem; }
+.green-badge { font-size:0.62rem; font-weight:700; padding:2px 7px; border-radius:4px; background:rgba(52,211,153,0.1); color:#34d399; border:1px solid rgba(52,211,153,0.2); text-transform:uppercase; letter-spacing:0.04em; }
+.cashback-badge { font-size:0.62rem; font-weight:700; padding:2px 7px; border-radius:4px; background:rgba(245,158,11,0.1); color:#fbbf24; border:1px solid rgba(245,158,11,0.2); text-transform:uppercase; letter-spacing:0.04em; }
+.mortgage-apply { display:inline-block; margin-top:0.6rem; padding:6px 14px; border:1px solid #34d399; color:#34d399; border-radius:7px; text-decoration:none; font-size:0.75rem; font-weight:700; transition:all 0.18s; white-space:nowrap; }
+.mortgage-apply:hover { background:#34d399; color:var(--bg); }
+
+/* ── ELIGIBILITY ── */
+.elig-step { display:none; }
+.elig-step.active { display:block; animation:fadeUp 0.3s ease forwards; }
+.elig-progress { display:flex; gap:0.4rem; margin-bottom:1.5rem; }
+.elig-dot { flex:1; height:4px; border-radius:2px; background:var(--border); transition:background 0.3s; }
+.elig-dot.done { background:var(--accent); }
+.elig-dot.active { background:var(--accent); opacity:0.5; }
+.elig-question { font-size:1.05rem; font-weight:800; letter-spacing:-0.02em; margin-bottom:0.5rem; }
+.elig-sub { font-size:0.82rem; color:var(--muted); margin-bottom:1.25rem; }
+.elig-options { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; margin-bottom:1.25rem; }
+@media(max-width:420px){ .elig-options { grid-template-columns:1fr; } }
+.elig-opt { background:var(--surface2); border:2px solid var(--border); border-radius:10px; padding:0.85rem 1rem; cursor:pointer; transition:all 0.15s; font-size:0.88rem; font-weight:600; text-align:center; }
+.elig-opt:hover { border-color:var(--accent); color:var(--accent); }
+.elig-opt.selected { border-color:var(--accent); background:rgba(0,200,150,0.08); color:var(--accent); }
+.elig-nav { display:flex; gap:0.75rem; }
+.elig-back-btn { flex:1; padding:0.75rem; background:transparent; border:1px solid var(--border); color:var(--muted); border-radius:10px; font-family:'Inter',sans-serif; font-size:0.9rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
+.elig-back-btn:hover { border-color:var(--accent); color:var(--text); }
+.elig-next-btn { flex:2; padding:0.75rem; background:var(--accent); border:none; color:#080d16; border-radius:10px; font-family:'Inter',sans-serif; font-size:0.9rem; font-weight:800; cursor:pointer; transition:all 0.2s; }
+.elig-next-btn:hover { background:#00e0aa; }
+.elig-result { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:1.5rem; margin-bottom:1rem; }
+.elig-meter { height:10px; background:var(--surface2); border-radius:5px; margin:1rem 0; overflow:hidden; }
+.elig-meter-fill { height:100%; border-radius:5px; transition:width 1s ease; }
+.elig-score-label { font-size:2rem; font-weight:900; letter-spacing:-0.04em; margin-bottom:0.25rem; }
+
+/* ── CALCULATORS ── */
+.calc-tabs { display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:1.5rem; }
+.calc-tab { padding:0.5rem 1rem; border-radius:8px; border:1px solid var(--border); background:var(--surface2); color:var(--muted); font-size:0.8rem; font-weight:700; cursor:pointer; transition:all 0.15s; white-space:nowrap; }
+.calc-tab.active { background:var(--accent); border-color:var(--accent); color:#080d16; }
+.calc-tab:hover:not(.active) { border-color:var(--accent); color:var(--text); }
+.calc-panel { display:none; }
+.calc-panel.active { display:block; animation:fadeUp 0.25s ease forwards; }
+.result-row { display:flex; justify-content:space-between; align-items:center; padding:0.6rem 0; border-bottom:1px solid rgba(28,42,62,0.6); font-size:0.85rem; }
+.result-row:last-child { border-bottom:none; }
+.result-row .label { color:var(--muted); }
+.result-row .value { font-family:'JetBrains Mono',monospace; font-weight:600; }
+.result-row .value.accent { color:var(--accent); font-size:1.1rem; }
+.result-row .value.warn { color:#fbbf24; }
+.result-box { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:1.1rem 1.25rem; margin-top:1rem; }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo" onclick="goHome()">
-    <div class="logo-dot"></div>
-    <div>Rate<span>Radar</span> Ireland</div>
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showPage('homePage')">
+      <div class="logo-dot"></div>
+      <div>Rate<span>Radar</span></div>
+    </div>
+    <div class="nav-right">
+      <button class="nav-cta-btn" onclick="showPage('advisorPage')">&#129309; Talk to an Advisor</button>
+      <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
   </div>
-  <div class="header-right">
-    <div class="back-btn" id="backBtn" onclick="goHome()">&#8592; Home</div>
-    <div class="badge">Rates verified Mar 2026</div>
+</nav>
+
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-overlay" onclick="closeMenu()"></div>
+  <div class="nav-menu">
+    <div class="nav-menu-item" id="nav-loans" onclick="showPage('loansPage');closeMenu()"><span class="nav-icon">&#128176;</span>Personal Loans</div>
+    <div class="nav-menu-item" id="nav-savings" onclick="showPage('savingsPage');closeMenu()"><span class="nav-icon">&#127987;</span>Savings</div>
+    <div class="nav-menu-item" id="nav-investments" onclick="showPage('investmentsPage');closeMenu()"><span class="nav-icon">&#128200;</span>Investments</div>
+    <div class="nav-menu-item" id="nav-cards" onclick="showPage('cardsPage');closeMenu()"><span class="nav-icon">&#128179;</span>Credit Cards</div>
+    <div class="nav-divider"></div>
+    <div class="nav-menu-item" id="nav-mortgages" onclick="showPage('mortgagesPage');closeMenu()"><span class="nav-icon">&#127968;</span>Mortgages</div>
+    <div class="nav-menu-item" id="nav-eligibility" onclick="showPage('eligibilityPage');closeMenu()"><span class="nav-icon">&#9989;</span>Eligibility <span class="nav-badge">New</span></div>
+    <div class="nav-menu-item" id="nav-calculators" onclick="showPage('calculatorsPage');closeMenu()"><span class="nav-icon">&#129518;</span>Calculator</div>
+    <div class="nav-divider"></div>
+    <div class="nav-menu-item" onclick="showPage('advisorPage');closeMenu()" style="color:#a78bfa"><span class="nav-icon">&#129309;</span>Talk to an Advisor</div>
   </div>
-</header>
+</div>
 
 <!-- HOME PAGE -->
 <div class="page active" id="homePage">
@@ -279,7 +379,7 @@ textarea.form-input { resize:vertical; min-height:90px; }
         <h3>Personal Loans</h3>
         <p>Compare personal loan APRs from Ireland's top lenders and find the lowest monthly repayment.</p>
         <div class="product-stats">
-          <span class="product-stat">From 6.7% APR</span>
+          <span class="product-stat">From 6.2% APR</span>
           <span class="product-stat">7 lenders</span>
         </div>
       </div>
@@ -329,6 +429,73 @@ textarea.form-input { resize:vertical; min-height:90px; }
         </div>
       </div>
 
+    </div>
+  </div>
+</div>
+
+<!-- BEST RATES PAGE -->
+<div class="page" id="bestRatesPage">
+  <div class="inner-container">
+    <div class="page-title">
+      <div class="page-title-icon" style="background:rgba(0,200,150,0.1)">&#9889;</div>
+      <div><h2>Best Rates</h2><p>The single best rate in every category right now — March 2026</p></div>
+    </div>
+    <div class="best-rates-bar" style="margin-bottom:2rem">
+      <div class="best-rates-grid">
+        <div class="br-item" onclick="showPage('mortgagesPage')">
+          <div class="br-cat">&#127968; Mortgage</div>
+          <div class="br-val" style="color:#34d399">3.15%</div>
+          <div class="br-who">Avant Money · Variable</div>
+        </div>
+        <div class="br-item" onclick="showPage('loansPage')">
+          <div class="br-cat">&#128176; Personal Loan</div>
+          <div class="br-val" style="color:var(--accent)">6.2%</div>
+          <div class="br-who">PTSB · APR</div>
+        </div>
+        <div class="br-item" onclick="showPage('savingsPage')">
+          <div class="br-cat">&#127987; Regular Saver</div>
+          <div class="br-val" style="color:var(--accent3)">3.00%</div>
+          <div class="br-who">AIB / BOI · AER</div>
+        </div>
+        <div class="br-item" onclick="showPage('savingsPage')">
+          <div class="br-cat">&#127809; Tax-Free Savings</div>
+          <div class="br-val" style="color:#34d399">1.76%</div>
+          <div class="br-who">State Savings · 5yr cert</div>
+        </div>
+        <div class="br-item" onclick="showPage('savingsPage')">
+          <div class="br-cat">&#127974; Fixed Term Savings</div>
+          <div class="br-val" style="color:var(--accent3)">2.60%</div>
+          <div class="br-who">Avant/Bankinter · AER</div>
+        </div>
+        <div class="br-item" onclick="showPage('cardsPage')">
+          <div class="br-cat">&#128179; Credit Card APR</div>
+          <div class="br-val" style="color:var(--accent4)">14.16%</div>
+          <div class="br-who">AIB Click Visa</div>
+        </div>
+        <div class="br-item" onclick="showPage('investmentsPage')">
+          <div class="br-cat">&#128200; ETF Trading Fee</div>
+          <div class="br-val" style="color:var(--accent2)">€0</div>
+          <div class="br-who">DEGIRO · Free</div>
+        </div>
+        <div class="br-item" onclick="showPage('mortgagesPage')">
+          <div class="br-cat">&#127968; Fixed Mortgage</div>
+          <div class="br-val" style="color:#34d399">3.10%</div>
+          <div class="br-who">BOI · 4yr, BER A/B</div>
+        </div>
+        <div class="br-item" onclick="showPage('mortgagesPage')">
+          <div class="br-cat">&#127807; Green Mortgage</div>
+          <div class="br-val" style="color:#34d399">3.10%</div>
+          <div class="br-who">BOI · BER A/B discount</div>
+        </div>
+        <div class="br-item" onclick="showPage('mortgagesPage')">
+          <div class="br-cat">&#127881; Mortgage Cashback</div>
+          <div class="br-val" style="color:#fbbf24">3%</div>
+          <div class="br-who">BOI / EBS</div>
+        </div>
+      </div>
+    </div>
+    <div style="background:rgba(0,200,150,0.04);border:1px solid rgba(0,200,150,0.15);border-radius:12px;padding:1.1rem 1.25rem;font-size:0.8rem;color:var(--muted);line-height:1.7">
+      ℹ️ Rates shown are indicative and verified from official lender sources in March 2026. Click any tile to go to the full comparison for that product. Rates change frequently — always confirm directly with the lender before applying.
     </div>
   </div>
 </div>
@@ -521,7 +688,232 @@ textarea.form-input { resize:vertical; min-height:90px; }
   </div>
 </div>
 
-<!-- LOANS PAGE -->
+<!-- MORTGAGES PAGE -->
+<div class="page" id="mortgagesPage">
+  <div class="inner-container">
+    <div class="page-title">
+      <div class="page-title-icon" style="background:rgba(52,211,153,0.1)">&#127968;</div>
+      <div><h2 style="color:#34d399">Mortgages</h2><p>Compare Irish mortgage rates — verified March 2026</p></div>
+    </div>
+    <div class="calc-card">
+      <h3 style="--accent:#34d399">Configure Your Mortgage</h3>
+      <div class="inputs-grid">
+        <div class="input-group">
+          <label>Property Value</label>
+          <div class="range-wrap">
+            <span class="range-val" id="mortPropVal">&#8364;350,000</span>
+            <input type="range" id="mortPropRange" min="100000" max="1000000" step="5000" value="350000" oninput="updateMort('prop',this.value)">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Deposit</label>
+          <div class="range-wrap">
+            <span class="range-val" id="mortDepVal">&#8364;35,000 (10%)</span>
+            <input type="range" id="mortDepRange" min="5" max="50" step="1" value="10" oninput="updateMort('dep',this.value)">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Mortgage Term</label>
+          <div class="range-wrap">
+            <span class="range-val" id="mortTermVal">30 years</span>
+            <input type="range" id="mortTermRange" min="5" max="35" step="1" value="30" oninput="updateMort('term',this.value)">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Rate Type</label>
+          <div class="select-wrap">
+            <select id="mortRateType">
+              <option value="fixed3">3-Year Fixed</option>
+              <option value="fixed4" selected>4-Year Fixed</option>
+              <option value="fixed5">5-Year Fixed</option>
+              <option value="fixed7">7-Year Fixed</option>
+              <option value="variable">Variable</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Buyer Type</label>
+          <div class="select-wrap">
+            <select id="mortBuyerType">
+              <option value="ftb">First-Time Buyer</option>
+              <option value="mover">Home Mover</option>
+              <option value="switcher">Switcher</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>BER Rating</label>
+          <div class="select-wrap">
+            <select id="mortBer">
+              <option value="ab">A or B (Green)</option>
+              <option value="cd" selected>C or D</option>
+              <option value="ef">E, F or G</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <button class="calc-btn" style="background:#34d399;color:#080d16" onclick="compareMortgages()">&#127968; Compare Mortgage Rates</button>
+    </div>
+    <div class="loading" id="mortLoading"><div class="spinner" style="border-top-color:#34d399"></div><p>Comparing mortgage rates...</p></div>
+    <div id="mortResults" class="results-hidden"></div>
+  </div>
+</div>
+
+<!-- ELIGIBILITY PAGE -->
+<div class="page" id="eligibilityPage">
+  <div class="inner-container" style="max-width:640px">
+    <div class="page-title">
+      <div class="page-title-icon" style="background:rgba(251,191,36,0.1)">&#9989;</div>
+      <div><h2>Am I Eligible?</h2><p>Answer a few questions to see what you're likely to qualify for</p></div>
+    </div>
+    <div class="calc-card" id="eligCard">
+      <div class="elig-progress" id="eligProgress"></div>
+      <div id="eligSteps"></div>
+      <div class="elig-nav" id="eligNav">
+        <button class="elig-back-btn" id="eligBackBtn" onclick="eligBack()" style="display:none">&#8592; Back</button>
+        <button class="elig-next-btn" id="eligNextBtn" onclick="eligNext()">Next &#8594;</button>
+      </div>
+    </div>
+    <div id="eligResult" style="display:none"></div>
+  </div>
+</div>
+
+<!-- CALCULATORS PAGE -->
+<div class="page" id="calculatorsPage">
+  <div class="inner-container">
+    <div class="page-title">
+      <div class="page-title-icon" style="background:rgba(96,165,250,0.1)">&#129518;</div>
+      <div><h2>Calculators</h2><p>Irish-specific financial calculators with 2026 tax rates</p></div>
+    </div>
+    <div class="calc-tabs" id="calcTabs">
+      <div class="calc-tab active" onclick="switchCalc('mortgage')">&#127968; Mortgage</div>
+      <div class="calc-tab" onclick="switchCalc('stampduty')">&#128196; Stamp Duty</div>
+      <div class="calc-tab" onclick="switchCalc('dirt')">&#127868; DIRT</div>
+      <div class="calc-tab" onclick="switchCalc('pension')">&#129312; Pension</div>
+      <div class="calc-tab" onclick="switchCalc('borrow')">&#128176; Borrowing Power</div>
+    </div>
+
+    <!-- MORTGAGE REPAYMENT CALC -->
+    <div class="calc-panel active" id="calc-mortgage">
+      <div class="calc-card">
+        <h3>Mortgage Repayment Calculator</h3>
+        <div class="inputs-grid">
+          <div class="input-group"><label>Mortgage Amount</label>
+            <div class="range-wrap"><span class="range-val" id="cMortAmt">&#8364;300,000</span>
+            <input type="range" min="50000" max="800000" step="5000" value="300000" oninput="cMortAmt=parseInt(this.value);document.getElementById('cMortAmt').textContent=fe(cMortAmt);runCalc('mortgage')"></div></div>
+          <div class="input-group"><label>Interest Rate</label>
+            <div class="range-wrap"><span class="range-val" id="cMortRate">3.50%</span>
+            <input type="range" min="1" max="10" step="0.05" value="3.50" oninput="cMortRate=parseFloat(this.value);document.getElementById('cMortRate').textContent=cMortRate.toFixed(2)+'%';runCalc('mortgage')"></div></div>
+          <div class="input-group"><label>Term</label>
+            <div class="range-wrap"><span class="range-val" id="cMortTerm">30 years</span>
+            <input type="range" min="5" max="35" step="1" value="30" oninput="cMortTerm=parseInt(this.value);document.getElementById('cMortTerm').textContent=cMortTerm+' year'+(cMortTerm>1?'s':'');runCalc('mortgage')"></div></div>
+          <div class="input-group"><label>Repayment Type</label>
+            <div class="select-wrap"><select id="cMortType" onchange="runCalc('mortgage')">
+              <option value="repayment">Capital &amp; Interest</option>
+              <option value="interest">Interest Only</option>
+            </select></div></div>
+        </div>
+      </div>
+      <div class="result-box" id="res-mortgage"></div>
+    </div>
+
+    <!-- STAMP DUTY CALC -->
+    <div class="calc-panel" id="calc-stampduty">
+      <div class="calc-card">
+        <h3>Stamp Duty Calculator</h3>
+        <div class="inputs-grid">
+          <div class="input-group"><label>Property Value</label>
+            <div class="range-wrap"><span class="range-val" id="cSdVal">&#8364;350,000</span>
+            <input type="range" min="50000" max="2000000" step="5000" value="350000" oninput="cSdVal=parseInt(this.value);document.getElementById('cSdVal').textContent=fe(cSdVal);runCalc('stampduty')"></div></div>
+          <div class="input-group"><label>Property Type</label>
+            <div class="select-wrap"><select id="cSdType" onchange="runCalc('stampduty')">
+              <option value="residential">Residential</option>
+              <option value="btl">Buy-to-Let</option>
+            </select></div></div>
+          <div class="input-group"><label>Buyer Type</label>
+            <div class="select-wrap"><select id="cSdBuyer" onchange="runCalc('stampduty')">
+              <option value="ftb">First-Time Buyer</option>
+              <option value="other">Other Buyer</option>
+            </select></div></div>
+        </div>
+      </div>
+      <div class="result-box" id="res-stampduty"></div>
+    </div>
+
+    <!-- DIRT CALC -->
+    <div class="calc-panel" id="calc-dirt">
+      <div class="calc-card">
+        <h3>DIRT Tax Calculator</h3>
+        <div class="inputs-grid">
+          <div class="input-group"><label>Deposit Amount</label>
+            <div class="range-wrap"><span class="range-val" id="cDirtDep">&#8364;20,000</span>
+            <input type="range" min="1000" max="200000" step="1000" value="20000" oninput="cDirtDep=parseInt(this.value);document.getElementById('cDirtDep').textContent=fe(cDirtDep);runCalc('dirt')"></div></div>
+          <div class="input-group"><label>Gross Interest Rate (AER)</label>
+            <div class="range-wrap"><span class="range-val" id="cDirtRate">2.50%</span>
+            <input type="range" min="0.1" max="6" step="0.05" value="2.50" oninput="cDirtRate=parseFloat(this.value);document.getElementById('cDirtRate').textContent=cDirtRate.toFixed(2)+'%';runCalc('dirt')"></div></div>
+          <div class="input-group"><label>Term (years)</label>
+            <div class="range-wrap"><span class="range-val" id="cDirtTerm">1 year</span>
+            <input type="range" min="1" max="5" step="1" value="1" oninput="cDirtTerm=parseInt(this.value);document.getElementById('cDirtTerm').textContent=cDirtTerm+' year'+(cDirtTerm>1?'s':'');runCalc('dirt')"></div></div>
+          <div class="input-group"><label>Account Type</label>
+            <div class="select-wrap"><select id="cDirtExempt" onchange="runCalc('dirt')">
+              <option value="no">Standard (DIRT 33%)</option>
+              <option value="yes">Tax-Free (State Savings)</option>
+            </select></div></div>
+        </div>
+      </div>
+      <div class="result-box" id="res-dirt"></div>
+    </div>
+
+    <!-- PENSION CALC -->
+    <div class="calc-panel" id="calc-pension">
+      <div class="calc-card">
+        <h3>Pension Contribution Calculator</h3>
+        <div class="inputs-grid">
+          <div class="input-group"><label>Gross Annual Salary</label>
+            <div class="range-wrap"><span class="range-val" id="cPenSal">&#8364;60,000</span>
+            <input type="range" min="20000" max="250000" step="1000" value="60000" oninput="cPenSal=parseInt(this.value);document.getElementById('cPenSal').textContent=fe(cPenSal);runCalc('pension')"></div></div>
+          <div class="input-group"><label>Contribution Rate</label>
+            <div class="range-wrap"><span class="range-val" id="cPenPct">5%</span>
+            <input type="range" min="1" max="40" step="1" value="5" oninput="cPenPct=parseInt(this.value);document.getElementById('cPenPct').textContent=cPenPct+'%';runCalc('pension')"></div></div>
+          <div class="input-group"><label>Your Age</label>
+            <div class="range-wrap"><span class="range-val" id="cPenAge">35</span>
+            <input type="range" min="20" max="65" step="1" value="35" oninput="cPenAge=parseInt(this.value);document.getElementById('cPenAge').textContent=cPenAge;runCalc('pension')"></div></div>
+          <div class="input-group"><label>Income Tax Rate</label>
+            <div class="select-wrap"><select id="cPenTax" onchange="runCalc('pension')">
+              <option value="0.20">20% (Standard Rate)</option>
+              <option value="0.40" selected>40% (Higher Rate)</option>
+            </select></div></div>
+        </div>
+      </div>
+      <div class="result-box" id="res-pension"></div>
+    </div>
+
+    <!-- BORROWING POWER CALC -->
+    <div class="calc-panel" id="calc-borrow">
+      <div class="calc-card">
+        <h3>Borrowing Power Calculator</h3>
+        <div class="inputs-grid">
+          <div class="input-group"><label>Gross Annual Income (Applicant 1)</label>
+            <div class="range-wrap"><span class="range-val" id="cBorInc1">&#8364;60,000</span>
+            <input type="range" min="20000" max="300000" step="1000" value="60000" oninput="cBorInc1=parseInt(this.value);document.getElementById('cBorInc1').textContent=fe(cBorInc1);runCalc('borrow')"></div></div>
+          <div class="input-group"><label>Gross Annual Income (Applicant 2)</label>
+            <div class="range-wrap"><span class="range-val" id="cBorInc2">&#8364;0</span>
+            <input type="range" min="0" max="300000" step="1000" value="0" oninput="cBorInc2=parseInt(this.value);document.getElementById('cBorInc2').textContent=fe(cBorInc2);runCalc('borrow')"></div></div>
+          <div class="input-group"><label>Monthly Outgoings / Debts</label>
+            <div class="range-wrap"><span class="range-val" id="cBorDebt">&#8364;500</span>
+            <input type="range" min="0" max="5000" step="100" value="500" oninput="cBorDebt=parseInt(this.value);document.getElementById('cBorDebt').textContent=fe(cBorDebt);runCalc('borrow')"></div></div>
+          <div class="input-group"><label>Buyer Type</label>
+            <div class="select-wrap"><select id="cBorType" onchange="runCalc('borrow')">
+              <option value="ftb">First-Time Buyer (4× income)</option>
+              <option value="other">Other Buyer (3.5× income)</option>
+            </select></div></div>
+        </div>
+      </div>
+      <div class="result-box" id="res-borrow"></div>
+    </div>
+
+  </div>
+</div>
 <div class="page" id="loansPage">
   <div class="inner-container">
     <div class="page-title">
@@ -732,19 +1124,31 @@ textarea.form-input { resize:vertical; min-height:90px; }
 </div>
 
 <script>
+function toggleMenu(){
+  var h=document.getElementById('hamburger'), d=document.getElementById('navDrawer');
+  h.classList.toggle('open'); d.classList.toggle('open');
+}
+function closeMenu(){
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('navDrawer').classList.remove('open');
+}
+
 // ── NAVIGATION ──
+var NAV_MAP = {
+  homePage:null, loansPage:'nav-loans', savingsPage:'nav-savings',
+  investmentsPage:'nav-investments', cardsPage:'nav-cards', mortgagesPage:'nav-mortgages',
+  bestRatesPage:null, eligibilityPage:'nav-eligibility',
+  calculatorsPage:'nav-calculators', advisorPage:null
+};
 function showPage(id) {
   document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
   document.getElementById(id).classList.add('active');
-  document.getElementById('backBtn').classList.add('visible');
+  document.querySelectorAll('.nav-link').forEach(function(l){ l.classList.remove('active'); });
+  var navId = NAV_MAP[id];
+  if(navId) document.getElementById(navId).classList.add('active');
   window.scrollTo(0,0);
 }
-function goHome() {
-  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
-  document.getElementById('homePage').classList.add('active');
-  document.getElementById('backBtn').classList.remove('visible');
-  window.scrollTo(0,0);
-}
+function goHome() { showPage('homePage'); }
 
 // ── HELPERS ──
 function fe(n){ return '\u20AC'+Math.round(n).toLocaleString('en-IE'); }
@@ -1184,7 +1588,337 @@ function disclaimer(domains,names,urls){
   return '<div class="disclaimer">Rates are indicative and sourced from published lender data as of March 2026. Your actual rate depends on your individual circumstances. Always confirm rates directly with the provider. RateRadar Ireland is not a regulated financial advisor.<br><br><strong>Official sites:</strong> '+links+'</div>';
 }
 
-// ── ADVISOR FORM ──
+// ── MORTGAGES ──
+var mortProp=350000, mortDep=10, mortTerm=30;
+function updateMort(t,v){
+  if(t==='prop'){ mortProp=parseInt(v); document.getElementById('mortPropVal').textContent=fe(mortProp); var dep=Math.round(mortProp*mortDep/100); document.getElementById('mortDepVal').textContent=fe(dep)+' ('+mortDep+'%)'; }
+  if(t==='dep'){ mortDep=parseInt(v); var dep=Math.round(mortProp*mortDep/100); document.getElementById('mortDepVal').textContent=fe(dep)+' ('+mortDep+'%)'; }
+  if(t==='term'){ mortTerm=parseInt(v); document.getElementById('mortTermVal').textContent=v+' years'; }
+}
+
+var MORTGAGES=[
+  { key:'avant', name:'Avant Money', short:'AV', url:'https://www.avantmoney.ie/mortgages/products-and-rates',
+    rates:{ fixed3:{ltv60:3.35,ltv80:3.45,ltv90:3.55}, fixed4:{ltv60:3.20,ltv80:3.30,ltv90:3.40}, fixed5:{ltv60:3.35,ltv80:3.45,ltv90:3.55}, fixed7:{ltv60:3.50,ltv80:3.60,ltv90:3.70}, variable:{ltv60:3.15,ltv80:3.15,ltv90:3.35} },
+    greenDiscount:0, cashback:'2% (max €7,500)', perks:'Lowest variable in Ireland · 10% overpay/yr · Up to 30yr fixed', tags:[{t:'Lowest Variable',c:'tg'},{t:'2% Cashback',c:'ty'}] },
+  { key:'boi', name:'Bank of Ireland', short:'BOI', url:'https://personalbanking.bankofireland.com/borrow/mortgages/',
+    rates:{ fixed3:{ltv60:3.30,ltv80:3.45,ltv90:3.60}, fixed4:{ltv60:3.10,ltv80:3.30,ltv90:3.50}, fixed5:{ltv60:3.35,ltv80:3.50,ltv90:3.65}, fixed7:{ltv60:3.55,ltv80:3.70,ltv90:3.85}, variable:{ltv60:4.15,ltv80:4.15,ltv90:4.15} },
+    greenDiscount:0.20, cashback:'Up to 3%', perks:'Green discount 0.20% · Up to 3% cashback · BER A/B discount', tags:[{t:'Green Discount',c:'tg'},{t:'3% Cashback',c:'ty'}] },
+  { key:'aib', name:'AIB', short:'AIB', url:'https://aib.ie/our-products/mortgages',
+    rates:{ fixed3:{ltv60:3.45,ltv80:3.55,ltv90:3.65}, fixed4:{ltv60:3.35,ltv80:3.45,ltv90:3.55}, fixed5:{ltv60:3.45,ltv80:3.55,ltv90:3.65}, fixed7:{ltv60:3.65,ltv80:3.75,ltv90:3.85}, variable:{ltv60:4.15,ltv80:4.15,ltv90:4.15} },
+    greenDiscount:0.25, cashback:'None standard', perks:'Green mortgage from 3.10% · Free home insurance yr 1 · Fast approval', tags:[{t:'Green Mortgage',c:'tg'},{t:'Fast Approval',c:'tb'}] },
+  { key:'haven', name:'Haven Mortgages', short:'HAV', url:'https://www.havenbank.ie/',
+    rates:{ fixed3:{ltv60:3.30,ltv80:3.45,ltv90:3.60}, fixed4:{ltv60:3.25,ltv80:3.40,ltv90:3.55}, fixed5:{ltv60:3.40,ltv80:3.55,ltv90:3.65}, fixed7:{ltv60:3.60,ltv80:3.75,ltv90:3.85}, variable:{ltv60:3.95,ltv80:3.95,ltv90:4.15} },
+    greenDiscount:0.20, cashback:'€5,000 on loans >€250k', perks:'Broker-only · Green discount 0.20% · €5k cashback >€250k', tags:[{t:'€5k Cashback',c:'ty'},{t:'Green Rate',c:'tg'}] },
+  { key:'ptsb', name:'Permanent TSB', short:'PTSB', url:'https://www.ptsb.ie/mortgages/',
+    rates:{ fixed3:{ltv60:3.50,ltv80:3.65,ltv90:3.80}, fixed4:{ltv60:3.40,ltv80:3.55,ltv90:3.70}, fixed5:{ltv60:3.50,ltv80:3.65,ltv90:3.80}, fixed7:{ltv60:3.60,ltv80:3.75,ltv90:3.90}, variable:{ltv60:4.40,ltv80:4.40,ltv90:4.70} },
+    greenDiscount:0.15, cashback:'2% of mortgage value', perks:'2% cashback · 6 rate cuts since Dec 2023 · Green discount 0.15%', tags:[{t:'2% Cashback',c:'ty'},{t:'Rate Cuts',c:'tg'}] },
+  { key:'ebs', name:'EBS', short:'EBS', url:'https://www.ebs.ie/mortgages',
+    rates:{ fixed3:{ltv60:3.45,ltv80:3.55,ltv90:3.70}, fixed4:{ltv60:3.35,ltv80:3.50,ltv90:3.65}, fixed5:{ltv60:3.50,ltv80:3.65,ltv90:3.75}, fixed7:{ltv60:3.70,ltv80:3.80,ltv90:3.90}, variable:{ltv60:4.15,ltv80:4.15,ltv90:4.15} },
+    greenDiscount:0.15, cashback:'Up to 3%', perks:'Up to 3% cashback on fixed rates · Green 4yr fixed discount', tags:[{t:'3% Cashback',c:'ty'},{t:'Green Rate',c:'tg'}] }
+];
+
+function compareMortgages(){
+  var rateType=document.getElementById('mortRateType').value;
+  var berRaw=document.getElementById('mortBer').value;
+  var ltv=100-mortDep;
+  var ltvKey=ltv<=60?'ltv60':ltv<=80?'ltv80':'ltv90';
+  var isGreen=berRaw==='ab';
+  showLoading('mortLoading');
+  document.getElementById('mortResults').className='results-hidden';
+  setTimeout(function(){
+    hideLoading('mortLoading');
+    var loanAmt=mortProp*(1-mortDep/100);
+    var results=MORTGAGES.map(function(m){
+      var baseRate=m.rates[rateType][ltvKey];
+      var rate=isGreen?Math.max(baseRate-m.greenDiscount,baseRate-0.30):baseRate;
+      var monthly=calcMonthly(loanAmt,rate,mortTerm);
+      var totalPaid=monthly*mortTerm*12;
+      var totalInterest=totalPaid-loanAmt;
+      return {m:m,rate:rate,baseRate:baseRate,monthly:monthly,totalPaid:totalPaid,totalInterest:totalInterest,isGreen:isGreen&&m.greenDiscount>0};
+    }).sort(function(a,b){return a.rate-b.rate;});
+    var best=results[0];
+    var typeLabels={fixed3:'3-Year Fixed',fixed4:'4-Year Fixed',fixed5:'5-Year Fixed',fixed7:'7-Year Fixed',variable:'Variable'};
+    var wrap=document.createElement('div');
+    var sb=document.createElement('div'); sb.className='fetch-status';
+    sb.innerHTML='<div class="fs-dot" style="background:#34d399"></div><div>Mortgage rates verified from official lender sites</div><div class="fs-time" style="color:#34d399">Mar 2026</div>';
+    wrap.appendChild(sb);
+    if(ltv>90){
+      var warn=document.createElement('div'); warn.style.cssText='background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);border-radius:10px;padding:0.75rem 1rem;margin-bottom:1.25rem;font-size:0.78rem;color:#fbbf24';
+      warn.innerHTML='⚠️ <strong>LTV over 90%:</strong> Most Irish lenders require a minimum 10% deposit (90% LTV). First-time buyers can apply under the Help-to-Buy scheme. Rates shown are for 90% LTV products.'; wrap.appendChild(warn);
+    }
+    if(isGreen){
+      var gn=document.createElement('div'); gn.style.cssText='background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.2);border-radius:10px;padding:0.75rem 1rem;margin-bottom:1.25rem;font-size:0.78rem;color:#34d399';
+      gn.innerHTML='🌿 <strong>Green mortgage applied:</strong> BER A/B discount applied where available. Confirm your BER certificate with your lender.'; wrap.appendChild(gn);
+    }
+    var hdr=document.createElement('div'); hdr.className='results-header';
+    hdr.innerHTML='<h2>Mortgage Results</h2><span class="results-count">'+results.length+' lenders · '+typeLabels[rateType]+'</span>';
+    wrap.appendChild(hdr);
+    var grid=document.createElement('div'); grid.className='cards-grid';
+    results.forEach(function(r,i){
+      var card=document.createElement('div'); card.className='mortgage-card'+(i===0?' best':'');
+      card.appendChild(makeLogo(null,r.m.name,r.m.short,'#fff','#0f1623',r.m.key));
+      var info=document.createElement('div'); info.className='bank-info';
+      var bdg=document.createElement('div'); bdg.className='mortgage-best-badge'; bdg.textContent='★ Best Rate'; info.appendChild(bdg);
+      var h4=document.createElement('h4'); h4.textContent=r.m.name; info.appendChild(h4);
+      var sub=document.createElement('div'); sub.className='sub'; sub.textContent=r.m.perks; info.appendChild(sub);
+      var tgs=document.createElement('div'); tgs.className='tags';
+      r.m.tags.forEach(function(t){ var s=document.createElement('span'); s.className='tag '+t.c; s.textContent=t.t; tgs.appendChild(s); });
+      if(r.isGreen){ var gb=document.createElement('span'); gb.className='green-badge'; gb.textContent='🌿 Green rate'; tgs.appendChild(gb); }
+      if(r.m.cashback!=='None standard'){ var cb=document.createElement('span'); cb.className='cashback-badge'; cb.textContent='💰 '+r.m.cashback; tgs.appendChild(cb); }
+      info.appendChild(tgs); card.appendChild(info);
+      var nums=document.createElement('div'); nums.className='rate-nums';
+      var rb=document.createElement('div'); rb.className='mortgage-rate-big'; rb.innerHTML=r.rate.toFixed(2)+'<span>%</span>'; nums.appendChild(rb);
+      var aprc=document.createElement('div'); aprc.className='mortgage-aprc'; aprc.textContent='LTV '+ltvKey.replace('ltv','')+'%'; nums.appendChild(aprc);
+      var rs=document.createElement('div'); rs.className='rate-sub'; rs.innerHTML='Monthly: <strong>'+fe(r.monthly)+'</strong>'; nums.appendChild(rs);
+      var rh=document.createElement('div'); rh.className='rate-sub'; rh.innerHTML='Total interest: <strong>'+fe(r.totalInterest)+'</strong>'; nums.appendChild(rh);
+      var btn=document.createElement('a'); btn.className='mortgage-apply'; btn.href=r.m.url; btn.target='_blank'; btn.rel='noopener'; btn.textContent='Apply →'; nums.appendChild(btn);
+      card.appendChild(nums); grid.appendChild(card);
+    }); wrap.appendChild(grid);
+    var saving=fe(results[results.length-1].totalInterest-best.totalInterest);
+    var ai=document.createElement('div'); ai.className='ai-box';
+    ai.innerHTML='<div class="ai-header"><div class="ai-icon" style="background:#34d399">★</div><h3 style="color:#34d399">AI Recommendation</h3></div><div class="ai-body">For a <span class="hl">'+fe(loanAmt)+'</span> mortgage over <span class="hl">'+mortTerm+' years</span> ('+Math.round(ltv)+'% LTV, '+typeLabels[rateType]+'):<br><br><strong>🏆 '+best.m.name+'</strong> at <span class="hl">'+best.rate.toFixed(2)+'%</span> — <span class="hl">'+fe(best.monthly)+'/month</span>, total interest <span class="hl">'+fe(best.totalInterest)+'</span>. Choosing '+best.m.name+' saves <span class="hl">'+saving+'</span> in interest vs the most expensive option.'+(isGreen?'<br><br>🌿 <span class="hl">Green tip:</span> BER A/B homes unlock discounts of 0.15–0.25% depending on lender. On a €300k mortgage over 30 years this can save €15,000+.':'')+'<br><br>⚠️ <strong>WARNING:</strong> If you do not keep up your repayments, you may lose your home. Rates are indicative — confirm directly with lenders before applying.</div>';
+    wrap.appendChild(ai);
+    var tw=document.createElement('div'); tw.className='table-wrap';
+    tw.innerHTML='<h3>Full Rate Comparison</h3>';
+    var tbl=document.createElement('table');
+    tbl.innerHTML='<thead><tr><th>Lender</th><th>Rate</th><th>Monthly</th><th>Total Interest</th><th>Cashback</th><th>Green Discount</th></tr></thead>';
+    var tb=document.createElement('tbody');
+    results.forEach(function(r){ var tr=document.createElement('tr'); var isBest=r===results[0];
+      tr.innerHTML='<td><strong>'+r.m.name+'</strong></td><td class="'+(isBest?'best-td':'mono')+'">'+r.rate.toFixed(2)+'%'+(isBest?' ★':'')+'</td><td class="mono">'+fe(r.monthly)+'/mo</td><td class="mono">'+fe(r.totalInterest)+'</td><td style="font-size:0.78rem">'+r.m.cashback+'</td><td style="font-size:0.78rem">'+(r.m.greenDiscount>0?'<span style="color:#34d399">-'+r.m.greenDiscount.toFixed(2)+'%</span>':'—')+'</td>';
+      tb.appendChild(tr); }); tbl.appendChild(tb); tw.appendChild(tbl); wrap.appendChild(tw);
+    wrap.innerHTML+=disclaimer(['avantmoney.ie','bankofireland.com','aib.ie','havenbank.ie','ptsb.ie','ebs.ie'],['Avant Money','Bank of Ireland','AIB','Haven','PTSB','EBS'],['https://www.avantmoney.ie/mortgages/products-and-rates','https://personalbanking.bankofireland.com/borrow/mortgages/','https://aib.ie/our-products/mortgages','https://www.havenbank.ie/','https://www.ptsb.ie/mortgages/','https://www.ebs.ie/mortgages']);
+    document.getElementById('mortResults').appendChild(wrap);
+    document.getElementById('mortResults').className='results-visible';
+  },800);
+}
+
+// ── ELIGIBILITY CHECKER ──
+var ELIG_STEPS=[
+  { q:'What are you looking for?', sub:'Select everything that applies to you.', opts:['🏠 Mortgage','💰 Personal Loan','💳 Credit Card','📈 Investment Account','🏦 Savings Account'], multi:true },
+  { q:'What is your employment status?', sub:'This affects borrowing capacity significantly.', opts:['Full-time PAYE','Part-time PAYE','Self-employed','Public sector','Retired','Unemployed'], multi:false },
+  { q:'What is your approximate annual income?', sub:'Household income if applying jointly.', opts:['Under €30,000','€30,000–€50,000','€50,000–€80,000','€80,000–€120,000','Over €120,000'], multi:false },
+  { q:'Do you have any existing debts or loans?', sub:'Include car finance, credit cards, other loans.', opts:['No existing debts','Under €5,000','€5,000–€15,000','€15,000–€30,000','Over €30,000'], multi:false },
+  { q:'How would you describe your credit history?', sub:'Missed payments or defaults affect eligibility significantly.', opts:['Excellent — no issues','Good — very few missed payments','Fair — some missed payments','Poor — defaults or arrears'], multi:false },
+  { q:'Do you have savings or a deposit?', sub:'Savings demonstrate financial discipline to lenders.', opts:['No savings','Under €5,000','€5,000–€20,000','€20,000–€50,000','Over €50,000'], multi:false }
+];
+var eligAnswers={}, eligCurrent=0;
+function initElig(){
+  var prog=document.getElementById('eligProgress');
+  prog.innerHTML='';
+  ELIG_STEPS.forEach(function(_,i){ var d=document.createElement('div'); d.className='elig-dot'; d.id='edot-'+i; prog.appendChild(d); });
+  renderEligStep(0);
+}
+function renderEligStep(idx){
+  eligCurrent=idx;
+  var step=ELIG_STEPS[idx];
+  var container=document.getElementById('eligSteps');
+  container.innerHTML='';
+  var q=document.createElement('div'); q.className='elig-question'; q.textContent=step.q; container.appendChild(q);
+  var s=document.createElement('div'); s.className='elig-sub'; s.textContent=step.sub; container.appendChild(s);
+  var opts=document.createElement('div'); opts.className='elig-options';
+  step.opts.forEach(function(o){
+    var btn=document.createElement('div'); btn.className='elig-opt'; btn.textContent=o;
+    var prev=eligAnswers[idx];
+    if(prev&&(Array.isArray(prev)?prev.indexOf(o)>-1:prev===o)) btn.classList.add('selected');
+    btn.onclick=function(){
+      if(step.multi){ btn.classList.toggle('selected'); }
+      else { opts.querySelectorAll('.elig-opt').forEach(function(b){b.classList.remove('selected');}); btn.classList.add('selected'); }
+      if(!step.multi){ var sel=btn.textContent; eligAnswers[idx]=sel; setTimeout(function(){if(idx<ELIG_STEPS.length-1)eligNext();else showEligResult();},300); }
+      else { var sels=Array.from(opts.querySelectorAll('.elig-opt.selected')).map(function(b){return b.textContent;}); eligAnswers[idx]=sels; }
+    };
+    opts.appendChild(btn);
+  });
+  container.appendChild(opts);
+  document.getElementById('eligBackBtn').style.display=idx>0?'flex':'none';
+  document.getElementById('eligNextBtn').textContent=idx===ELIG_STEPS.length-1?'See My Results →':'Next →';
+  document.querySelectorAll('.elig-dot').forEach(function(d,i){ d.className='elig-dot'+(i<idx?' done':i===idx?' active':''); });
+}
+function eligNext(){
+  var step=ELIG_STEPS[eligCurrent];
+  var sel=eligAnswers[eligCurrent];
+  if(!sel||(Array.isArray(sel)&&sel.length===0)){ var opts=document.querySelectorAll('.elig-opt.selected'); if(opts.length===0){ document.getElementById('eligSteps').querySelectorAll('.elig-sub')[0].style.color='#f87171'; return; } }
+  if(eligCurrent===ELIG_STEPS.length-1){ showEligResult(); return; }
+  renderEligStep(eligCurrent+1);
+}
+function eligBack(){ if(eligCurrent>0) renderEligStep(eligCurrent-1); }
+function showEligResult(){
+  document.getElementById('eligCard').style.display='none';
+  var res=document.getElementById('eligResult'); res.style.display='block';
+  // Score logic
+  var score=50;
+  var employment=eligAnswers[1]||'';
+  var income=eligAnswers[2]||'';
+  var debts=eligAnswers[3]||'';
+  var credit=eligAnswers[4]||'';
+  var savings=eligAnswers[5]||'';
+  if(employment.indexOf('Full-time')>-1||employment.indexOf('Public')>-1) score+=15;
+  else if(employment.indexOf('Self')>-1) score+=8;
+  else if(employment.indexOf('Unemployed')>-1) score-=20;
+  if(income.indexOf('Over')>-1) score+=15;
+  else if(income.indexOf('€80')>-1) score+=10;
+  else if(income.indexOf('€50')>-1) score+=5;
+  else if(income.indexOf('Under')>-1) score-=10;
+  if(debts.indexOf('No existing')>-1) score+=10;
+  else if(debts.indexOf('Over')>-1) score-=15;
+  else if(debts.indexOf('€15')>-1) score-=8;
+  if(credit.indexOf('Excellent')>-1) score+=15;
+  else if(credit.indexOf('Good')>-1) score+=8;
+  else if(credit.indexOf('Fair')>-1) score-=5;
+  else if(credit.indexOf('Poor')>-1) score-=20;
+  if(savings.indexOf('Over €50')>-1) score+=10;
+  else if(savings.indexOf('€20')>-1) score+=6;
+  else if(savings.indexOf('No')>-1) score-=5;
+  score=Math.min(100,Math.max(5,score));
+  var label=score>=80?'Strong':score>=60?'Good':score>=40?'Fair':'Weak';
+  var colour=score>=80?'#34d399':score>=60?'var(--accent)':score>=40?'#fbbf24':'#f87171';
+  var products=eligAnswers[0]||[];
+  var html='<div class="elig-result">';
+  html+='<div class="elig-score-label" style="color:'+colour+'">'+label+' Eligibility</div>';
+  html+='<div style="font-size:0.82rem;color:var(--muted);margin-bottom:0.75rem">Based on your answers, you have a <strong style="color:'+colour+'">'+label.toLowerCase()+' profile</strong> for most Irish lenders.</div>';
+  html+='<div class="elig-meter"><div class="elig-meter-fill" style="width:'+score+'%;background:'+colour+'"></div></div>';
+  html+='<div style="font-size:0.75rem;color:var(--muted);text-align:right;margin-bottom:1rem">Eligibility score: '+score+'/100</div>';
+  // Product-specific guidance
+  var guidance=[];
+  var pArr=Array.isArray(products)?products:[products];
+  pArr.forEach(function(p){
+    if(p.indexOf('Mortgage')>-1){
+      var maxBorrow=0;
+      if(income.indexOf('Over €120')>-1) maxBorrow=480000;
+      else if(income.indexOf('€80')>-1) maxBorrow=360000;
+      else if(income.indexOf('€50')>-1) maxBorrow=280000;
+      else if(income.indexOf('€30')>-1) maxBorrow=175000;
+      else maxBorrow=90000;
+      guidance.push('<div style="margin-bottom:0.75rem"><strong style="color:#34d399">🏠 Mortgage:</strong> Based on income, estimated maximum borrowing ~<strong>'+fe(maxBorrow)+'</strong> (3.5× income rule for non-FTBs, 4× for FTBs). '+(credit.indexOf('Poor')>-1?'<span style="color:#f87171">Poor credit history will make mortgage approval very difficult — consider a credit union or specialist lender.</span>':credit.indexOf('Fair')>-1?'<span style="color:#fbbf24">Fair credit may require a larger deposit (20%+).</span>':'Eligible with most mainstream lenders.')+'</div>');
+    }
+    if(p.indexOf('Loan')>-1){ guidance.push('<div style="margin-bottom:0.75rem"><strong style="color:var(--accent)">💰 Personal Loan:</strong> '+(credit.indexOf('Excellent')>-1||credit.indexOf('Good')>-1?'Likely eligible for best rates (6.2%–7.1% APR) from PTSB or BOI.':credit.indexOf('Fair')>-1?'Eligible but expect higher rates (8–12% APR). Consider a credit union.':'Poor credit limits options — Credit Union or An Post Money most likely to approve.')+'</div>'); }
+    if(p.indexOf('Credit Card')>-1){ guidance.push('<div style="margin-bottom:0.75rem"><strong style="color:var(--accent4)">💳 Credit Card:</strong> '+(credit.indexOf('Poor')>-1?'<span style="color:#f87171">Credit card approval unlikely with poor credit history.</span>':income.indexOf('Under')>-1?'Low income may limit credit limit but approval possible with AIB or BOI.':'Likely eligible — AIB Click Visa offers the lowest APR at 14.16%.')+'</div>'); }
+    if(p.indexOf('Investment')>-1){ guidance.push('<div style="margin-bottom:0.75rem"><strong style="color:var(--accent2)">📈 Investments:</strong> No credit check required — DEGIRO and Revolut have no income requirements. Anyone can open an account. Note Irish Exit Tax (41%) on fund gains.</div>'); }
+    if(p.indexOf('Savings')>-1){ guidance.push('<div style="margin-bottom:0.75rem"><strong style="color:var(--accent3)">🏦 Savings:</strong> No restrictions — anyone can open a savings account. Best rates: AIB/BOI Regular Saver at 3% AER, or State Savings (tax-free).</div>'); }
+  });
+  if(guidance.length) html+='<div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">'+guidance.join('')+'</div>';
+  html+='</div>';
+  html+='<div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1rem">';
+  html+='<button onclick="initElig();document.getElementById(\'eligCard\').style.display=\'block\';document.getElementById(\'eligResult\').style.display=\'none\'" style="flex:1;padding:0.75rem;background:var(--surface2);border:1px solid var(--border);color:var(--muted);border-radius:10px;font-family:Inter,sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer">← Start Again</button>';
+  html+='<button onclick="showPage(\'advisorPage\')" style="flex:2;padding:0.75rem;background:linear-gradient(135deg,#7c3aed,#a78bfa);border:none;color:#fff;border-radius:10px;font-family:Inter,sans-serif;font-size:0.85rem;font-weight:800;cursor:pointer">🤝 Talk to an Advisor</button>';
+  html+='</div>';
+  res.innerHTML=html;
+}
+
+// ── CALCULATORS ──
+var cMortAmt=300000,cMortRate=3.50,cMortTerm=30;
+var cSdVal=350000;
+var cDirtDep=20000,cDirtRate=2.50,cDirtTerm=1;
+var cPenSal=60000,cPenPct=5,cPenAge=35;
+var cBorInc1=60000,cBorInc2=0,cBorDebt=500;
+
+function switchCalc(id){
+  document.querySelectorAll('.calc-tab').forEach(function(t,i){
+    var ids=['mortgage','stampduty','dirt','pension','borrow'];
+    t.classList.toggle('active',ids[i]===id);
+  });
+  document.querySelectorAll('.calc-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('calc-'+id).classList.add('active');
+  runCalc(id);
+}
+
+function runCalc(type){
+  if(type==='mortgage'){
+    var mo=calcMonthly(cMortAmt,cMortRate,cMortTerm);
+    var total=mo*cMortTerm*12, interest=total-cMortAmt;
+    var io=(cMortAmt*(cMortRate/100))/12;
+    var isIO=document.getElementById('cMortType')&&document.getElementById('cMortType').value==='interest';
+    if(isIO) mo=io;
+    document.getElementById('res-mortgage').innerHTML=rows([
+      ['Monthly repayment',fe(isIO?io:mo),'accent'],
+      ['Total repaid over '+cMortTerm+' yrs',fe(isIO?cMortAmt+(io*cMortTerm*12):total),''],
+      ['Total interest paid',fe(isIO?io*cMortTerm*12:interest),'warn'],
+      ['Mortgage amount',fe(cMortAmt),''],
+      ['Interest rate',cMortRate.toFixed(2)+'%',''],
+    ]);
+  }
+  if(type==='stampduty'){
+    var val=cSdVal, buyer=document.getElementById('cSdBuyer')&&document.getElementById('cSdBuyer').value, isBtl=document.getElementById('cSdType')&&document.getElementById('cSdType').value==='btl';
+    var duty=0;
+    if(isBtl){ duty=val*0.075; }
+    else if(buyer==='ftb'){
+      if(val<=500000) duty=val*0.01;
+      else duty=500000*0.01+(val-500000)*0.02;
+    } else {
+      if(val<=1000000) duty=val*0.01;
+      else duty=1000000*0.01+(val-1000000)*0.02;
+    }
+    var legalFees=Math.round(Math.max(2000,val*0.01));
+    var surveyFees=800, valFee=185;
+    var totalCosts=duty+legalFees+surveyFees+valFee;
+    document.getElementById('res-stampduty').innerHTML=rows([
+      ['Stamp Duty',fe(duty),'accent'],
+      ['Rate applied',isBtl?'7.5%':buyer==='ftb'?'1% (up to €500k)':'1% (up to €1m)',''],
+      ['Est. legal fees',fe(legalFees),''],
+      ['Survey / valuation',fe(surveyFees+valFee),''],
+      ['Total buying costs',fe(totalCosts),'warn'],
+    ]);
+  }
+  if(type==='dirt'){
+    var exempt=document.getElementById('cDirtExempt')&&document.getElementById('cDirtExempt').value==='yes';
+    var grossInt=cDirtDep*(Math.pow(1+cDirtRate/100,cDirtTerm)-1);
+    var dirtAmt=exempt?0:grossInt*0.33;
+    var netInt=grossInt-dirtAmt;
+    document.getElementById('res-dirt').innerHTML=rows([
+      ['Gross interest earned',fe(grossInt),''],
+      ['DIRT tax (33%)',exempt?'€0 (Tax-Free)':fe(dirtAmt),'warn'],
+      ['Net interest (after DIRT)',fe(netInt),'accent'],
+      ['Net AER',(netInt/cDirtDep*100).toFixed(2)+'%',''],
+      ['Total balance after '+cDirtTerm+'yr',fe(cDirtDep+netInt),''],
+    ]);
+  }
+  if(type==='pension'){
+    var taxRate=parseFloat(document.getElementById('cPenTax')&&document.getElementById('cPenTax').value||'0.40');
+    var maxPct=[20,20,20,20,25,25,25,25,25,25,30,30,35,35,40][Math.min(Math.floor((Math.min(cPenAge,70)-20)/5),14)];
+    var contribAmt=cPenSal*(cPenPct/100);
+    var taxRelief=contribAmt*taxRate;
+    var netCost=contribAmt-taxRelief;
+    var projYears=68-cPenAge;
+    var fund=contribAmt*projYears*2.5; // rough approx
+    document.getElementById('res-pension').innerHTML=rows([
+      ['Annual contribution',fe(contribAmt),''],
+      ['Tax relief ('+Math.round(taxRate*100)+'%)',fe(taxRelief),'accent'],
+      ['Your actual net cost',fe(netCost),''],
+      ['Max tax-relievable % at age '+cPenAge,maxPct+'% of salary',''],
+      ['Contribution within limit',cPenPct<=maxPct?'✅ Yes':'⚠️ Over limit — excess gets no relief',''],
+      ['Approx. fund at 68 (est.)',fe(fund),'warn'],
+    ]);
+  }
+  if(type==='borrow'){
+    var buyerType=document.getElementById('cBorType')&&document.getElementById('cBorType').value;
+    var mult=buyerType==='ftb'?4:3.5;
+    var totalIncome=cBorInc1+cBorInc2;
+    var maxBorrow=totalIncome*mult;
+    var adjustedMax=Math.max(0,maxBorrow-(cBorDebt*12*10));
+    var minDep10=Math.round(adjustedMax/9);
+    var minDep20=Math.round(adjustedMax/4);
+    document.getElementById('res-borrow').innerHTML=rows([
+      ['Maximum borrowing ('+mult+'× income)',fe(adjustedMax),'accent'],
+      ['Combined household income',fe(totalIncome),''],
+      ['Income multiplier',mult+'× ('+( buyerType==='ftb'?'First-Time Buyer':'Other Buyer')+')',''],
+      ['Min deposit needed (10%)',fe(minDep10),''],
+      ['Min deposit needed (20%)',fe(minDep20),''],
+      ['Estimated property price (10% dep)',fe(adjustedMax+minDep10),'warn'],
+    ]);
+  }
+}
+function rows(data){
+  return data.map(function(r){ return '<div class="result-row"><span class="label">'+r[0]+'</span><span class="value'+(r[2]?' '+r[2]:'')+'">'+r[1]+'</span></div>'; }).join('');
+}
+
+// Init eligibility on page show
+// Init on page navigation
+var _origShowPage=showPage;
+showPage=function(id){
+  _origShowPage(id);
+  if(id==='eligibilityPage'){ eligAnswers={}; eligCurrent=0; initElig(); }
+  if(id==='calculatorsPage'){ setTimeout(function(){ runCalc('mortgage'); },100); }
+};
+
 var advisorConsent = false;
 
 function toggleCheck(el, group) {
